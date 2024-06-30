@@ -3,13 +3,14 @@
 from datetime import datetime
 from uuid import uuid4
 import models
-from models import storage
 
 
 class BaseModel:
     """The base model for other models"""
+
     def __init__(self, *args, **kwargs):
         """Create an instance"""
+        from models import storage
         if kwargs:
             # some safe gaurds
             if kwargs.get('__class__'):
@@ -37,6 +38,7 @@ class BaseModel:
 
     def save(self):
         """Update the updated_at attribute with the current datetime"""
+        from models import storage
         self.updated_at = datetime.now()
         storage.save()
 
