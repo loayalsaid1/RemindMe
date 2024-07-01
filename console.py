@@ -4,10 +4,18 @@
 import cmd
 from models import storage
 from models.base_model import BaseModel
+from models.user import User
+from models.reflection import Reflection
+from models.streak import Streak
+from models.reminder import Reminder
 
 
 classes = {
-    "BaseModel": BaseModel
+    "BaseModel": BaseModel,
+    "User": User,
+    "Reflection": Reflection,
+    "Streak": Streak,
+    "Reminder": Reminder
 }
 
 
