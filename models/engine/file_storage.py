@@ -14,9 +14,18 @@ class FileStorage:
         "BaseModel": BaseModel
     }
 
-    def all(self):
+    def all(self, cls=None):
         """Returns a dictionary of all objects"""
-        return self.__objects
+        if cls:
+            objects = {}
+            class_name = cls.__name__
+            for key, value in self.__objects.items():
+                if key.startswith(f"{class_name}."):
+                    objects.update({key: value})
+
+            return objects
+        else:
+            return self.__objects
 
     def new(self, obj):
         """Sets in __objects the obj with key <obj class name>.id"""
@@ -38,3 +47,7 @@ class FileStorage:
                         **value)
         except FileNotFoundError:
             pass
+
+    def get(self, cls, id):
+        """Get an object from storage based on class and ID"""
+        return self.__objects.get(f"{cls.__name__}.{id}")

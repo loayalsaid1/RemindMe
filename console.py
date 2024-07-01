@@ -56,6 +56,13 @@ class RemindMeConsole(cmd.Cmd):
             if len(args) < 4:
                 print("** value missing **")
                 return ""
+        if command == "all" and args:
+            if args[0] not in classes:
+                print("** class doesn't exist **")
+                return ""
+
+        if command == "create" and len(args[1:]) % 2 != 0:
+            del args[-1]
 
         return line
 
@@ -66,6 +73,9 @@ class RemindMeConsole(cmd.Cmd):
         """Create an object"""
         args = args.split()
         new_object = classes[args[0]]()
+        for i in range(1, len(args), 2):
+            setattr(new_object, args[i],
+                    RemindMeConsole.parse_type(args[i+1]))
         print(new_object.id)
         storage.save()
 
@@ -77,7 +87,7 @@ class RemindMeConsole(cmd.Cmd):
     def do_show(self, args):
         """Show string represintation of an object"""
         args = args.split()
-        obj = storage.get(args[0], args[1])
+        obj = storage.get(classes[args[0]], args[1])
         if (obj):
             print(obj)
 
@@ -90,9 +100,9 @@ class RemindMeConsole(cmd.Cmd):
         """Destroy an object AKA, delete it from storage"""
         args = args.split()
         cls = classes[args[0]]
-        id = classes[args[1]]
-        obj = storage.get(cls, id)
-        del obj
+        id = args[1]
+        objects = storage.all()
+        del objects[f"{args[0]}.{id}"]
         storage.save()
 
     def help_destroy(self):
@@ -108,8 +118,8 @@ class RemindMeConsole(cmd.Cmd):
             objects = storage.all(cls)
         else:
             objects = storage.all()
-        [print(obj) for obj in objects]
-        print(objects.len)
+        [print(obj) for obj in objects.values()]
+        print(len(objects))
 
     def help_all(self):
         """Document all"""
@@ -119,8 +129,8 @@ class RemindMeConsole(cmd.Cmd):
     def do_update(self, args):
         """Update attibutes of an existent object"""
         args = args.split()
-        obj = storage.get(classes[args[0]]), args[1]
-        setattr(obj, args[2], parse_type(args[3]))
+        obj = storage.get(classes[args[0]], args[1])
+        setattr(obj, args[2], RemindMeConsole.parse_type(args[3]))
         storage.save()
 
     def help_update(self):
@@ -149,4 +159,3 @@ class RemindMeConsole(cmd.Cmd):
 if __name__ == "__main__":
 
     RemindMeConsole().cmdloop()
-    cmd.Cmd.onecmd()
