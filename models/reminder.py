@@ -1,16 +1,13 @@
 #!/usr/bin/python3
-"""Reminder model for the RemindMe web application"""
+"""Reminders model for RemindMe application"""
 from models.base_model import BaseModel
 
 
 class Reminder(BaseModel):
-    """Class that defines user reminders"""
+    """Reminders model that inherits from BaseModel"""
 
-    def __init__(self, *args, **kwargs):
-        """Initialize a Reminders instance"""
-        super().__init__(*args, **kwargs)
-        self.type = kwargs.get('type', "text")
-        self.public = kwargs.get('public', False)
-        self.text = kwargs.get('text', "")
-        self.user_id = kwargs.get('user_id', "")
-        self.img = kwargs.get('img', None)
+    type = "text"
+    public = False
+    text = ""
+    user_id = ""
+    img = None

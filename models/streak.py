@@ -4,10 +4,7 @@ from models.base_model import BaseModel
 
 
 class Streak(BaseModel):
-    """Class for user streaks"""
+    """Class that models user streaks of RemindMe application"""
 
-    def __init__(self, *args, **kwargs):
-        """Initialize a Streaks instance"""
-        super().__init__(*args, **kwargs)
-        self.user_id = kwargs.get('user_id', "")
-        self.days = kwargs.get('days', 0)
+    user_id = ""
+    days = 0

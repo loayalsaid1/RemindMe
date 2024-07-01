@@ -3,6 +3,10 @@
 
 import json
 from models.base_model import BaseModel
+from models.user import User
+from models.reflection import Reflection
+from models.streak import Streak
+from models.reminder import Reminder
 
 
 class FileStorage:
@@ -11,7 +15,11 @@ class FileStorage:
     __objects = {}
     __file_path = "file.json"
     classes = {
-        "BaseModel": BaseModel
+        "BaseModel": BaseModel,
+        "User": User,
+        "Reflection": Reflection,
+        "Streak": Streak,
+        "Reminder": Reminder
     }
 
     def all(self, cls=None):
