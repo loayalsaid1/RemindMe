@@ -10,5 +10,5 @@ class Reminder(BaseModel):
     public = False
     text = ""
     user_id = ""
-    img = None
+    img_ = None
     img_caption = ""
