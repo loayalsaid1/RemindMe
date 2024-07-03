@@ -96,5 +96,8 @@ class TestFileStorage(unittest.TestCase):
         self.assertTrue(os.path.exists(FileStorage._FileStorage__file_path))
 
 
+    """Author: Loay Al-Said"""
+    def test_delete(self):
+        """Test delete method"""
 if __name__ == "__main__":
     unittest.main()
