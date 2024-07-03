@@ -3,7 +3,6 @@
 from datetime import datetime
 from uuid import uuid4
 import models
-from models import storage
 
 
 class BaseModel:
@@ -11,7 +10,6 @@ class BaseModel:
 
     def __init__(self, *args, **kwargs):
         """Create an instance"""
-        from models import storage
         if kwargs:
             # some safe gaurds
             if kwargs.get('__class__'):
@@ -30,7 +28,7 @@ class BaseModel:
         else:
             self.id = str(uuid4())
             self.created_at = self.updated_at = datetime.now()
-            storage.new(self)
+            models.storage.new(self)
 
     def __str__(self):
         """Make a string representation of the object"""
@@ -39,9 +37,8 @@ class BaseModel:
 
     def save(self):
         """Update the updated_at attribute with the current datetime"""
-        from models import storage
         self.updated_at = datetime.now()
-        storage.save()
+        models.storage.save()
 
     def to_dict(self):
         """Make a dictionary representation of the object"""

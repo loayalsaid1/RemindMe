@@ -43,11 +43,13 @@ class TestFileStorage(unittest.TestCase):
         # Check that "file.json" now exists in path
         self.assertTrue(os.path.exists(FileStorage._FileStorage__file_path))
 
-        with open(FileStorage._FileStorage__file_path, 'r', encoding="utf-8") as file:
+        with open(FileStorage._FileStorage__file_path,
+                  'r', encoding="utf-8") as file:
             contents = json.loads(file.read())
             for key in FileStorage._FileStorage__objects.keys():
                 self.assertEqual(
-                    FileStorage._FileStorage__objects[key].to_dict(), contents[key])
+                    FileStorage._FileStorage__objects[key].to_dict(),
+                    contents[key])
 
     def test_new_method(self):
         """Tests the behaviour of the new() method"""
