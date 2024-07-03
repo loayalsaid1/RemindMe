@@ -109,8 +109,8 @@ class RemindMeConsole(cmd.Cmd):
         args = args.split()
         cls = classes[args[0]]
         id = args[1]
-        objects = storage.all()
-        del objects[f"{args[0]}.{id}"]
+        obj = storage.get(cls, id)
+        storage.delete(obj)
         storage.save()
 
     def help_destroy(self):
