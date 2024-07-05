@@ -59,3 +59,10 @@ class FileStorage:
     def get(self, cls, id):
         """Get an object from storage based on class and ID"""
         return self.__objects.get(f"{cls.__name__}.{id}")
+
+    def delete(self, obj=None):
+        """Delete an object from storage"""
+        if obj:
+            key = f"{obj.__class__.__name__}.{getattr(obj, 'id')}"
+            if key in self.__objects:
+                del self.__objects[key]

@@ -4,10 +4,10 @@
 import cmd
 from models import storage
 from models.base_model import BaseModel
-from models.user import User
 from models.reflection import Reflection
-from models.streak import Streak
 from models.reminder import Reminder
+from models.user import User
+from models.streak import Streak
 
 
 classes = {
@@ -85,6 +85,7 @@ class RemindMeConsole(cmd.Cmd):
             setattr(new_object, args[i],
                     RemindMeConsole.parse_type(args[i+1]))
         print(new_object.id)
+        new_object.save()
         storage.save()
 
     def help_create(self):
@@ -109,8 +110,8 @@ class RemindMeConsole(cmd.Cmd):
         args = args.split()
         cls = classes[args[0]]
         id = args[1]
-        objects = storage.all()
-        del objects[f"{args[0]}.{id}"]
+        obj = storage.get(cls, id)
+        storage.delete(obj)
         storage.save()
 
     def help_destroy(self):
