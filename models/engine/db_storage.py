@@ -17,11 +17,11 @@ classes = {
     "Reminder": Reminder
 }
 
+
 class DBStorage:
     """DBStorage class"""
     __engine = None
     __session = None
-
 
     def __init__(self):
         """Initialize our engine"""
@@ -36,31 +36,35 @@ class DBStorage:
 
         """if the environment is testing drop all tables"""
         if getenv('REMIND_ME_ENV') == 'TEST':
+            if "test" not in getenv('REMIND_ME_MYSQL_BD'):
+                print("You dummy!😠💢. Stop right there!",
+                      "\nYou're testing on production or development DB!",
+                      "\nRun the tests on the test database!")
+                exit(1)
             Base.metadata.drop_all(self.__engine)
-    
+
     def all(self, cls=None):
         """Make a query for one or all objs in the DB"""
         if cls:
-            objects = self.__session.query(cls).all()
+            query_result = self.__session.query(cls).all()
         else:
-            objects = {}
-            for cls in classes:
-                for obj in self.__session.query(cls).all():
-                    id = obj.id
-                    objects[f'{cls.__name__}.{id}'] = obj
-        
+            query_result = []
+            for cls in classes.values():
+                query_result.extend(self.__session.query(cls).all())
+        objects = {}
+        for obj in query_result:
+            object_class = obj.__class__.__name__
+            objects[f'{object_class}.{obj.id}'] = obj
         return objects
-    
+
     def new(self, obj):
         """Add an obj to the current DB session"""
         self.__session.add(obj)
 
-    
     def save(self):
         """Commit changes to the current DB session"""
         self.__session.commit()
 
-    
     def delete(self, obj=None):
         """This method deletes an obj from current DB session"""
         if obj is not None:
@@ -69,16 +73,17 @@ class DBStorage:
     def get(self, cls, id):
         """This method retrieves one obj via cls name and ID"""
         if cls in classes.values():
-            return self.session.query(cls).filter_by(id=id).first()
+            return self.__session.query(cls).filter_by(id=id).first()
         return None
 
-    
     def count(self, cls=None):
         """Get number of objects in the current DB session"""
         if cls:
-            return self.session.query(cls).count()
+            return self.__session.query(cls).count()
         else:
-            counts = [self.session.query(cls).count() for cls in classes.values()]
+            counts = [
+                self.__session.query(cls).count() for cls in classes.values()
+            ]
             return sum(counts)
 
     def reload(self):
@@ -86,4 +91,4 @@ class DBStorage:
         Base.metadata.create_all(self.__engine)
         session = sessionmaker(bind=self.__engine, expire_on_commit=False)
         Session = scoped_session(session)
-        self.session = Session
+        self.__session = Session()

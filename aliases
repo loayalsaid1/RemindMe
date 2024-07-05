@@ -1,0 +1,70 @@
+# Directory you are working on in mean time
+alias home='cd ~/RemindMe' 
+# Higher level programming directory
+alias py='cd /home/loayalsaid1/alx-higher_level_programming' 
+# Lower level programming directory
+alias c='cd /home/loayalsaid1/alx-low_level_programming'
+# DevOps directory 
+alias devops='cd /home/loayalsaid1/alx-system_engineering-devops'
+# Amend git commit
+alias amend='git add . && git commit --amend'
+# Git commit with message
+alias gc='git add . && git commit -m'
+# Git push
+alias gp='git push'
+# Change file execution permission
+alias cm='chmod +x'
+# Echo with escape characters
+alias echo='echo -e'
+# Python 3
+alias p='python3'
+# Python directory
+alias python='cd /mnt/e/Programming/Python'
+# Python style check
+alias pcs='pycodestyle'
+# Betty style check for C code
+alias bs='betty-style'
+# Betty documentation check
+alias bd='betty-doc'
+# SQLite3 shell
+alias db='sqlite3'
+# Open .bash_aliases in VS Code
+alias csc='code ~/.bash_aliases'
+# Compile C code with warnings
+alias comp='gcc -Wall -Wextra -Werror -pedantic  -std=gnu89'
+# Bash shebang
+alias bhb='echo "#!/usr/bin/env bash"'
+# Shellcheck
+alias sc='shellcheck'
+# Open .bash_aliases in vi and source it
+alias bcsc='vi ~/.bash_aliases && source ~/.bash_aliases' 
+# Make bash script
+alias mbs='./home/loayalsaid1/my_scripts/make_bash_script.sh'
+# Web directory
+alias web=' cd /mnt/e/Programming/web'
+# W3C validator
+alias val='/home/loayalsaid1/W3C-Validator/w3c_validator.py'
+# Bash shebang for Python
+alias cf='echo "#!/usr/bin/python3" >'
+# JavaScript styling
+alias jss='semistandard' 
+# AirBnB clone v2
+alias air2='cd ~/AirBnB_clone_v2'
+# AirBnB clone
+alias air='cd ~/AirBnB_clone'
+# AirBnB clone v3
+alias air3='cd ~/AirBnB_clone_v3'
+# AirBnB clone v3 copy
+alias air3_copy='cd /home/loayalsaid1/AirBnB_Clone_v3_copy'
+# AirBnB clone v4
+alias air4='cd ~/AirBnB_clone_v4'
+# (remove python cache) Recursively delete __pycache__ directories
+alias rpc='find . -type d -name "__pycache__" -exec rm -rf {} +'
+# Run console with environment variables for development
+alias run='home ; REMIND_ME_MYSQL_USER=remind_me_dev REMIND_ME_MYSQL_PWD=Remind_me_dev_pwd1 REMIND_ME_MYSQL_HOST=localhost REMIND_ME_MYSQL_DB=remind_me_dev_db REMIND_ME_TYPE_STORAGE=db ./console.py'
+# Run unit tests with environment variables for testing (database testing)
+alias dbtst='home; clear; REMIND_ME_MYSQL_USER=remind_me_test REMIND_ME_MYSQL_PWD=Remind_me_test_pwd1 REMIND_ME_MYSQL_HOST=localhost REMIND_ME_MYSQL_DB=remind_me_test_db REMIND_ME_TYPE_STORAGE=db REMIND_ME_ENV=test python3 -m unittest discover tests'
+# Run unit tests
+alias tst='home && clear && python3 -m unittest discover tests'
+# Go to tests directory
+alias tests='home && cd tests/test_models'

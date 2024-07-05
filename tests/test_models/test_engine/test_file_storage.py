@@ -2,12 +2,13 @@
 """Module to test FileStorage"""
 from models.base_model import BaseModel
 from models.engine.file_storage import FileStorage
-from models import storage
+from models import storage, storage_t
 import unittest
 import os
 import json
 
 
+@unittest.skipIf(storage_t == "db", "db storage not enabled")
 class TestFileStorage(unittest.TestCase):
     """Class to test FileStorage"""
 

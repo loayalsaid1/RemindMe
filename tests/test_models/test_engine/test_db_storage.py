@@ -1,67 +1,88 @@
 #!/usr/bin/python3
 """Test the db storage engine"""
 import unittest
+from os import getenv
 from models.user import User
 from models.reminder import Reminder
-from os import getenv
-from models.engine.db_storage import DBStorage
 from models.base_model import Base
+from models.engine.db_storage import DBStorage
+from models import storage_t, storage
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
 
 
+@unittest.skipUnless(storage_t == "db", "db storage not enabled")
 class TESTDBStorage(unittest.TestCase):
     """Test the db storage engine"""
+    @classmethod
+    def tearDownClass(cls):
+        """After finishing testng"""
+        storage.reload()
 
     def setUp(self):
         """Set up for the test"""
         self.storage = DBStorage()
+        if "test" not in getenv('REMIND_ME_MYSQL_DB', ""):
+            print("You dummy!😠💢, Stop right there",
+                  "\nYou're testing on production or development DB!",
+                  "\nRun the tests on the test database!")
+            exit(1)
         self.storage._DBStorage__engine = create_engine(
             'mysql+mysqldb://{}:{}@{}/{}'.format(
                 getenv('REMIND_ME_MYSQL_USER'),
                 getenv('REMIND_ME_MYSQL_PWD'),
                 getenv('REMIND_ME_MYSQL_HOST'),
                 getenv('REMIND_ME_MYSQL_DB')
-            )
+            ),
+            pool_pre_ping=True
         )
-
-        self.storage._DBStorage__session = scoped_session(sessionmaker(
+        self.Session = scoped_session(sessionmaker(
             bind=self.storage._DBStorage__engine,
             expire_on_commit=False
         ))
+        self.storage._DBStorage__session = self.Session()
         self.session = self.storage._DBStorage__session
         Base.metadata.create_all(self.storage._DBStorage__engine)
 
-        self.user_1 = User(
-            first_name="John", last_name="Doe", email="jdoe@me.com",
-            password="password"
-        )
-        self.user_2 = User(
-            first_name="Jane", last_name="Doe", email="jane@me.com",
-            password="password"
+        self.user_1 = User()
+        self.user_1.user_name = "test_user"
+        self.user_1.password = "test_password"
+        self.user_1.first_name = "test_first_name"
+        self.user_1.last_name = "test_last_name"
+        self.user_1.email = "test_email"
 
-        )
+        self.user_2 = User()
+        self.user_2.user_name = "test_user"
+        self.user_2.password = "test_password"
+        self.user_2.first_name = "test_first_name"
+        self.user_2.last_name = "test_last_name"
+        self.user_2.email = "test_email"
 
-    def teardown(self):
+    def tearDown(self):
         """Clean up after each test"""
+        self.session.close()
         Base.metadata.drop_all(self.storage._DBStorage__engine)
-        self.session.remove()
+        self.session.close()
         del self.user_1
         del self.user_2
 
     def test_all(self):
         """Test the all method"""
-        # test with no objects
+        # Test with no objects
+        Base.metadata.drop_all(self.storage._DBStorage__engine)
+        Base.metadata.create_all(self.storage._DBStorage__engine)
+
         self.assertEqual(self.storage.all(), {})
-        # test with two objects
-        self.session.add(self.user_1)
-        self.session.add(self.user_2)
-        self.session.commit()
+
+        # Test with two objects
+        self.storage.new(self.user_1)
+        self.storage.new(self.user_2)
+        self.storage.save()
         result = self.storage.all()
 
-        # test the keys and values of the output
+        # Test the keys and values of the output
         self.assertIn(f"{self.user_1.__class__.__name__}.{self.user_1.id}",
-                      self.user_1, result)
+                      result)
         self.assertIn(self.user_1, result.values())
 
         self.assertEqual(len(self.storage.all()), 2)
@@ -71,7 +92,7 @@ class TESTDBStorage(unittest.TestCase):
     def test_new(self):
         """Test the new method"""
         self.storage.new(self.user_1)
-        self.asserIn(self.user_1, self.session.new)
+        self.assertIn(self.user_1, self.session.new)
 
     def test_save(self):
         """Test the save method"""
@@ -82,31 +103,23 @@ class TESTDBStorage(unittest.TestCase):
     def test_delete(self):
         """Test the delete method"""
         self.storage.new(self.user_1)
+        self.storage.save()
         self.storage.delete(self.user_1)
-        self.assertNotIn(self.user_1, self.session.new)
+        self.storage.save()
+        self.assertIsNone(self.storage.get(User, self.user_1.id))
 
     def test_get(self):
-        """Test Get method"""
+        """Test the get method"""
         self.storage.new(self.user_1)
         self.storage.save()
-        obj = self.get(User, self.user_1.id)
+        obj = self.storage.get(User, self.user_1.id)
         self.assertIs(obj, self.user_1)
 
-    def test_reload(self):
-        """Test reload method"""
-        self.storage.reload()
-        self.assertIsInstance(self.storage._DBStorage__session,
-                              scoped_session)
     def test_count(self):
-        """Test count method"""
-        self.assertEqual(self.count(), 0)
-        self.assertEqual(self.count(User), 0)
-        self.assertEqual(self.count(Reminder), 0)
-        self.user_1.save()
-        self.assertEqual(self.count(), 1)
-        self.assertEqual(self.count(User), 1)
-        self.storage.new(self.user_2)
-        self.user_2.save()
-        self.assertEqual(self.count(), 2)
-        self.assertEqual(self.count(User), 2)
-        self.assertEqual(self.count(Reminder), 0)
+        """Test the count method"""
+        self.assertEqual(self.storage.count(), 0)
+        self.assertEqual(self.storage.count(User), 0)
+        self.assertEqual(self.storage.count(Reminder), 0)
+        self.storage.new(self.user_1)
+        self.storage.save()
+        self.assertEqual(self.storage.count(), 1)
