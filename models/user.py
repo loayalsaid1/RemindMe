@@ -6,7 +6,8 @@ from models.reminder import Reminder
 from models.reflection import Reflection
 from models.streak import Streak
 from sqlalchemy.orm import relationship
-from sqlalchemy import Column, String, ForeignKey, Enum, Integer
+from sqlalchemy import Column, String, Enum, Integer
+from werkzeug.security import check_password_hash, generate_password_hash
 
 
 class User(BaseModel, Base):
@@ -71,3 +72,11 @@ class User(BaseModel, Base):
                     user_streaks.append(streak.id)
 
             return user_streaks
+
+        def set_password(self, password):
+            """Hash and set the password before saving it to the database"""
+            self.password = generate_password_hash(password)
+
+        def verify_password(self, password):
+            """Verify hashed password"""
+            return check_password_hash(self.password, password)

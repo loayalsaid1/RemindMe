@@ -5,6 +5,7 @@ from api.v1.views import app_views
 from models import storage
 from models.reminder import Reminder
 from flask import jsonify, abort, request
+from flask_jwt_extended import jwt_required
 
 
 @app_views.route("/reminders", strict_slashes=False, methods=["GET"])
@@ -16,6 +17,7 @@ def get_reminders():
 
 @app_views.route("/reminders/<reminder_id>", strict_slashes=False,
                  methods=["GET"])
+@jwt_required()
 def get_reminder(reminder_id):
     """Retrieves a specific reminder in the RemindMe app"""
     reminder = storage.get(Reminder, reminder_id)
@@ -39,7 +41,9 @@ def create_reminder():
     return jsonify(new_reminder.to_dict()), 201
 
 
-@app_views.route("/reminders/<reminder_id>", strict_slashes=False, methods=["PUT"])
+@app_views.route(
+    "/reminders/<reminder_id>", strict_slashes=False, methods=["PUT"])
+@jwt_required()
 def update_reminder(reminder_id):
     """Updates an existing Reminder"""
     reminder = storage.get(Reminder, reminder_id)
@@ -58,7 +62,9 @@ def update_reminder(reminder_id):
     return jsonify(reminder.to_dict())  # Return updated reminder
 
 
-@app_views.route("/reminders/<reminder_id>", strict_slashes=False, methods=["DELETE"])
+@app_views.route(
+    "/reminders/<reminder_id>", strict_slashes=False, methods=["DELETE"])
+@jwt_required()
 def delete_reminder(reminder_id):
     """Deletes an existing Reminder"""
     reminder = storage.get(Reminder, reminder_id)

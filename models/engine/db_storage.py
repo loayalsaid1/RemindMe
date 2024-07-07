@@ -96,3 +96,7 @@ class DBStorage:
     def close(self):
         """This method closes the DB session"""
         self.__session.close()
+
+    def get_user_by_email(self, email):
+        """Get specific user by their email"""
+        return self.__session.query(User).filter(User.email == email).first()
