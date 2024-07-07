@@ -94,3 +94,18 @@ def update_reflection(reflection_id):
     return jsonify(reflection.to_dict()), 200
 
 
+@app_views.route('/reflections/<reflection_id>', methods=[
+    'DELETE'], strict_slashes=False)
+@jwt_required()
+def delete_reflection(reflection_id):
+    """Deletes a reflection"""
+    current_user_id = get_jwt_identity()
+    reflection = storage.get(Reflection, reflection_id)
+    if not reflection:
+        abort(404, description="Reflection not found")
+    if reflection.user_id != current_user_id:
+        abort(403, description="Permission denied")
+
+    storage.delete(reflection)
+    storage.save()
+    return jsonify({}), 200
