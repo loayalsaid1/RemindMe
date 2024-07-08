@@ -1,10 +1,15 @@
 {% extends "layout.html" %}
 
+
 {% block content %}
+
 	<h2>Login</h1>
-	<form method="POST" action="/login">
+	<form method="POST" action="{{ url_for('login', next=request.args.get('next')) }}">
 		<input type="text" name="user_name" placeholder="Username"><br>
 		<input type="password" name="password" placeholder="Password"><br>
+		<input type="checkbox" name="remember_me", id='remember_me'>
+		<label for="remember_me">Remember me</label>
+		<br>
 		<input type="submit" value="Login">
 	</form>
 {% endblock %}
