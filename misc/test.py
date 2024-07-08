@@ -20,6 +20,7 @@ Base.metadata.create_all(engine)
 Session = sessionmaker(bind=engine)
 session = Session()
 
+
 # Function to add sample data to the database
 def add_sample_data():
     # Create Users
@@ -99,6 +100,7 @@ def add_sample_data():
     session.commit()
 
     print("Sample data added successfully!")
+
 
 # Call the function to add sample data
 if __name__ == "__main__":

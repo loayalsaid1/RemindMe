@@ -9,6 +9,7 @@ from sqlalchemy.orm import relationship
 from sqlalchemy import Column, String, ForeignKey, Enum, Integer
 from flask_login import UserMixin
 
+
 class User(UserMixin, BaseModel, Base):
     """User model that inherits from BaseModel"""
     __tablename__ = 'users'

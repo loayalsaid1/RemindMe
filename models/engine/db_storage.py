@@ -101,12 +101,12 @@ class DBStorage:
                     filter_ = eval(f"{cls.__name__}.{name} == '{value}'")
                 else:
                     filter_ = eval(f"{cls.__name__}.{name} == {value}")
-                    
+
                 objects = self.__session.query(cls).filter(filter_).all()
                 if objects:
                     return objects
                 else:
                     return None
             except Exception:
-                    return None
+                return None
         return None

@@ -4,8 +4,8 @@
 {% block content %}
 
 	<h2>Login</h1>
-	<form method="POST" action="{{ url_for('login', next=request.args.get('next')) }}">
-		<input type="text" name="user_name" placeholder="Username"><br>
+	<form method="POST" action="{{ url_for('auth.login', next=request.args.get('next')) }}">
+		<input type="text" name="username" placeholder="Username"><br>
 		<input type="password" name="password" placeholder="Password"><br>
 		<input type="checkbox" name="remember_me", id='remember_me'>
 		<label for="remember_me">Remember me</label>
