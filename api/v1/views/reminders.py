@@ -5,7 +5,8 @@ from api.v1.views import app_views
 from models import storage
 from models.reminder import Reminder
 from flask import jsonify, abort, request
-from flask_jwt_extended import jwt_required
+from flask_jwt_extended import jwt_required, get_jwt_identity
+from models.user import User
 
 
 @app_views.route("/reminders", strict_slashes=False, methods=["GET"])
@@ -26,7 +27,28 @@ def get_reminder(reminder_id):
     return jsonify(reminder.to_dict())
 
 
+@app_views.route("/users/<user_id>/reminders", strict_slashes=False,)
+@jwt_required()
+def get_reminders_by_user(user_id):
+    """Gets all reminders by a specific user"""
+    current_user_id = get_jwt_identity()  # Get current user
+    if current_user_id != user_id:
+        abort(403, description="Access forbidden")
+
+    user = storage.get(User, user_id)
+    if not user:
+        abort(404, description="User not found")
+
+    reminders = storage.all(Reminder).values()
+    user_reminders = []
+    for reminder in reminders:
+        if reminder.user_id == user_id:
+            user_reminders.append(reminder.to_dict())
+    return jsonify(user_reminders)
+
+
 @app_views.route("/reminders", strict_slashes=False, methods=["POST"])
+@jwt_required()
 def create_reminder():
     """Creates new Reminder"""
     if not request.get_json():

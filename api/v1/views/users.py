@@ -5,6 +5,7 @@ from flask import jsonify, request, abort
 from models import storage
 from models.user import User
 from api.v1.views import app_views
+from flask_jwt_extended import jwt_required, get_jwt_identity
 
 
 @app_views.route('/users', methods=['GET'], strict_slashes=False)
@@ -15,8 +16,12 @@ def get_users():
 
 
 @app_views.route("users/<user_id>", methods=['GET'], strict_slashes=False)
+@jwt_required()
 def get_user(user_id):
     """Retrieves a specific user in the RemindMe app"""
+    current_user_id = get_jwt_identity()  # Get current user
+    if current_user_id != user_id:
+        abort(403, description="Access forbidden")
     user = storage.get(User, user_id)
     if not user:
         abort(404)
