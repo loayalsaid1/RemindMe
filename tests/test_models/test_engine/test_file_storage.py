@@ -11,6 +11,13 @@ import json
 @unittest.skipIf(storage_t == "db", "db storage not enabled")
 class TestFileStorage(unittest.TestCase):
     """Class to test FileStorage"""
+    @classmethod
+    def setUpClass(cls):
+        """Run Before running tests in the class"""
+        try:
+            os.remove("file.json")
+        except Exception as e:
+            pass
 
     def setUp(self):
         """Instances for test methods"""
@@ -99,6 +106,16 @@ class TestFileStorage(unittest.TestCase):
     """Author: Loay Al-Said"""
     def test_delete(self):
         """Test delete method"""
+        pass
+
+    def test_filter_objects(self):
+        """Test fileter_obejcts"""
+        # Test the filter_objects method
+
+        self.base_1.name = "Testeous  III"
+        self.base_1.save()
+        objects = self.obj_1.filter_objects(BaseModel, "name", "Testeous  III")
+        self.assertIn(self.base_1, objects)
 
 
 if __name__ == "__main__":
