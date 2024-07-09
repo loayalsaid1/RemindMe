@@ -22,6 +22,22 @@ def is_safe_url(target):
         ref_url.netloc == test_url.netloc
 
 
+@auth.route('/register', methods=["GET", "POST"],
+            strict_slashes=False)
+def register():
+    """Register new user"""
+    if request.method == "POST":
+        user = User()
+
+        for key, val in request.form.items():
+            setattr(user, key, val)
+        user.save()
+        flash("Successfully registered")
+        return redirect(url_for('auth.login'))
+
+    return render_template('register.html')
+
+
 @auth.route('/login', methods=["GET", "POST"],
             strict_slashes=False)
 def login():
@@ -36,11 +52,17 @@ def login():
                 redirect to profile page
     """
     if request.method == "POST":
-        username = request.form.get("username")
+        username_or_id = request.form.get("username_or_id")
         password = request.form.get("password")
 
         try:
-            user = storage.filter_objects(User, "user_name", username)[0]
+            try:
+                username_or_id = int(username_or_id)
+                user = storage.filter_objects(
+                    User, "user_custom_id", username_or_id)[0]
+            except ValueError:
+                user = storage.filter_objects(
+                    User, "user_name", username_or_id)[0]
         except TypeError:
             user = None
 
@@ -57,7 +79,7 @@ def login():
         if next_page and is_safe_url(next_page):
             response = make_response(redirect(next_page))
         else:
-            response = make_response(str(user))
+            response = make_response(render_template('profile.html'))
 
         response.set_cookie('access_token_cookie', token, httponly=False)
 
