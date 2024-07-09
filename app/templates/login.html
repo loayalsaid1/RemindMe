@@ -12,10 +12,14 @@
 	<main>
 		<h1>Remind Me</h1>
 		<form action="{{ url_for('auth.login', next=request.args.get('next')) }}" method="POST">
-			<input type="text" name="username_or_id" class="input" id="username" placeholder="Your Username/custom ID" pattern="[A-Za-z0-9]+(\s[A-Za-z0-9]+)*" required>
-			<input type="password" name="password" class="input" id="password" placeholder="Password" maxlength="64" required>
-			<p class="side">Forgot your password? </p>
-			<input type="submit" class="submit" value="Log In">
+			<!-- <input type="text" name="username_or_id" class="input" id="username" placeholder="Your Username/custom ID" pattern="[A-Za-z0-9]+(\s[A-Za-z0-9]+)*" required> -->
+			<!-- <input type="password" name="password" class="input" id="password" placeholder="Password" maxlength="64" required> -->
+			{{ form.hidden_tag() }}
+
+			{{ form.username_or_id(class="input", id="username", placeholder="Your Username/Custom ID") }}
+			{{ form.password(class="input", id="password", placeholder="Password") }}
+			<p class="side">Forgot your password?</p>
+			{{ form.submit(class="submit") }}
 		</form>
 		<p class="footnote">Don't have an account? <strong class="join_us"><a href"{{ url_for('auth.register') }}">Join Us</a></strong></p>
 	</main>

@@ -11,9 +11,29 @@ from flask_jwt_extended import create_access_token
 from urllib.parse import urlparse, urljoin
 from models import storage
 from models.user import User
+from flask_wtf import FlaskForm
+from wtforms import StringField, PasswordField, SubmitField, FileField
+from wtforms.validators import InputRequired, Regexp, Length
+
 
 auth = Blueprint("auth", __name__)
+class LoginFrom(FlaskForm):
+    username_or_id = StringField("Username/Custom ID", validators=[
+        InputRequired(),
+        Regexp(r'^[A-Za-z0-9]+(\s[A-Za-z0-9]+)*$',
+        message="Only letters and numbers are allowed."),
+        Length(min=4, max=64)
+    ], )
+    password = PasswordField("Password", validators=[
+        InputRequired(),
+        Length(min=8, max=64)
+    ])
 
+    submit = SubmitField("Log In", render_kw={"class": "submit"})
+
+class RegisterFrom(FlaskForm):
+    image = FileField("Profile Image", validators=[InputRequired()])
+    submit = SubmitField("Register", render_kw={"class": "submit"})
 
 def is_safe_url(target):
     ref_url = urlparse(request.host_url)
@@ -22,20 +42,30 @@ def is_safe_url(target):
         ref_url.netloc == test_url.netloc
 
 
+"""
+Just playing around with forms and file uploads
+
+This branch is so bad interms of me practicing nad playing around
+without paying attention to making atomic commits.. and all these things
+I will just clean up form now on
+"""
 @auth.route('/register', methods=["GET", "POST"],
             strict_slashes=False)
 def register():
     """Register new user"""
-    if request.method == "POST":
-        user = User()
+    form = RegisterFrom()
+    if form.validate_on_submit():
+        # user = User()
 
-        for key, val in request.form.items():
-            setattr(user, key, val)
-        user.save()
+        # for key, val in request.form.items():
+        #     setattr(user, key, val)
+        # user.save()          
+
         flash("Successfully registered")
+        return render_template('register.html', form=form)
         return redirect(url_for('auth.login'))
 
-    return render_template('register.html')
+    return render_template('register.html', form=form)
 
 
 @auth.route('/login', methods=["GET", "POST"],
@@ -51,7 +81,9 @@ def login():
             else:
                 redirect to profile page
     """
-    if request.method == "POST":
+    form = LoginFrom()
+
+    if form.validate_on_submit():
         username_or_id = request.form.get("username_or_id")
         password = request.form.get("password")
 
@@ -85,7 +117,7 @@ def login():
 
         return response
 
-    return render_template('login.html')
+    return render_template('login.html', form=form)
 
 
 @auth.route('/logout', strict_slashes=False)

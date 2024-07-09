@@ -79,8 +79,20 @@ form {
 	background-color: #95bcf2;
 	border-color: black;
 	box-shadow: 2px 2px 0px rgb(0, 0, 0);
+	cursor: pointer;
 }
 
+
+
+.submit:hover {
+	transition: 0.3s;
+	background-color: #5f99eb;
+}
+
+.submit:active {
+	transition: 0.3s;
+	background-color: #597db3;
+}
 .footnote {
 	margin-top: 15px;
 
