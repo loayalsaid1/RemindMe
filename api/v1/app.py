@@ -19,8 +19,8 @@ app.config['JWT_TOKEN_LOCATION'] = ['headers']
 jwt = JWTManager(app)
 
 # Register blueprints
+app.register_blueprint(auth)
 app.register_blueprint(app_views)
-app.register_blueprint(auth, url_prefix="/api/v1/auth")
 
 CORS(app, resources={r"/api/v1/*": {"origins": "*"}})
 
@@ -35,7 +35,3 @@ def teardown_db(exception):
 def not_found(error):
     """This method handles 404 errors"""
     return jsonify({"error": "Uh uh, Not found"}), 404
-
-
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port="5000", debug=True)

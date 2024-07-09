@@ -4,21 +4,23 @@
 from flask import Blueprint, jsonify, request
 from flask_jwt_extended import create_access_token, jwt_required
 from flask_jwt_extended import get_jwt_identity
-from api.v1.utils import get_user_by_email
+from models import storage
 
-auth = Blueprint('auth', __name__)
+auth = Blueprint('auth', __name__, url_prefix='/api/v1')
 
 
-@auth.route('/auth/login', methods=['POST'])  # Login route
+@auth.route('/auth/login', methods=['POST'], strict_slashes=False)
 def login():
     """The login route"""
     email = request.json.get('email')
     password = request.json.get('password')
 
+    #import pdb; pdb.set_trace()
+
     if not email or not password:
         return jsonify({"msg": "Missing email or password"}), 400
 
-    user = get_user_by_email(email)
+    user = storage.get_user_by_email(email)
 
     if not user or not user.verify_password(password):
         return jsonify({"msg": "Bad email or password"}), 401

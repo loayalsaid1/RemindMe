@@ -58,7 +58,10 @@ def create_reminder():
     if 'text' not in data:
         abort(400, description="Missing text")
 
-    new_reminder = Reminder(**data)  # Create new Reminder
+    new_reminder = Reminder()  # Create new Reminder
+    for key, value in data.items():
+        if key not in ['id', 'user_id', 'created_at', 'updated_at']:
+            setattr(new_reminder, key, value)
     new_reminder.save()
     return jsonify(new_reminder.to_dict()), 201
 

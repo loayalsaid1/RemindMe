@@ -17,7 +17,7 @@ class User(BaseModel, Base):
         user_name = Column(String(32), nullable=False)
         user_custom_id = Column(Integer)
         email = Column(String(255), nullable=False)
-        password = Column(String(64), nullable=False)
+        password = Column(String(1024), nullable=False)
         first_name = Column(String(32), nullable=False)
         last_name = Column(String(32), nullable=False)
         profession = Column(String(32))
@@ -43,40 +43,44 @@ class User(BaseModel, Base):
         description = ""
         img_url = None
 
-        @property
-        def reminders(self):
-            user_reminders = []
-            all_reminders = models.storage.all(Reminder).values()
-            for reminder in all_reminders:
-                if reminder.user_id == self.id:
-                    user_reminders.append(reminder.id)
+    def __init__(self, *args, **kwargs):
+        """Initialize the user"""
+        super().__init__(*args, **kwargs)
 
-            return user_reminders
+    @property
+    def reminders(self):
+        user_reminders = []
+        all_reminders = models.storage.all(Reminder).values()
+        for reminder in all_reminders:
+            if reminder.user_id == self.id:
+                user_reminders.append(reminder.id)
 
-        @property
-        def reflections(self):
-            reflections = []
-            all_reflectiolns = models.storage.all(Reflection).values()
-            for reflection in all_reflectiolns:
-                if reflection.user_id == self.id:
-                    reflections.append(reflection.id)
+        return user_reminders
 
-            return reflections
+    @property
+    def reflections(self):
+        reflections = []
+        all_reflectiolns = models.storage.all(Reflection).values()
+        for reflection in all_reflectiolns:
+            if reflection.user_id == self.id:
+                reflections.append(reflection.id)
 
-        @property
-        def streaks(self):
-            user_streaks = []
-            all_streaks = models.storage.all(Streak).values()
-            for streak in all_streaks:
-                if streak.user_id == self.id:
-                    user_streaks.append(streak.id)
+        return reflections
 
-            return user_streaks
+    @property
+    def streaks(self):
+        user_streaks = []
+        all_streaks = models.storage.all(Streak).values()
+        for streak in all_streaks:
+            if streak.user_id == self.id:
+                user_streaks.append(streak.id)
 
-        def set_password(self, password):
-            """Hash and set the password before saving it to the database"""
-            self.password = generate_password_hash(password)
+        return user_streaks
 
-        def verify_password(self, password):
-            """Verify hashed password"""
-            return check_password_hash(self.password, password)
+    def set_password(self, password):
+        """Hash and set the password before saving it to the database"""
+        self.password = generate_password_hash(password)
+
+    def verify_password(self, password):
+        """Verify hashed password"""
+        return check_password_hash(self.password, password)

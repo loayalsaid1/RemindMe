@@ -38,7 +38,11 @@ def create_user():
     if 'email' not in data or 'password' not in data:
         abort(400, description="Missing email or password")
 
-    new_user = User(**data)  # Create new User
+    new_user = User()  # Create new User
+    for key, value in data.items():
+        if key not in ['id', 'created_at', 'updated_at']:
+            setattr(new_user, key, value)
+    new_user.set_password(data['password'])  # Hash and set password
     new_user.save()
     return jsonify(new_user.to_dict()), 201
 
