@@ -8,38 +8,11 @@ from flask import Blueprint, render_template, redirect, url_for, request,\
     flash, make_response
 from flask_login import login_user, logout_user, current_user
 from flask_jwt_extended import create_access_token
-from urllib.parse import urlparse, urljoin
 from models import storage
 from models.user import User
-from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, FileField
-from wtforms.validators import InputRequired, Regexp, Length
-
+from app.blueprints.utils import RegisterFrom, LoginFrom, is_safe_url
 
 auth = Blueprint("auth", __name__)
-class LoginFrom(FlaskForm):
-    username_or_id = StringField("Username/Custom ID", validators=[
-        InputRequired(),
-        Regexp(r'^[A-Za-z0-9]+(\s[A-Za-z0-9]+)*$',
-        message="Only letters and numbers are allowed."),
-        Length(min=4, max=64)
-    ], )
-    password = PasswordField("Password", validators=[
-        InputRequired(),
-        Length(min=8, max=64)
-    ])
-
-    submit = SubmitField("Log In", render_kw={"class": "submit"})
-
-class RegisterFrom(FlaskForm):
-    image = FileField("Profile Image", validators=[InputRequired()])
-    submit = SubmitField("Register", render_kw={"class": "submit"})
-
-def is_safe_url(target):
-    ref_url = urlparse(request.host_url)
-    test_url = urlparse(urljoin(request.host_url, target))
-    return test_url.scheme in ('http', 'https') and\
-        ref_url.netloc == test_url.netloc
 
 
 """
@@ -49,6 +22,8 @@ This branch is so bad interms of me practicing nad playing around
 without paying attention to making atomic commits.. and all these things
 I will just clean up form now on
 """
+
+
 @auth.route('/register', methods=["GET", "POST"],
             strict_slashes=False)
 def register():
@@ -59,7 +34,7 @@ def register():
 
         # for key, val in request.form.items():
         #     setattr(user, key, val)
-        # user.save()          
+        # user.save()
 
         flash("Successfully registered")
         return render_template('register.html', form=form)
