@@ -51,16 +51,21 @@ def get_reminders_by_user(user_id):
 @jwt_required()
 def create_reminder():
     """Creates new Reminder"""
+
+    # Get user_id from JWT token
+    user_id = get_jwt_identity()
+
+    print(user_id)
+
     if not request.get_json():
         abort(400, description="Not a JSON")
 
     data = request.get_json()  # Get data from request
-    if 'text' not in data:
-        abort(400, description="Missing text")
+    data['user_id'] = user_id
 
     new_reminder = Reminder()  # Create new Reminder
     for key, value in data.items():
-        if key not in ['id', 'user_id', 'created_at', 'updated_at']:
+        if key not in ['id', 'created_at', 'updated_at']:
             setattr(new_reminder, key, value)
     new_reminder.save()
     return jsonify(new_reminder.to_dict()), 201
@@ -78,7 +83,7 @@ def update_reminder(reminder_id):
         abort(400, description="Not a JSON")
 
     data = request.get_json()  # Get data from request
-    ignore_keys = ["id", "user_id", "created_at", "updated_at"]
+    ignore_keys = ["id", "created_at", "updated_at"]
 
     for key, value in data.items():
         if key not in ignore_keys:
