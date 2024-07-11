@@ -116,7 +116,7 @@ def login():
         if next_page and is_safe_url(next_page):
             response = make_response(redirect(next_page))
         else:
-            response = make_response(render_template('profile.html'))
+            response = make_response(render_template('profile.html', user=user))
 
         response.set_cookie('access_token_cookie', token, httponly=False)
 

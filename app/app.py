@@ -38,7 +38,9 @@ def not_found(error):
 @app.route('/')
 def home():
     """Home page"""
-    return render_template('index.html', username=current_user.user_name)
+    if current_user.is_authenticated:
+        return render_template('index.html', username=current_user.user_name)
+    return render_template('index.html')
 
 if __name__ == "__main__":
     app.run(debug=True)
