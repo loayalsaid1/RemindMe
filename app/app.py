@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """Core of the application"""
-from flask import Flask, flask_login
+from flask import Flask, render_template
 from flask_jwt_extended import JWTManager
 from flask_login import LoginManager, current_user
 from markupsafe import escape

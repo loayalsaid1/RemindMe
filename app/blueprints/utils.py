@@ -45,7 +45,7 @@ class RegisterFrom(FlaskForm):
     ])
     password = StringField("Password", validators=[
         InputRequired(),
-        Length(min=4, max=64)
+        Length(min=8, max=64)
     ])
     submit = SubmitField("Register")
 
@@ -58,4 +58,3 @@ def is_safe_url(target):
     test_url = urlparse(urljoin(request.host_url, target))
     return test_url.scheme in ('http', 'https') and\
         ref_url.netloc == test_url.netloc
-
