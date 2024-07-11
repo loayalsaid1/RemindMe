@@ -1,81 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Registration</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        .container {
-            background-color: #fff;
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-            max-width: 500px;
-            width: 100%;
-        }
-        h2 {
-            text-align: center;
-            color: #333;
-        }
-        form {
-            display: flex;
-            flex-direction: column;
-        }
-        label {
-            margin-top: 10px;
-            font-weight: bold;
-            color: #333;
-        }
-        input, textarea, select, button {
-            margin-top: 5px;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 16px;
-            width: 100%;
-            box-sizing: border-box;
-        }
-        button {
-            background-color: #28a745;
-            color: white;
-            cursor: pointer;
-            margin-top: 20px;
-        }
-        button:hover {
-            background-color: #218838;
-        }
-        .gender-option {
-            display: flex;
-            justify-content: space-between;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h2>User Registration</h2>
+{% extends "layout.html" %}
+{% block title %}
+<title>User Registration</title>
+{% endblock %}
+{% block styles %}
+<link rel="stylesheet" href="../static/authentication_form.css">
+<link rel="stylesheet" href="../static/register.css">
+{% endblock %}
+
+{% block content %}
+    <main>
+        <h1>RemindMe</h1>
+        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sit possimus sequi deserunt.</p>
         <form action="{{ url_for('auth.register') }}" method="POST" enctype="multipart/form-data">
-
             {{ form.hidden_tag() }}
-            <!-- <label for="img_url">Image Upload:</label>
-            <input type="file" id="img_url" name="img" accept="image/*">
-            
-            <button type="submit">Register</button> -->
-            {{ form.image.label}}
-            {{ form.image(accept="image/*") }}
-
-            {{ form.submit() }}
-
+            <div class="names">
+                {{ form.first_name(class="input", placeholder="First name") }}
+                {{ form.last_name(class="input", placeholder="Your Last name") }}
+            </div>
+            {{ form.email(class="input", placeholder="Type your Email") }}
+            {{ form.password(class="input", placeholder="And...  a password") }}
+            <div class="side">
+                <input type="checkbox" id = "terms_check" name="terms_check" required>
+                <label for="terms_check" class="terms">
+                    Just keep it safe and productive.
+                </label>
+            </div>
+            {{ form.submit(class="submit") }}
         </form>
-    </div>
-</body>
-</html>
+        <p class="footnote">Got an account? <strong class="join_us"><a href="{{ url_for('auth.login') }}">Log In</a></strong></p>
+    </main>
+{% endblock %}

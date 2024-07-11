@@ -22,23 +22,53 @@ This branch is so bad interms of me practicing nad playing around
 without paying attention to making atomic commits.. and all these things
 I will just clean up form now on
 """
+import os
 
+# Replace with your actual values
+IMAGEKIT_PRIVATE_KEY = "private_edl1a45K3hzSaAhroLRPpspVRqM="
+IMAGEKIT_PUBLIC_KEY = "public_tTc9vCi5O7L8WVAQquK6vQWNx08="
+IMAGEKIT_URL_ENDPOINT = "https://ik.imagekit.io/loayalsaid1/"
 
+from imagekitio  import ImageKit
+
+ik = ImageKit(
+    private_key=IMAGEKIT_PRIVATE_KEY,
+    public_key=IMAGEKIT_PUBLIC_KEY,
+    url_endpoint=IMAGEKIT_URL_ENDPOINT
+)
 @auth.route('/register', methods=["GET", "POST"],
             strict_slashes=False)
 def register():
     """Register new user"""
     form = RegisterFrom()
     if form.validate_on_submit():
-        # user = User()
+        email = request.form.get("email")
 
-        # for key, val in request.form.items():
-        #     setattr(user, key, val)
-        # user.save()
+        if storage.filter_objects(User, "email", email):
+            flash("Email already exists", category="danger")
+            return render_template('register.html', form=form)
 
-        flash("Successfully registered")
-        return render_template('register.html', form=form)
-        return redirect(url_for('auth.login'))
+        user = User()
+
+        first_name = request.form.get("first_name")
+        last_name = request.form.get("last_name")
+        user.first_name = first_name
+        user.last_name = last_name
+        user.email = email
+        user.password = request.form.get("password")
+
+        user.user_name = ''.join(e for e in f"{first_name}{last_name}" if e.isalnum()).lower()
+        user.save()
+
+        flash("Successfully registered", category="success")
+        login_user(user, remember=True)
+
+        token = create_access_token(identity={'user_id': user.id})
+
+        response = make_response(render_template('profile.html', user=user))
+        response.set_cookie('access_token_cookie', token, httponly=False)
+
+        return response
 
     return render_template('register.html', form=form)
 

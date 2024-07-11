@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 """Core of the application"""
-from flask import Flask
+from flask import Flask, flask_login
 from flask_jwt_extended import JWTManager
-from flask_login import LoginManager
+from flask_login import LoginManager, current_user
 from markupsafe import escape
 from app.blueprints.auth import auth
 from models import storage
@@ -34,6 +34,11 @@ def not_found(error):
     # Or.. Lost? ... probaby you need a reminder.
     return "<h1>Lost?!\n Consider having some remidner!</h1>", 404
 
+
+@app.route('/')
+def home():
+    """Home page"""
+    return render_template('index.html', username=current_user.user_name)
 
 if __name__ == "__main__":
     app.run(debug=True)

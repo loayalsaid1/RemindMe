@@ -7,7 +7,8 @@ from flask import request
 from urllib.parse import urlparse, urljoin
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, FileField
-from wtforms.validators import InputRequired, Regexp, Length
+from wtforms.validators import InputRequired, Regexp, Length, Email
+from flask_wtf.file import FileField, FileAllowed
 
 
 class LoginFrom(FlaskForm):
@@ -16,8 +17,7 @@ class LoginFrom(FlaskForm):
           InputRequired(),
           Regexp(
               r'^[A-Za-z0-9]+(\s[A-Za-z0-9]+)*$',
-              message="Only letters and numbers are allowed."
-              ),
+              message="Only letters and numbers are allowed."),
           Length(min=4, max=64)
         ])
     password = PasswordField("Password", validators=[
@@ -30,8 +30,24 @@ class LoginFrom(FlaskForm):
 
 class RegisterFrom(FlaskForm):
     """Class forming the register form using flask-wtf"""
-    image = FileField("Profile Image", validators=[InputRequired()])
-    submit = SubmitField("Register", render_kw={"class": "submit"})
+    first_name = StringField("First Name", validators=[
+        InputRequired(),
+        Length(max=32) 
+    ])
+    last_name = StringField("Last Name", validators=[
+        InputRequired(),
+        Length(max=32) 
+    ])
+    email = StringField("Email", validators=[
+        InputRequired(),
+        Length(max=255),
+        Email()
+    ])
+    password = StringField("Password", validators=[
+        InputRequired(),
+        Length(min=4, max=64)
+    ])
+    submit = SubmitField("Register")
 
 
 def is_safe_url(target):
@@ -42,3 +58,4 @@ def is_safe_url(target):
     test_url = urlparse(urljoin(request.host_url, target))
     return test_url.scheme in ('http', 'https') and\
         ref_url.netloc == test_url.netloc
+

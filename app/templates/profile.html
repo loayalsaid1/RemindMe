@@ -2,7 +2,10 @@
 
 
 {% block content %}
-	<h2>welcome {{ name }} to your profile page</h1>
+	<h2>welcome {{ user.first_name }} to your profile page</h1>
 	<h3><a href="/logout">logout</a> | <a href="/">Home</a></h3>	
 
+	{% for k, v in user.to_dict().items() %}
+	<h3>{{k}} : {{v}} </h3>
+	{% endfor %}
 {% endblock %}
