@@ -42,5 +42,8 @@ def home():
         return render_template('index.html', username=current_user.user_name)
     return render_template('index.html')
 
+@app.route('/profile')
+def profile():
+    return render_template('profile.html', user=current_user)
 if __name__ == "__main__":
     app.run(debug=True)

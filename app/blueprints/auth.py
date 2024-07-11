@@ -6,14 +6,15 @@
 """
 from flask import Blueprint, render_template, redirect, url_for, request,\
     flash, make_response
-from flask_login import login_user, logout_user, current_user
+from flask_login import login_user, logout_user, current_user, login_required
 from flask_jwt_extended import create_access_token
 from models import storage
 from models.user import User
-from app.blueprints.utils import RegisterFrom, LoginFrom, is_safe_url
+from app.blueprints.utils import RegisterFrom, LoginFrom, is_safe_url, make_initial_username, FinalizeProfile
+import os
+
 
 auth = Blueprint("auth", __name__)
-
 
 """
 Just playing around with forms and file uploads
@@ -22,7 +23,6 @@ This branch is so bad interms of me practicing nad playing around
 without paying attention to making atomic commits.. and all these things
 I will just clean up form now on
 """
-import os
 
 # Replace with your actual values
 IMAGEKIT_PRIVATE_KEY = "private_edl1a45K3hzSaAhroLRPpspVRqM="
@@ -57,20 +57,74 @@ def register():
         user.email = email
         user.password = request.form.get("password")
 
-        user.user_name = ''.join(e for e in f"{first_name}{last_name}" if e.isalnum()).lower()
+        user.user_name = make_initial_username(first_name, last_name)
         user.save()
 
         flash("Successfully registered", category="success")
+
         login_user(user, remember=True)
 
         token = create_access_token(identity={'user_id': user.id})
 
-        response = make_response(render_template('profile.html', user=user))
+        response = make_response(redirect(url_for('auth.finalize_profile')))
         response.set_cookie('access_token_cookie', token, httponly=False)
 
         return response
 
     return render_template('register.html', form=form)
+
+
+@auth.route('/finalize_profile', methods=["GET", "POST"], strict_slashes=False)
+@login_required
+def finalize_profile():
+    form = FinalizeProfile()
+    if request.method == "POST":
+        print(2332)
+        print(form.username.data)
+    if form.validate_on_submit():
+        image_file = form.image.data
+        username = form.username.data
+        gender = form.gender.data
+        description = form.description.data
+        print(0)
+
+        if username != current_user.user_name:
+            print(1)
+            print(current_user.user_name)
+            if storage.filter_objects(User, "user_name", username):
+                print(2)
+                print(username)
+                print(storage.filter_objects(User, "user_name", username))
+                flash("Username already exists", category="danger")
+                return render_template('finalize_profile.html', form=form)
+        if image_file:
+            print(3)
+            extention = image_file.filename.split('.')[-1]
+            temp_file_path = f'temp_image.{extention}'
+            with open(temp_file_path, 'wb') as f:
+                image_file.save(f)
+            # with open(temp_file_path, 'rb') as f:
+            #     result = ik.upload_file(file=f, 
+            #                             file_name=f'{current_user.user_name}{ext}')
+            # os.remove(temp_file_path)
+            # if result.status == "success":
+            #     image_url = result.url
+            # else:
+            #     flash("Failed to upload image", category="danger")
+            #     return render_template('finalize_profile.html', form=form)
+        
+        print(5)
+        current_user.user_name = username
+        current_user.gender = gender
+        current_user.description = description
+        # current_user.img_url = image_url
+        storage.save()
+
+        return redirect(url_for('profile'))
+
+
+    print(6)
+    return render_template('finalize_profile.html', form=form, user=current_user)
 
 
 @auth.route('/login', methods=["GET", "POST"],

@@ -21,7 +21,7 @@
 			<p class="side">Forgot your password?</p>
 			{{ form.submit(class="submit") }}
 		</form>
-		<p class="footnote">Don't have an account? <strong class="join_us"><a href"{{ url_for('auth.register') }}">Join Us</a></strong></p>
+		<p class="footnote">Don't have an account? <strong class="join_us"><a href="{{ url_for('auth.register') }}">Join Us</a></strong></p>
 	</main>
 {% endblock %}
 </body>
