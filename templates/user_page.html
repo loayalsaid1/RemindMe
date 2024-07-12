@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Page</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles/user_page.css') }}"
+    />
+  </head>
+  <body>
+    <div class="header">
+      <h1>User Dashboard</h1>
+    </div>
+    <div class="container">
+      <div class="main-content">
+        <div class="reminders">
+          <h2>Your Reminders</h2>
+          <!-- Reminder items will be populated here -->
+          <div id="reminder-list">
+            <!-- Example reminder -->
+            <div class="reminder-item">
+              <p><strong>Text:</strong> You got this! Stay undeterred!!</p>
+              <p><strong>Public:</strong> False</p>
+              <p><strong>Image URL:</strong> http://example.com/reminder.jpg</p>
+              <p><strong>Type:</strong> Personal</p>
+              <p><strong>Created At:</strong> 2024-07-11T14:47:08</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="sidebar">
+        <div class="user-info">
+          <h2>User Info</h2>
+          <!-- User info will be populated here -->
+          <p><strong>Name:</strong> John Doe</p>
+          <p><strong>Email:</strong> john.doe@example.com</p>
+          <p><strong>Profession:</strong> Developer</p>
+        </div>
+        <div class="streaks">
+          <h2>Streaks</h2>
+          <!-- Streaks info will be populated here -->
+          <p><strong>Current Streak:</strong> 5 days</p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -33,7 +33,6 @@ class DBStorage:
             f"mysql+mysqldb://{user}:{password}@{host}/{db}",
             pool_pre_ping=True
         )
-        # Base.metadata.drop_all(self.__engine)
 
         """if the environment is testing drop all tables"""
         if getenv('REMIND_ME_ENV') == 'TEST':
@@ -111,3 +110,11 @@ class DBStorage:
             except Exception:
                 return None
         return None
+
+    def close(self):
+        """This method closes the DB session"""
+        self.__session.close()
+
+    def get_user_by_email(self, email):
+        """Get specific user by their email"""
+        return self.__session.query(User).filter(User.email == email).first()
