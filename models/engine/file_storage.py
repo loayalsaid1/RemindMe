@@ -66,3 +66,15 @@ class FileStorage:
             key = f"{obj.__class__.__name__}.{getattr(obj, 'id')}"
             if key in self.__objects:
                 del self.__objects[key]
+
+    def filter_objects(self, cls, name, value):
+        """Search for objects with certain class and attibute"""
+        def f(x):
+            """Check whether an object has a certain attribute and value"""
+            return hasattr(x, name) and getattr(x, name) == value
+        objects = list(filter(f, self.all(cls).values()))
+
+        if objects:
+            return objects
+        else:
+            return None

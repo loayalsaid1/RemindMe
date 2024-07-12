@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+
+{% block content %}
+{% if username %}
+	<h2>Loged in as user: {{ username}}</h2>
+	<h2><a href="/logout">logout</a> | <a href="/profile">Profile</a></h2>	
+
+{% else %}
+	<h2><a href="/login">Login</a></h2>	
+	<h2><a href="/register">Register</a></h2>	
+{% endif %}
+{% endblock %}

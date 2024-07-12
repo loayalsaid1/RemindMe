@@ -33,6 +33,7 @@ class DBStorage:
             f"mysql+mysqldb://{user}:{password}@{host}/{db}",
             pool_pre_ping=True
         )
+        # Base.metadata.drop_all(self.__engine)
 
         """if the environment is testing drop all tables"""
         if getenv('REMIND_ME_ENV') == 'TEST':
@@ -92,3 +93,21 @@ class DBStorage:
         session = sessionmaker(bind=self.__engine, expire_on_commit=False)
         Session = scoped_session(session)
         self.__session = Session()
+
+    def filter_objects(self, cls, name, value):
+        """Search for a property in a class"""
+        if cls in classes.values():
+            try:
+                if type(value) is str:
+                    filter_ = eval(f"{cls.__name__}.{name} == '{value}'")
+                else:
+                    filter_ = eval(f"{cls.__name__}.{name} == {value}")
+
+                objects = self.__session.query(cls).filter(filter_).all()
+                if objects:
+                    return objects
+                else:
+                    return None
+            except Exception:
+                return None
+        return None
