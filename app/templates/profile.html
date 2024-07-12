@@ -8,4 +8,12 @@
 	{% for k, v in user.to_dict().items() %}
 	<h3>{{k}} : {{v}} </h3>
 	{% endfor %}
+
+	<h3>Your reminders</h3>
+	{% for reminder in user.reminders %}
+		<h4>{{ reminder.caption }}</h4>
+		<p>{{ reminder.text}}</p>
+		<hr>
+	{% endfor %}
 {% endblock %}
+

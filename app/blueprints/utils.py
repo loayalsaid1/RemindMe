@@ -6,7 +6,8 @@
 from flask import request
 from urllib.parse import urlparse, urljoin
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, FileField, RadioField, TextAreaField
+from wtforms import StringField, PasswordField, SubmitField, FileField,\
+    RadioField, TextAreaField
 from wtforms.validators import InputRequired, Regexp, Length, Email
 from flask_wtf.file import FileField, FileAllowed
 from models import storage
@@ -34,11 +35,11 @@ class RegisterFrom(FlaskForm):
     """Class forming the register form using flask-wtf"""
     first_name = StringField("First Name", validators=[
         InputRequired(),
-        Length(max=32) 
+        Length(max=32)
     ])
     last_name = StringField("Last Name", validators=[
         InputRequired(),
-        Length(max=32) 
+        Length(max=32)
     ])
     email = StringField("Email", validators=[
         InputRequired(),
@@ -51,6 +52,7 @@ class RegisterFrom(FlaskForm):
     ])
     submit = SubmitField("Register")
 
+
 class FinalizeProfile(FlaskForm):
     """form to get the rest of user data"""
     username = StringField("Username", validators=[
@@ -61,8 +63,11 @@ class FinalizeProfile(FlaskForm):
             message="Only letters and numbers are allowed."),
 
     ])
-    gender = RadioField('Gender', choices=[('male', 'Male'), ('female', 'Female')], validators=[InputRequired()])
-    image = FileField('Profile Image', validators=[FileAllowed(['jpg', 'png', 'gif'])])
+    gender = RadioField(
+        'Gender', choices=[('male', 'Male'), ('female', 'Female')],
+         validators=[InputRequired()])
+    image = FileField(
+        'Profile Image', validators=[FileAllowed(['jpg', 'png', 'gif'])])
     description = TextAreaField('Description', validators=[
         InputRequired(),
         Length(max=512)
@@ -79,8 +84,10 @@ def is_safe_url(target):
 
 def make_initial_username(first_name, last_name):
     """Make initial usrname based on first and last name"""
-    initial_username = ''.join(e for e in f"{first_name}{last_name}" if e.isalnum()).lower()
-    existing_users = storage.filter_objects(User, "user_name", initial_username)
+    initial_username = ''.join(
+        e for e in f"{first_name}{last_name}" if e.isalnum()).lower()
+    existing_users = storage.filter_objects(
+        User, "user_name", initial_username)
     if existing_users:
         i = 1
         while True:

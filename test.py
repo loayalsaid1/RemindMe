@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
@@ -16,6 +18,7 @@ DB_URL = f'mysql+mysqldb://{DB_USER}:{DB_PWD}@{DB_HOST}/{DB_NAME}'
 
 # Create the engine and session
 engine = create_engine(DB_URL)
+
 Base.metadata.create_all(engine)
 Session = sessionmaker(bind=engine)
 session = Session()
@@ -99,9 +102,21 @@ def add_sample_data():
 
     session.commit()
 
-    print("Sample data added successfully!")
 
+    print("Sample data added successfully!")
+    # Drop all rows from the table
+    # Note: This is a risky command, use with caution
 
 # Call the function to add sample data
 if __name__ == "__main__":
+    print("Executing this command will drop all rows from the tables, are you sure you want to proceed? (y/n)")
+    response = input()
+    if response.lower() == 'y':
+        for table in Base.metadata.tables.values():
+            session.query(table).delete()
+            session.commit()
+            print(f"Successfully deleted all rows from {table.name}")
+        print("All rows have been cleared from all tables.")
+    else:
+        print("No changes have been made.")
     add_sample_data()

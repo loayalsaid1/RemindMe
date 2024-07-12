@@ -147,11 +147,14 @@ label[for='description'] {
 	background-color: #fff;
 	padding-left: 20px;
 }
-.left .button {
-}
+
 img {
 	border-radius: 5px;
 	margin-bottom: 10px;
+	object-fit: cover;
+	width: 140px;
+    height: 150px;
+
 }
 
 .button:hover {

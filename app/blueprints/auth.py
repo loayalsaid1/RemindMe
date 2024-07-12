@@ -10,8 +10,10 @@ from flask_login import login_user, logout_user, current_user, login_required
 from flask_jwt_extended import create_access_token
 from models import storage
 from models.user import User
-from app.blueprints.utils import RegisterFrom, LoginFrom, is_safe_url, make_initial_username, FinalizeProfile
+from app.blueprints.utils import RegisterFrom, LoginFrom,\
+    is_safe_url, make_initial_username, FinalizeProfile
 import os
+from imagekitio import ImageKit
 
 
 auth = Blueprint("auth", __name__)
@@ -29,13 +31,14 @@ IMAGEKIT_PRIVATE_KEY = "private_edl1a45K3hzSaAhroLRPpspVRqM="
 IMAGEKIT_PUBLIC_KEY = "public_tTc9vCi5O7L8WVAQquK6vQWNx08="
 IMAGEKIT_URL_ENDPOINT = "https://ik.imagekit.io/loayalsaid1/"
 
-from imagekitio  import ImageKit
 
 ik = ImageKit(
     private_key=IMAGEKIT_PRIVATE_KEY,
     public_key=IMAGEKIT_PUBLIC_KEY,
     url_endpoint=IMAGEKIT_URL_ENDPOINT
 )
+
+
 @auth.route('/register', methods=["GET", "POST"],
             strict_slashes=False)
 def register():
@@ -100,8 +103,8 @@ def finalize_profile():
             with open(temp_file_path, 'wb') as f:
                 image_file.save(f)
             with open(temp_file_path, 'rb') as f:
-                result = ik.upload_file(file=f, 
-                                        file_name=f'{current_user.user_name}.{extention}')
+                result = ik.upload_file(
+                    file=f, file_name=f'{current_user.user_name}.{extention}')
             os.remove(temp_file_path)
 
             if result.response_metadata.http_status_code == 200:
@@ -109,7 +112,7 @@ def finalize_profile():
             else:
                 flash("Failed to upload image", category="danger")
                 return render_template('finalize_profile.html', form=form)
-        
+
         current_user.user_name = username
         current_user.gender = gender
         current_user.description = description
@@ -118,9 +121,8 @@ def finalize_profile():
 
         return redirect(url_for('profile'))
 
-
-    print(6)
-    return render_template('finalize_profile.html', form=form, user=current_user)
+    return render_template(
+        'finalize_profile.html', form=form, user=current_user)
 
 
 @auth.route('/login', methods=["GET", "POST"],
@@ -166,7 +168,8 @@ def login():
         if next_page and is_safe_url(next_page):
             response = make_response(redirect(next_page))
         else:
-            response = make_response(render_template('profile.html', user=user))
+            response = make_response(render_template(
+                'profile.html', user=user))
 
         response.set_cookie('access_token_cookie', token, httponly=False)
 

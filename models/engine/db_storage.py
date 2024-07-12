@@ -33,6 +33,7 @@ class DBStorage:
             f"mysql+mysqldb://{user}:{password}@{host}/{db}",
             pool_pre_ping=True
         )
+        # Base.metadata.drop_all(self.__engine)
 
         """if the environment is testing drop all tables"""
         if getenv('REMIND_ME_ENV') == 'TEST':
