@@ -9,7 +9,7 @@ from flask_jwt_extended import JWTManager
 from api.v1.views.auth import auth
 from datetime import timedelta
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder='templates')
 
 # JWT configuration
 app.config['JWT_SECRET_KEY'] = 'CIBwsUdxn67Uezxe8JAa_OLHuiPn0wQIHFZvv3pjEZo'

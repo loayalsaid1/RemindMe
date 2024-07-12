@@ -11,3 +11,4 @@ from api.v1.views.reflections import *
 from api.v1.views.reminders import *
 from api.v1.views.streaks import *
 from api.v1.views.auth import *
+from api.v1.views.user_page import *
