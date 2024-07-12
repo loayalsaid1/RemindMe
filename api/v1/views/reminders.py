@@ -13,21 +13,24 @@ from models.user import User
 def get_reminders():
     """Retrieves the list of all public reminders in the RemindMe app"""
     reminders = storage.all(Reminder).values()
-    return jsonify([reminder.to_dict() for reminder in reminders])
+    public_reminders = [reminder.to_dict()
+                        for reminder in reminders if reminder.public]
+    return jsonify(public_reminders)
 
 
 @app_views.route("/reminders/<reminder_id>", strict_slashes=False,
                  methods=["GET"])
-@jwt_required()
 def get_reminder(reminder_id):
     """Retrieves a specific reminder in the RemindMe app"""
     reminder = storage.get(Reminder, reminder_id)
     if not reminder:
         abort(404)
+    if not reminder.public:
+        abort(403, description="Access forbidden")
     return jsonify(reminder.to_dict())
 
 
-@app_views.route("/users/<user_id>/reminders", strict_slashes=False,)
+@app_views.route("/users/<user_id>/reminders", strict_slashes=False, methods=["GET"])
 @jwt_required()
 def get_reminders_by_user(user_id):
     """Gets all reminders by a specific user"""
@@ -40,10 +43,8 @@ def get_reminders_by_user(user_id):
         abort(404, description="User not found")
 
     reminders = storage.all(Reminder).values()
-    user_reminders = []
-    for reminder in reminders:
-        if reminder.user_id == user_id:
-            user_reminders.append(reminder.to_dict())
+    user_reminders = [reminder.to_dict()
+                      for reminder in reminders if reminder.user_id == user_id]
     return jsonify(user_reminders)
 
 
@@ -54,8 +55,6 @@ def create_reminder():
 
     # Get user_id from JWT token
     user_id = get_jwt_identity()
-
-    print(user_id)
 
     if not request.get_json():
         abort(400, description="Not a JSON")
@@ -76,14 +75,17 @@ def create_reminder():
 @jwt_required()
 def update_reminder(reminder_id):
     """Updates an existing Reminder"""
+    user_id = get_jwt_identity()  # Get current user id
     reminder = storage.get(Reminder, reminder_id)
     if not reminder:
         abort(404)
+    if reminder.user_id != user_id:
+        abort(403, description="Access forbidden")
     if not request.get_json():
         abort(400, description="Not a JSON")
 
     data = request.get_json()  # Get data from request
-    ignore_keys = ["id", "created_at", "updated_at"]
+    ignore_keys = ["id", "created_at", "updated_at", "user_id"]
 
     for key, value in data.items():
         if key not in ignore_keys:
@@ -97,9 +99,12 @@ def update_reminder(reminder_id):
 @jwt_required()
 def delete_reminder(reminder_id):
     """Deletes an existing Reminder"""
+    user_id = get_jwt_identity()  # Get current user id
     reminder = storage.get(Reminder, reminder_id)
     if not reminder:
         abort(404)
+    if reminder.user_id != user_id:
+        abort(403, description="Access forbidden")
     storage.delete(reminder)
     storage.save()
     return jsonify({}), 200
