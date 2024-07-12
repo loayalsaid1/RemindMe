@@ -48,8 +48,13 @@ def create_user():
 
 
 @app_views.route('/users/<user_id>', methods=['PUT'], strict_slashes=False)
+@jwt_required()
 def update_user(user_id):
     """Update the profile of RemindMe user"""
+    current_user_id = get_jwt_identity()
+    if current_user_id != user_id:
+        abort(403, description="Access forbidden")
+
     user = storage.get(User, user_id)
     if not user:
         abort(404)
@@ -57,21 +62,31 @@ def update_user(user_id):
         abort(400, description="Not a JSON")
 
     data = request.get_json()  # Get user data from request
-    ignore_keys = ["id", "email", "created_at", "updated_at"]
+    ignore_keys = ["id", "created_at", "updated_at"]
 
     for key, value in data.items():
         if key not in ignore_keys:
-            setattr(user, key, value)  # Update user
+            if key == "password":
+                user.set_password(value)
+            else:
+                setattr(user, key, value)  # Update user
+
     user.save()
     return jsonify(user.to_dict())
 
 
 @app_views.route("/user/<user_id>", methods=['DELETE'], strict_slashes=False)
+@jwt_required()
 def delete_user(user_id):
     """Delete user, close account, deactivate account"""
-    user = storage.get(User, user_id)  # Get specific user
-    if user is None:
-        abort(404)
+    current_user_id = get_jwt_identity()
+    if current_user_id != user_id:
+        abort(403, description="Access forbidden")
+
+    user = storage.get(User, user_id)
+    if not user:
+        abort(404, description="User not found")
+
     user.delete()
     storage.save()
-    return jsonify({})
+    return jsonify({}), 200
