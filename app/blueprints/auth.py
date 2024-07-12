@@ -101,9 +101,10 @@ def finalize_profile():
                 image_file.save(f)
             with open(temp_file_path, 'rb') as f:
                 result = ik.upload_file(file=f, 
-                                        file_name=f'{current_user.user_name}{ext}')
+                                        file_name=f'{current_user.user_name}.{extention}')
             os.remove(temp_file_path)
-            if result.http_response.status == "success":
+
+            if result.response_metadata.http_status_code == 200:
                 image_url = result.url
             else:
                 flash("Failed to upload image", category="danger")
