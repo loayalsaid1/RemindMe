@@ -15,7 +15,7 @@ class Reminder(BaseModel, Base):
     if getenv('REMIND_ME_TYPE_STORAGE') == 'db':
         public = Column(Boolean, nullable=False, default=True)
         is_text = Column(Boolean, nullable=False, default=True)
-        text = Column(String(1024), nullable=False)
+        text = Column(String(1024))
         img_url = Column(String(500), default=None)
         caption = Column(String(1025), default=None)
         user_id = Column(String(36), ForeignKey('users.id'), nullable=False)

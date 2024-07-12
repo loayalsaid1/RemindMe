@@ -123,3 +123,20 @@ class TESTDBStorage(unittest.TestCase):
         self.storage.new(self.user_1)
         self.storage.save()
         self.assertEqual(self.storage.count(), 1)
+
+    def test_filter_objects(self):
+        """Test filter_objects method"""
+        # Test with no objects
+        result = self.storage.filter_objects(User, "user_name", "test_user")
+        self.assertIsNone(result)
+
+        self.storage.new(self.user_1)
+        self.storage.save()
+
+        result = self.storage.filter_objects(User, "user_name", "test_user")
+        self.assertIn(self.user_1, result)
+
+
+if __name__ == "__main__":
+
+    unittest.main()

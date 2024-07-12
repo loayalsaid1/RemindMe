@@ -1,0 +1,65 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Complete profile</title>
+	<link rel="stylesheet" href="../static/finalize_profile.css">
+
+</head>
+<body>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="alert alert-{{ category }}">
+          {{ message }}
+        </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+	<main>
+        <h1>Welcome {{user.first_name }}</h1>
+        <h4>Let's finish your profile</h4>
+		<form action="{{ url_for('auth.finalize_profile') }}" method="POST" enctype="multipart/form-data">
+            {{ form.hidden_tag() }}
+
+            <div class="top_container">
+                <div class="left">
+                    <div class="username">
+                        {{ form.username.label(class="label") }}
+                        {{ form.username(value=user.user_name, class="input") }}
+                    </div>
+                    <div class="gender">
+                        {{ form.gender.label(class="label") }}
+                        {{ form.gender }}
+                    </div>
+                </div>
+                <div class="right">
+                    <img id="profile_image" src="../static/profile_placeholder.png" alt="Profile Image">
+                    {{ form.image(onchange="loadFile(event)") }}
+                    <label for="image" class="button">Profile Image</label>
+                </div>
+            </div>
+            <div class="bottom_container">
+                {{ form.description.label(class="label") }}
+                {{ form.description(rows=2, class="input") }}
+                
+                {{ form.submit(class="button") }}
+            </div>
+
+		</form>
+	</main>
+    <script>
+        function loadFile(event) {
+            const image = document.getElementById('profile_image');
+            image.src = URL.createObjectURL(event.target.files[0]);
+            image.onload = () => {
+                URL.revokeObjectURL(image.src); // free memory
+            }
+        }
+    </script>
+</body>
+</html>

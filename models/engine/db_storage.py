@@ -93,6 +93,24 @@ class DBStorage:
         Session = scoped_session(session)
         self.__session = Session()
 
+    def filter_objects(self, cls, name, value):
+        """Search for a property in a class"""
+        if cls in classes.values():
+            try:
+                if type(value) is str:
+                    filter_ = eval(f"{cls.__name__}.{name} == '{value}'")
+                else:
+                    filter_ = eval(f"{cls.__name__}.{name} == {value}")
+
+                objects = self.__session.query(cls).filter(filter_).all()
+                if objects:
+                    return objects
+                else:
+                    return None
+            except Exception:
+                return None
+        return None
+
     def close(self):
         """This method closes the DB session"""
         self.__session.close()

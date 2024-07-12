@@ -8,9 +8,10 @@ from models.streak import Streak
 from sqlalchemy.orm import relationship
 from sqlalchemy import Column, String, Enum, Integer
 from werkzeug.security import check_password_hash, generate_password_hash
+from flask_login import UserMixin
 
 
-class User(BaseModel, Base):
+class User(UserMixin, BaseModel, Base):
     """User model that inherits from BaseModel"""
     __tablename__ = 'users'
     if models.storage_t == "db":
