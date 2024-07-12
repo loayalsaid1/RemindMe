@@ -79,17 +79,14 @@ def register():
 def finalize_profile():
     form = FinalizeProfile()
     if request.method == "POST":
-        print(2332)
         print(form.username.data)
     if form.validate_on_submit():
         image_file = form.image.data
         username = form.username.data
         gender = form.gender.data
         description = form.description.data
-        print(0)
 
         if username != current_user.user_name:
-            print(1)
             print(current_user.user_name)
             if storage.filter_objects(User, "user_name", username):
                 print(2)
@@ -98,26 +95,24 @@ def finalize_profile():
                 flash("Username already exists", category="danger")
                 return render_template('finalize_profile.html', form=form)
         if image_file:
-            print(3)
             extention = image_file.filename.split('.')[-1]
             temp_file_path = f'temp_image.{extention}'
             with open(temp_file_path, 'wb') as f:
                 image_file.save(f)
-            # with open(temp_file_path, 'rb') as f:
-            #     result = ik.upload_file(file=f, 
-            #                             file_name=f'{current_user.user_name}{ext}')
-            # os.remove(temp_file_path)
-            # if result.status == "success":
-            #     image_url = result.url
-            # else:
-            #     flash("Failed to upload image", category="danger")
-            #     return render_template('finalize_profile.html', form=form)
+            with open(temp_file_path, 'rb') as f:
+                result = ik.upload_file(file=f, 
+                                        file_name=f'{current_user.user_name}{ext}')
+            os.remove(temp_file_path)
+            if result.http_response.status == "success":
+                image_url = result.url
+            else:
+                flash("Failed to upload image", category="danger")
+                return render_template('finalize_profile.html', form=form)
         
-        print(5)
         current_user.user_name = username
         current_user.gender = gender
         current_user.description = description
-        # current_user.img_url = image_url
+        current_user.img_url = image_url
         storage.save()
 
         return redirect(url_for('profile'))

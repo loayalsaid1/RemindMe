@@ -1,0 +1,168 @@
+* {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+}
+
+#image {
+	display: none;
+}
+
+body {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	background-color: #CCC;
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+main {
+	background-color: #EEE;
+	padding: 20px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	border-radius: 10px;
+    max-width: 350px;
+	width: 100%;
+	min-height: 410px;
+    height: 470px;
+	margin: 20px
+}
+
+h1 {
+	margin-bottom: 5px;
+}
+main p {
+	margin-bottom: 20px;
+	font-weight: bold;
+
+}
+
+form {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+	margin-top: 20px;
+}
+
+.top_container {
+	display: flex;
+	justify-content: space-between;
+
+	margin-bottom: 10px;
+}
+
+.left {
+	display: flex;
+	flex-direction: column;
+	width: 45%;
+}
+
+.left .input {
+	margin-top: 5px;
+    padding: 7px 0;
+    text-align: left;
+	padding-left: 5px;
+    height: 40px;
+}
+.username {
+	margin-bottom: 15px;
+}
+
+
+.gender ul li:first-child {
+	margin-right: 20px;
+}
+
+li {
+	display: inline-block;
+}
+.right {
+	width: 45%;
+
+	display: flex;
+	justify-content: center;
+	align-items: stretch;
+	flex-direction: column;
+}
+
+.right .button {
+	padding: 5px;
+	text-align: center;
+}
+.bottom_container {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: stretch;
+
+	margin-top: 10px;
+}
+
+.top_container,
+.bottom_container {
+	width: 100%;
+}
+
+label[for='description'] {
+	text-align: left;
+}
+
+.bottom_container .button {
+	margin-top: 10px;
+	padding: 10px; 
+}
+
+.button{
+	width: 100%;
+
+	border: 1px solid #ccc;
+	border-radius: 3px;
+	
+
+	font-weight: bold;
+	font-size: 1rem;
+
+	background-color: #95bcf2;
+	border-color: black;
+	box-shadow: 2px 2px 0px rgb(0, 0, 0);
+	cursor: pointer;
+}
+
+.label {
+	margin-bottom: 5px;
+	font-size: 1.1rem;
+	font-weight: bold;
+}
+
+.input {
+	width: 100%;
+	
+	padding: 10px;
+	
+	border: 2px solid #0a0a0a;
+	border-radius: 10px;
+	
+	background-color: #fff;
+	padding-left: 20px;
+}
+.left .button {
+}
+img {
+	border-radius: 5px;
+	margin-bottom: 10px;
+}
+
+.button:hover {
+	transition: 0.3s;
+	background-color: #5f99eb;
+}
+
+.button:active {
+	transition: 0.3s;
+	background-color: #597db3;
+}
+ul {
+	list-style-type: none;
+}
