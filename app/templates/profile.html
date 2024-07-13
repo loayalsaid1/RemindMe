@@ -1,19 +1,30 @@
-{% extends "layout.html" %}
 
 
-{% block content %}
-	<h2>welcome {{ user.first_name }} to your profile page</h1>
-	<h3><a href="/logout">logout</a> | <a href="/">Home</a></h3>	
 
-	{% for k, v in user.to_dict().items() %}
-	<h3>{{k}} : {{v}} </h3>
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	<h1>Welcome {{ user.first_name }}</h1>
+	<p>
+		Hey, here is some nonsense.. enjoy it..... {{useless_variable_passed_to_jinja_template}}
+	</p>
+
+	{% for reminder in reminders %}
+		<p>{{ reminder.text }}</p>
+		<p>{{ reminder.caption }}</p>
 	{% endfor %}
 
-	<h3>Your reminders</h3>
-	{% for reminder in user.reminders %}
-		<h4>{{ reminder.caption }}</h4>
-		<p>{{ reminder.text}}</p>
-		<hr>
-	{% endfor %}
-{% endblock %}
-
+</body>
+</html>

@@ -44,39 +44,35 @@ class User(UserMixin, BaseModel, Base):
         description = ""
         img_url = None
 
-    def __init__(self, *args, **kwargs):
-        """Initialize the user"""
-        super().__init__(*args, **kwargs)
+        @property
+        def reminders(self):
+            user_reminders = []
+            all_reminders = models.storage.all(Reminder).values()
+            for reminder in all_reminders:
+                if reminder.user_id == self.id:
+                    user_reminders.append(reminder.id)
 
-    @property
-    def reminders(self):
-        user_reminders = []
-        all_reminders = models.storage.all(Reminder).values()
-        for reminder in all_reminders:
-            if reminder.user_id == self.id:
-                user_reminders.append(reminder.id)
+            return user_reminders
 
-        return user_reminders
+        @property
+        def reflections(self):
+            reflections = []
+            all_reflectiolns = models.storage.all(Reflection).values()
+            for reflection in all_reflectiolns:
+                if reflection.user_id == self.id:
+                    reflections.append(reflection.id)
 
-    @property
-    def reflections(self):
-        reflections = []
-        all_reflectiolns = models.storage.all(Reflection).values()
-        for reflection in all_reflectiolns:
-            if reflection.user_id == self.id:
-                reflections.append(reflection.id)
+            return reflections
 
-        return reflections
+        @property
+        def streaks(self):
+            user_streaks = []
+            all_streaks = models.storage.all(Streak).values()
+            for streak in all_streaks:
+                if streak.user_id == self.id:
+                    user_streaks.append(streak.id)
 
-    @property
-    def streaks(self):
-        user_streaks = []
-        all_streaks = models.storage.all(Streak).values()
-        for streak in all_streaks:
-            if streak.user_id == self.id:
-                user_streaks.append(streak.id)
-
-        return user_streaks
+            return user_streaks
 
     def set_password(self, password):
         """Hash and set the password before saving it to the database"""

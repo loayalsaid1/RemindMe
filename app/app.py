@@ -5,6 +5,7 @@ from flask_jwt_extended import JWTManager
 from flask_login import LoginManager, current_user
 from markupsafe import escape
 from app.blueprints.auth import auth
+from app.blueprints.users import users
 from models import storage
 from models.user import User
 
@@ -21,7 +22,7 @@ app.config['JWT_SECRET_KEY'] = 'Your_jwt_secret_key, idiot hacker'
 jwt = JWTManager(app)
 
 app.register_blueprint(auth)
-
+app.register_blueprint(users)
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -42,10 +43,6 @@ def home():
         return render_template('index.html', username=current_user.user_name)
     return render_template('index.html')
 
-
-@app.route('/profile')
-def profile():
-    return render_template('profile.html', user=current_user)
 
 
 if __name__ == "__main__":
