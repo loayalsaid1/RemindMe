@@ -1,0 +1,33 @@
+:root {
+	--header-height: 70px;
+	--main-width: 800px;
+	--card-width: 383px;
+	--card-height: 258px;
+	--aside-width: 300px;
+	--small-gap: 5px;
+	--medium-gap: 10px;
+	--large-gap: 20px;
+	
+	--color-1: #58756a;
+	--color-2: #a9a9a92b;
+	--color-3: darkslategray;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+	background-color: var(--color-3);
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	position: relative;
+	
+	display: flex;
+	justify-content: center;
+	
+	line-height: 1.3rem;
+}
+
+.material-symbols-outlined {
+	display: inline-block;
+}
