@@ -10,13 +10,8 @@ users = Blueprint('users', __name__)
 def nonesense():
 	"""Get user profile page"""
 	reminders = current_user.reminders
-	print(storage_t)
-	print(reminders)
-	for reminder in reminders:
-		print(reminder)
 	return render_template(
 		'profile.html',
 		user=current_user,
 		reminders=reminders,
-		useless_variable_passed_to_jinja_template="Hey,, I am a garbage string which has no meaning or purpose.. I am here to demonstrate that I dont' evne know what iam talking about"
 		)
