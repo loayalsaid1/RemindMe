@@ -1,12 +1,12 @@
 main {
 	background-color: var(--color-1);
 
-	width: var(--main-width);
+    width: calc(var(--main-width) + 20px);
 	margin: calc(var(--header-height) + var(--small-gap)) auto;
 	margin-bottom: var(--small-gap);
 	
 	display: flex;
-	justify-content: space-between;
+    justify-content: space-evenly;
 	flex-wrap: wrap;
 	align-content: flex-start;
 	
@@ -23,6 +23,8 @@ article,
 	justify-content: center;
 	align-items: center;
 	transition: 0.3s;
+
+	margin: var(--small-gap);
 }
 
 .reminder_image {
@@ -35,6 +37,10 @@ article:hover .shown,
 .shown:hover {
 	padding: 10px;
 	filter: blur(2px);
+}
+
+.shown:hover p {
+	font-size: smaller;
 }
 
 .hidden {
@@ -71,7 +77,18 @@ article:hover .hidden {
     justify-content: center;
 }
 
+.shown p {
+    margin: 5px;
+    padding: 5px;
+    line-height: 1.7rem;
+    text-align: center;
+    font-size: 1.3rem;
+    font-weight: bold;
+    /* font-family: fantasy; */
+    letter-spacing: 1px;
 
+	transition: .3s;
+}
 /* 
 <span class="material-symbols-outlined">
 delete
