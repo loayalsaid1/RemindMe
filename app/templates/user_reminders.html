@@ -1,27 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "layout.html" %}
 
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	{% block title %}
 	<title>{{user.username}}'s Reminders'</title>
+	{% endblock %}
+
+	{% block styles %}
 	<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
 	<link rel="stylesheet" href="../static/styles/common.css">
 	<link rel="stylesheet" href="../static/styles/header.css">
 	<link rel="stylesheet" href="../static/styles/aside.css">
 	<link rel="stylesheet" href="../static/styles/user_reminders.css">
+	{% endblock %}
 
+	{% block scripts %}
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script src="../static/scripts/user_reminders.js"></script>
-</head>
+	{% endblock %}
 
-<body>
+	{% block content %}
 	{% include 'header.html' %}
 
 	{% include 'aside.html' %}
-
 	<main>
-
 		{% for reminder in reminders %}
 		<article data-reminder-id="{{ reminder.id }}">
 			<div class="shown">
@@ -66,8 +66,60 @@
 			</div>
 		</article>
 		{% endfor %}
+		<section class="add_text_reminder">
+			<span class="material-symbols-outlined cancel_icon">
+				close
+			</span>
+			<h2>Add Text Reminder</h2>
+			<form class="add_reminder_form" method="POST" enctype="multipart/form-data">
+				<label for="reminder_text">Reminder Text:</label>
+				<textarea name="reminder_text" id="reminder_text" rows="2"></textarea>
+
+				<label for="caption">Caption:</label>
+				<textarea name="caption" id="caption" rows="2"></textarea>
+
+				<input type="radio" id="public" name="reminder_visibility" value="public">
+				<label for="public">Public</label>
+
+				<input type="radio" id="private" name="reminder_visibility" value="private">
+				<label for="private">Private</label>
+
+				<button type="reset" class="reset_button">Reset</button>
+				<button type="submit" class="add_reminder_button">Add Reminder</button>
+			</form>
+		</section>
+		<section class="add_image_reminder">
+			<span class="material-symbols-outlined cancel_icon">
+				close
+			</span>
+			<h2>Add image Reminder</h2>
+			<img src="https://designshack.net/wp-content/uploads/placehold.jpg" alt="Hey, I am a placeholder image">
+			
+			<form class="add_image_reminder_form" method="POST" enctype="multipart/form-data">
+				<input type="file" name="reminder_image" id="reminder_image" onchange="loadFile(event)"/>
+				<label for="reminder_image">Reminder Image:</label>
+
+				<label for="caption">Caption:</label>
+				<textarea name="caption" id="caption" rows="2"></textarea>
+
+				<input type="radio" id="public" name="reminder_visibility" value="public">
+				<label for="public">Public</label>
+
+				<input type="radio" id="private" name="reminder_visibility" value="private">
+				<label for="private">Private</label>
+				
+				<button type="reset" class="reset_button">Reset</button>
+				<button type="submit" class="add_reminder_button">Add Reminder</button>
+			</form>
+		</section>
 	</main>
-
-</body>
-
-</html>
+	<script>
+        function loadFile(event) {
+            const image = document.getElementById('profile_image');
+            image.src = URL.createObjectURL(event.target.files[0]);
+            image.onload = () => {
+                URL.revokeObjectURL(image.src); // free memory
+            }
+        }
+    </script>
+	{% endblock %}
