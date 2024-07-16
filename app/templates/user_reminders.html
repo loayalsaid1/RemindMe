@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>{{user.username}}'s Reminders'</title>
+	<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+	<link rel="stylesheet" href="../static/styles/common.css">
+	<link rel="stylesheet" href="../static/styles/header.css">
+	<link rel="stylesheet" href="../static/styles/aside.css">
+	<link rel="stylesheet" href="../static/styles/user_reminders.css">
+
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="../static/scripts/user_reminders.js"></script>
+</head>
+
+<body>
+	<header>
+		<div class="logo">
+			<a href="#">
+				<img src="https://via.placeholder.com/50x50" alt="">
+				<h2>RemindMe</h2>
+			</a>
+		</div>
+		<div class="left">
+
+			<nav>
+				<ul>
+					<li><a href="#">Public reminders</a></li>
+					<li class="active"><a href="#">Your reminders</a></li>
+				</ul>
+			</nav>
+			<div class="profile_icon_section">
+				<img src="{{ profile_image }}" alt="">
+				<div class="profile_dropdown">
+					<a href="#">
+						<span class="material-symbols-outlined">
+							person
+						</span>
+						My Profile
+					</a>
+					<a href="#">
+						<span class="material-symbols-outlined">
+							logout
+						</span>
+						Log Out
+					</a>
+				</div>
+			</div>
+		</div>
+	</header>
+	<aside>
+		<div class="user_info">
+			<img src="{{ profile_image}}" alt="">
+
+			<h2 class="user_full_name">Loay AL-Said</h2>
+			<h3 class="username">@loayalsaid</h3>
+
+			<p class="user_description">
+				Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos maxime omnis,
+				repellendus odio facere dicta ratione magni dolorem animi in.
+			</p>
+
+			<button class"edit_profile">
+				<span class="material-symbols-outlined">
+					edit
+				</span>
+				Edit profile
+			</button>
+		</div>
+		<button class="aside_button">
+			<span class="material-symbols-outlined">
+				add
+			</span>
+			Add reminder
+		</button>
+	</aside>
+	<main>
+
+		<article>
+			<div class="shown">
+
+				<img class="reminder_image" src="../static/images/Screenshot_12-7-2024_01731_www.youtube.com.jpeg"
+					alt="" class="">
+			</div>
+			<div class="hidden">
+				<p class="caption">THisi s some texty</p>
+				<span class="material-symbols-outlined hidden_icons menu_icon">
+					menu
+				</span>
+				<ul class="reminder_options">
+					<li>
+						<span class="material-symbols-outlined">
+							edit
+						</span>
+					</li>
+					<li>
+						<span class="material-symbols-outlined">
+							visibility_lock
+						</span>
+					</li>
+					<li>
+						<span class="material-symbols-outlined">
+							delete
+						</span>
+					</li>
+				</ul>
+				<span class="material-symbols-outlined hidden_icons magnify_icon">
+					zoom_in
+				</span>
+				<button class="show_reminder" type="button">Show reflections</button>
+			</div>
+		</article>
+		<article>
+			<div class="shown">
+				<span class="material-symbols-outlined lock_icon">
+					visibility_lock
+				</span>
+				<img class="reminder_image" src="../static/images/Screenshot_20-2-2024_0298_newtab.jpeg" alt=""
+					class="">
+			</div>
+			<div class="hidden">
+				<p class="caption">This is some text</p>
+				<span class="material-symbols-outlined hidden_icons menu_icon">
+					menu
+				</span>
+				<ul class="reminder_options">
+					<li>
+						<span class="material-symbols-outlined">
+							edit
+						</span>
+					</li>
+					<li>
+						<span class="material-symbols-outlined">
+							visibility_lock
+						</span>
+					</li>
+					<li>
+						<span class="material-symbols-outlined">
+							delete
+						</span>
+					</li>
+				</ul>
+				<span class="material-symbols-outlined hidden_icons magnify_icon">
+					zoom_in
+				</span>
+				<button class="show_reminder" type="button">Show reflections</button>
+			</div>
+		</article>
+		<article>
+			<div class=" shown">
+				<span class=" material-symbols-outlined lock_icon">
+					visibility_lock
+				</span>
+				<p>
+					Small disciplines repeated with consitency everyday, lead to great
+					achievements gained slowly overtime
+				</p>
+			</div>
+			<div class="hidden">
+				<p class="caption">One think is small things actually coute.. and the otherone is that the emphasis the
+					tthe great
+					things will come by the small things thta you do.. DDDaaiiily</p>
+				<span class="material-symbols-outlined hidden_icons menu_icon">
+					menu
+				</span>
+				<ul class="reminder_options">
+					<li>
+						<span class="material-symbols-outlined">
+							edit
+						</span>
+					</li>
+					<li>
+						<span class="material-symbols-outlined">
+							visibility_lock
+						</span>
+					</li>
+					<li>
+						<span class="material-symbols-outlined">
+							delete
+						</span>
+					</li>
+				</ul>
+				<span class="material-symbols-outlined hidden_icons magnify_icon">
+					zoom_in
+				</span>
+				<button class="show_reminder" type="button">Show reflections</button>
+			</div>
+		</article>
+		<article>
+			<div class="shown">
+				<span class="material-symbols-outlined lock_icon">
+					visibility_lock
+				</span>
+				<img class="reminder_image" src="../static/images/Screenshot_20-2-2024_0298_newtab.jpeg" alt=""
+					class="">
+			</div>
+			<div class="hidden">
+				<p class="caption">One think is small things actually coute.. and the otherone is that the emphasis the
+					tthe great
+					things will come by the small things thta you do.. DDDaaiiily</p>
+				<span class="material-symbols-outlined hidden_icons menu_icon">
+					menu
+				</span>
+				<ul class="reminder_options">
+					<li>
+						<span class="material-symbols-outlined">
+							edit
+						</span>
+					</li>
+					<li>
+						<span class="material-symbols-outlined">
+							visibility_lock
+						</span>
+					</li>
+					<li>
+						<span class="material-symbols-outlined">
+							delete
+						</span>
+					</li>
+				</ul>
+				<span class="material-symbols-outlined hidden_icons magnify_icon">
+					zoom_in
+				</span>
+				<button class="show_reminder" type="button">Show reflections</button>
+			</div>
+		</article>
+
+	</main>
+	<script src='../static/scripts/user_reminders.js'></script>
+
+</body>
+
+</html>
