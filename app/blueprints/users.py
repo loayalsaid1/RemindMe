@@ -11,7 +11,7 @@ def nonesense():
 	"""Get user profile page"""
 	reminders = current_user.reminders
 	return render_template(
-		'profile.html',
+		'user_reminders.html',
 		user=current_user,
 		reminders=reminders,
 		)
