@@ -28,13 +28,18 @@ class RemindMeConsole(cmd.Cmd):
         """Detect the type of the text passed to it.
              Is it a number, float or string
         """
-        try:
-            return int(text)
-        except ValueError:
+        if text == "True":
+            return True
+        elif text == "False":
+            return False
+        else:                
             try:
-                return float(text)
+                return int(text)
             except ValueError:
-                return text
+                try:
+                    return float(text)
+                except ValueError:
+                    return text
 
     def precmd(self, line):
         """Safegaurds for argumets given to the classes we have.."""

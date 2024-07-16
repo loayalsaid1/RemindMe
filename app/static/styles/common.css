@@ -14,6 +14,8 @@
 }
 
 * {
+	margin: 0;
+	padding: 0;
 	box-sizing: border-box;
 }
 
@@ -26,8 +28,15 @@ body {
 	justify-content: center;
 	
 	line-height: 1.3rem;
+
 }
 
 .material-symbols-outlined {
 	display: inline-block;
+}
+
+button,
+a,
+input[type="submit"] {
+	cursor: pointer;
 }

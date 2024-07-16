@@ -18,7 +18,7 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = "auth.login"
 
-app.config['JWT_SECRET_KEY'] = 'Your_jwt_secret_key, idiot hacker'
+app.config['JWT_SECRET_KEY'] = 'CIBwsUdxn67Uezxe8JAa_OLHuiPn0wQIHFZvv3pjEZo'
 jwt = JWTManager(app)
 
 app.register_blueprint(auth)
@@ -36,6 +36,11 @@ def not_found(error):
     return "<h1>Lost?!\n Consider having some remidner!</h1>", 404
 
 
+@app.teardown_appcontext
+def cut_connection(error):
+    """define behavior after each request"""
+    storage.close()
+
 @app.route('/')
 def home():
     """Home page"""
@@ -46,4 +51,4 @@ def home():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, port=5000)

@@ -1,0 +1,25 @@
+<aside>
+	<div class="user_info">
+		<img src="{{ user.img_url }}" alt="">
+
+		<h2 class="user_full_name">{{ user.first_name }} {{ user.last_name }}</h2>
+		<h3 class="username">@{{ user.user_name }}</h3>
+
+		<p class="user_description">
+			{{ user.description }}
+		</p>
+
+		<button class"edit_profile">
+			<span class="material-symbols-outlined">
+				edit
+			</span>
+			Edit profile
+		</button>
+	</div>
+	<button class="aside_button">
+		<span class="material-symbols-outlined">
+			add
+		</span>
+		Add reminder
+	</button>
+</aside>

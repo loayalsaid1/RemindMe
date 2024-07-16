@@ -2,7 +2,7 @@ aside {
 	width: var(--aside-width);
 	height: calc(100vh - var(--header-height, 0));
 	padding: 10px;
-	margin-top: var(--header-height);
+	margin-top: calc(var(--header-height) + var(--small-gap));
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
@@ -24,18 +24,29 @@ aside {
 	width: 150px;
 	height: 150px;
 	border-radius: 50%;
+
+	margin: 10px
 }
 
-.user_info h2,
+.user_info h2 {
+	margin: 5px;
+}
 .user_info h3 {
-	margin: 0;
+	margin: 5px 0;
 }
 
 .user_info h3 {
     font-size: 1.1rem;
-    font-weight: 600;
+    font-weight: 500;
 }
 
+.user_info p {
+    text-align: center;
+    margin: 15px 0;
+    line-height: 1.5rem;
+    font-size: large;
+    font-weight: 600;
+}
 .user_info button,
 .aside_button {
 	display: flex;
@@ -51,7 +62,7 @@ aside {
 	background-color: var(--color-3);
 	color: white;
 	text-decoration: none;
-	
+
 }
 
 .material-symbols-outlined {

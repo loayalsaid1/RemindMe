@@ -67,7 +67,7 @@ def register():
 
         login_user(user, remember=True)
 
-        token = create_access_token(identity={'user_id': user.id})
+        token = create_access_token(identity=user.id)
 
         response = make_response(redirect(url_for('auth.finalize_profile')))
         response.set_cookie('access_token_cookie', token, httponly=False)
@@ -162,7 +162,7 @@ def login():
         login_user(user, remember=request.form.get('remember'))
         flash("Logged in successfully, Have a nice day ,and life",
               category='success')
-        token = create_access_token(identity={'user_id': user.id})
+        token = create_access_token(identity=user.id)
 
         next_page = request.args.get("next")
         if next_page and is_safe_url(next_page):

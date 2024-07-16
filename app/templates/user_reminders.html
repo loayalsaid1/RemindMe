@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>{{user.username}}'s Reminders'</title>
+	<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+	<link rel="stylesheet" href="../static/styles/common.css">
+	<link rel="stylesheet" href="../static/styles/header.css">
+	<link rel="stylesheet" href="../static/styles/aside.css">
+	<link rel="stylesheet" href="../static/styles/user_reminders.css">
+
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="../static/scripts/user_reminders.js"></script>
+</head>
+
+<body>
+	{% include 'header.html' %}
+
+	{% include 'aside.html' %}
+
+	<main>
+
+		{% for reminder in reminders %}
+		<article data-reminder-id="{{ reminder.id }}">
+			<div class="shown">
+				{% if reminder.public == False %}
+				<span class="material-symbols-outlined lock_icon">
+					visibility_lock
+				</span>
+				{% endif %}
+				{% if reminder.is_text %}
+				<p>{{ reminder.text }}</p>
+				{% else %}
+				<img class="reminder_image" src="{{ reminder.img_url }}"
+				alt="" class="">
+				{% endif %}
+			</div>
+			<div class="hidden">
+				<p class="caption">{{ reminder.caption }}</p>
+				<span class="material-symbols-outlined hidden_icons menu_icon">
+					menu
+				</span>
+				<ul class="reminder_options">
+					<li>
+						<span class="material-symbols-outlined">
+							edit
+						</span>
+					</li>
+					<li>
+						<span class="material-symbols-outlined">
+							visibility_lock
+						</span>
+					</li>
+					<li>
+						<span class="material-symbols-outlined">
+							delete
+						</span>
+					</li>
+				</ul>
+				<span class="material-symbols-outlined hidden_icons magnify_icon">
+					zoom_in
+				</span>
+				<button class="show_reminder" type="button">Show reflections</button>
+			</div>
+		</article>
+		{% endfor %}
+	</main>
+
+</body>
+
+</html>
