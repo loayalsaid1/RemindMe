@@ -23,7 +23,7 @@ header a {
 	color: inherit;
 }
 
-.logo,
+.logo a,
 .left {
 	display: flex;
 	align-items: center;
@@ -45,16 +45,55 @@ nav ul li {
 	margin-right: 10px;
 }
 
-.profile_icon {
+.profile_icon_section {
 	padding: 10px;
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+
 }
 
-.profile_icon img {
+.profile_icon_section:hover .profile_dropdown {
+	display: flex;
+}
+
+.profile_icon_section img {
 	height: 100%;
 	width: 50px;
 	border-radius: 50%;
 }
 
+.profile_dropdown {
+	display: none;
+	flex-direction: column;
+
+	position: absolute;
+	top: 100%;
+	right: var(--small-gap);
+	
+	background-color: var(--color-1);
+	
+	padding: 10px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+	width: 200px;
+}
+
+.profile_dropdown a {
+	padding: 5px;
+	display: flex;
+	align-items: center;
+}
+
+.profile_dropdown a:hover {
+	background-color: var(--color-3);
+}
+
+.profile_dropdown a span {
+	margin-right: var(-small-gap);
+}
 .active {
 	font-size: large;
     font-weight: 800;

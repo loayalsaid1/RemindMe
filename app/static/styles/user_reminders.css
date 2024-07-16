@@ -11,6 +11,7 @@ main {
 	align-content: flex-start;
 	
 	overflow: auto;
+	transition: opacity 0.3s ease-in-out;
 }
 
 article,
@@ -40,34 +41,44 @@ article:hover .shown,
 }
 
 .shown:hover p {
-	font-size: smaller;
+	font-size: small;
+	color: white;
+	font-weight: 100;
+
+	
 }
 
 .hidden {
 	display: none;
+	justify-content: center;
+	align-items: center;
+
 	position: absolute;
 	top: 0;
 	left: 0;
+
 	width: var(--card-width);
 	height: var(--card-height);
+
 	color: white;
-	pointer-events: none;
+    background-color: #2f4f4f8a;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
 }
 
 article:hover .hidden {
-	display: block;
+	display: flex;
+    opacity: 1;
 }
 
+.hidden_icons,
 .lock_icon {
-
     color: white !important;
     background: var(--color-3);
     
 	font-size: 1.7rem;
     
 	position: absolute;
-    top: 20px;
-    left: 20px;
     
 	width: 30px;
     height: 30px;
@@ -75,6 +86,29 @@ article:hover .hidden {
 	display: flex;
     align-items: center;
     justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.shown > .lock_icon {
+	top: 20px;
+    left: 20px;
+    opacity: 1;
+}
+
+.hidden .menu_icon {
+	top: 20px;
+	right: 20px;
+	z-index: 1000;
+	opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.magnify_icon {
+	bottom: 20px;
+	left: 20px;
+    opacity: 1;
+    transition: opacity 0.3s ease-in-out;
 }
 
 .shown p {
@@ -89,22 +123,71 @@ article:hover .hidden {
 
 	transition: .3s;
 }
+
+
+.hidden .show_reminder {
+	background-color: var(--color-3);
+    padding: 8px;
+    position: absolute;
+    bottom: 16px;
+    color: black;
+    left: 60px;
+    border-radius: 15px;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.hidden .reminder_options {
+	list-style: none;
+
+	background-color: var(--color-3);
+
+	position: absolute;
+	top: 50px;
+	right: 20px;
+
+	width: 30px;
+	height: calc((3 * 30px) + 10px);
+
+	padding: 10px 0;
+
+	display: none;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+	opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.hidden .caption {
+    margin: 5px;
+    padding: 5px;
+    line-height: 1.5rem;
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: 700;
+    font-family: monospace;
+    letter-spacing: 1px;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+.hidden:hover > * {
+    opacity: 1;
+}
+
+.magnify_icon,
+.menu_icon,
+.reminder_options {
+	cursor: pointer;
+}
 /* 
 <span class="material-symbols-outlined">
 delete
 </span>
+
 <span class="material-symbols-outlined">
-menu
-<span class="material-symbols-outlined">
-edit
-</span>
-<span class="material-symbols-outlined">
-person
+f
 </span>
 <span class="material-symbols-outlined">
 	logout
-	</span>
-	<span class="material-symbols-outlined">
-		zoom_in
-		</span>
-*/
+</span>
