@@ -84,8 +84,10 @@
 				<input type="radio" id="private" name="reminder_visibility" value="private">
 				<label for="private">Private</label>
 
-				<button type="reset" class="reset_button">Reset</button>
-				<button type="submit" class="add_reminder_button">Add Reminder</button>
+				<div class="form_buttons">
+					<button type="reset" class="reset_button">Reset</button>
+					<button type="submit" class="add_reminder_button">Add Reminder</button>
+				</div>
 			</form>
 		</section>
 		<section class="add_image_reminder">
@@ -113,13 +115,5 @@
 			</form>
 		</section>
 	</main>
-	<script>
-        function loadFile(event) {
-            const image = document.getElementById('profile_image');
-            image.src = URL.createObjectURL(event.target.files[0]);
-            image.onload = () => {
-                URL.revokeObjectURL(image.src); // free memory
-            }
-        }
-    </script>
+
 	{% endblock %}
