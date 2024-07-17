@@ -145,6 +145,3 @@ section button:hover,
 }
 
 
-/* main > *:not(:last-child):not(:nth-last-child(2)) {
-	filter: blur(3px);
-  } */
