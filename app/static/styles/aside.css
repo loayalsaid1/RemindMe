@@ -60,7 +60,7 @@ aside {
 	width: 100%;
 	padding: var(--medium-gap);
 	
-	display: flex;
+	display: none;
 	flex-direction: column;
 	align-items: center;
 	
@@ -101,7 +101,7 @@ aside {
 
 .user_info button,
 .aside_button {
-	display: none;
+	display: flex;
     align-items: center;
     justify-content: center;
 	
@@ -118,7 +118,9 @@ aside {
 	font-size: 1.1rem;
 }
 
-
+.add_reminder:hover ul {
+	display: flex;
+}
 
 .material-symbols-outlined {
 	display: inline-block;
