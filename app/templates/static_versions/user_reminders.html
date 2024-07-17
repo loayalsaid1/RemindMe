@@ -69,12 +69,32 @@
 				Edit profile
 			</button>
 		</div>
-		<button class="aside_button">
-			<span class="material-symbols-outlined">
-				add
-			</span>
-			Add reminder
-		</button>
+		<div class="add_reminder">
+			<ul>
+				<li>
+					<button>
+						<span class="material-symbols-outlined">
+							image
+						</span>
+						Image Reminder
+					</button>
+				</li>
+				<li>
+					<button>
+						<span class="material-symbols-outlined">
+							text_fields
+						</span>
+						Text Reminder
+					</button>
+				</li>
+			</ul>
+			<button class="aside_button">
+				<span class="material-symbols-outlined">
+					add
+				</span>
+				Add reminder
+			</button>
+		</div>
 	</aside>
 	<main>
 
@@ -232,7 +252,8 @@
 			</span>
 			<h2>Add image Reminder</h2>
 			<div class="image_placeholder_container">
-				<img id="placeholder_image" src="https:///designshack.net/wp-content/uploads/placehold.jpg"  alt="Hey, I am a placeholder image">
+				<img id="placeholder_image" src="https:///designshack.net/wp-content/uploads/placehold.jpg"
+					alt="Hey, I am a placeholder image">
 			</div>
 
 			<form class="add_image_reminder_form" method="POST" enctype="multipart/form-data">
@@ -286,14 +307,14 @@
 
 	</main>
 	<script>
-        function loadFile(event) {
-            const image = document.getElementById('placeholder_image');
-            image.src = URL.createObjectURL(event.target.files[0]);
-            image.onload = () => {
-                URL.revokeObjectURL(image.src); // free memory
-            }
-        }
-    </script>
+		function loadFile(event) {
+			const image = document.getElementById('placeholder_image');
+			image.src = URL.createObjectURL(event.target.files[0]);
+			image.onload = () => {
+				URL.revokeObjectURL(image.src); // free memory
+			}
+		}
+	</script>
 </body>
 
 </html>

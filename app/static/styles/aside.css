@@ -47,9 +47,61 @@ aside {
     font-size: large;
     font-weight: 600;
 }
+
+.add_reminder {
+	width: 100%;
+
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.add_reminder ul {
+	width: 100%;
+	padding: var(--medium-gap);
+	
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	
+	list-style: none;
+
+	color: black;
+    box-shadow: 1px 1px 6px 1px ;
+    border-radius: 10px;
+}
+
+.add_reminder ul li {
+	width: 100%;
+	padding: var(--small-gap);
+}
+
+.add_reminder ul li button {
+
+	width: 100%;
+	background-color: transparent;
+    box-shadow: 1px 1px 5px 1px black;
+    color: black;
+
+	display: flex;
+	justify-content: flex-start;
+    align-items: center;
+
+    padding: 8px;
+
+	border: 0;
+}
+
+.add_reminder ul li button:hover {
+	background-color: var(--color-3);
+	color: white;
+}
+
+
+
 .user_info button,
 .aside_button {
-	display: flex;
+	display: none;
     align-items: center;
     justify-content: center;
 	
@@ -63,7 +115,10 @@ aside {
 	color: white;
 	text-decoration: none;
 
+	font-size: 1.1rem;
 }
+
+
 
 .material-symbols-outlined {
 	display: inline-block;
