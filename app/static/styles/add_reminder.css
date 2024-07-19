@@ -145,3 +145,6 @@ section button:hover,
 }
 
 
+.add_reminder_window {
+	z-index: 2;
+}

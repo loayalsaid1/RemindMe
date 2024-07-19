@@ -111,7 +111,7 @@ article:hover .hidden {
 .hidden .menu_icon {
 	top: 20px;
 	right: 20px;
-	z-index: 1000;
+	z-index: 1;
 	opacity: 0;
     transition: opacity 0.3s ease-in-out;
 }

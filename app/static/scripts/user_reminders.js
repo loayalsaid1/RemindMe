@@ -55,6 +55,7 @@ $(document).ready(function () {
           $(".fullscreen_container p").hide();
           $(".fullscreen_container img").hide();
           $("main > *").css("filter", "none");
+          $('main').off('click');
         });
 
       /**

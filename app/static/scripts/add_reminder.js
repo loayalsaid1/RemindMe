@@ -29,13 +29,6 @@ $(document).ready(function() {
 		$('.add_image_reminder').fadeOut(100);
 		$('.add_text_reminder').fadeIn(300);
 		blur_main();
-
-		$("main")
-        .off("click")
-        .click(function (event) {
-          $(".add_reminder_window").fadeOut(300);
-          $("main > *").css("filter", "none");
-        });
 	})
 
 	/**
@@ -48,13 +41,6 @@ $(document).ready(function() {
 		$('.add_text_reminder').fadeOut(100);
 		$('.add_image_reminder').fadeIn(300);
 		blur_main();
-
-		$("main")
-        .off("click")
-        .click(function (event) {
-          $(".add_reminder_window").fadeOut(300);
-          $("main > *").css("filter", "none");
-        });
 	})
 
 	/************************/
