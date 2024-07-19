@@ -80,18 +80,18 @@
 			</div>
 
 			<form class="add_image_reminder_form" method="POST" enctype="multipart/form-data">
-				<input type="file" name="reminder_image" id="reminder_image" onchange="loadFile(event)" />
+				<input type="file" name="reminder_image" id="reminder_image" onchange="loadFile(event)"  required />
 				<label for="reminder_image">Upload Image</label>
 
 				<label for="caption">Caption:</label>
-				<textarea name="caption" id="caption" rows="2"></textarea>
+				<textarea name="caption" id="caption" rows="2" required ></textarea>
 
 				<label>Reminder Visibility</label>
 				<div class="visibility_section">
-					<input type="radio" id="img_private" name="reminder_visibility" value="private">
+					<input type="radio" id="img_private" name="reminder_visibility" value="private" required >
 					<label for="img_private">Private</label>
 
-					<input type="radio" id="img_public" name="reminder_visibility" value="public">
+					<input type="radio" id="img_public" name="reminder_visibility" value="public" required >
 					<label for="img_public">Public</label>
 				</div>
 
@@ -108,16 +108,16 @@
 			<h2>Add Text Reminder</h2>
 			<form class="add_reminder_form" method="POST" enctype="multipart/form-data" action="#">
 				<label for="reminder_text">Reminder Text:</label>
-				<textarea name="reminder_text" id="reminder_text" rows="2"></textarea>
+				<textarea name="reminder_text" id="reminder_text" rows="2" required ></textarea>
 
 				<label for="caption">Caption:</label>
-				<textarea name="caption" id="caption" rows="2"></textarea>
+				<textarea name="caption" id="caption" rows="2" required ></textarea>
 				<label>Reminder Visibility</label>
 				<div class="visibility_section">
-					<input type="radio" id="private" name="reminder_visibility" value="private">
+					<input type="radio" id="private" name="reminder_visibility" value="private" required >
 					<label for="private">Private</label>
 
-					<input type="radio" id="public" name="reminder_visibility" value="public">
+					<input type="radio" id="public" name="reminder_visibility" value="public" required >
 					<label for="public">Public</label>
 				</div>
 
