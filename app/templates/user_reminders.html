@@ -11,11 +11,14 @@
 	<link rel="stylesheet" href="../static/styles/aside.css">
 	<link rel="stylesheet" href="../static/styles/user_reminders.css">
 	<link rel="stylesheet" href="../static/styles/add_reminder.css">
+	
 	{% endblock %}
 
 	{% block scripts %}
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script src="../static/scripts/user_reminders.js"></script>
+	<script src="../../static/scripts/add_reminder.js"></script>
+
 	{% endblock %}
 
 	{% block content %}
@@ -24,7 +27,7 @@
 	{% include 'aside.html' %}
 	<main>
 		{% for reminder in reminders %}
-		<article data-reminder-id="{{ reminder.id }}">
+		<article data-reminder-id="{{ reminder.id }}" data-type="{{ 'image' if not reminder.is_text else 'text' }}">
 			<div class="shown">
 				{% if reminder.public == False %}
 				<span class="material-symbols-outlined lock_icon">
@@ -67,7 +70,7 @@
 			</div>
 		</article>
 		{% endfor %}
-		<section class="add_image_reminder">
+		<section class="add_image_reminder add_reminder_window">
 			<span class="material-symbols-outlined cancel_icon">
 				close
 			</span>
@@ -98,7 +101,7 @@
 				</div>
 			</form>
 		</section>
-		<section class="add_text_reminder">
+		<section class="add_text_reminder add_reminder_window">
 			<span class="material-symbols-outlined cancel_icon">
 				close
 			</span>
@@ -124,6 +127,10 @@
 				</div>
 			</form>
 		</section>
+		<div class="fullscreen_container">
+			<img src="" alt="">
+			<p></p>
+		</div>`
 	</main>
 	<script>
         function loadFile(event) {
