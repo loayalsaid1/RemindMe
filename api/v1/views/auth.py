@@ -5,8 +5,25 @@ from flask import Blueprint, jsonify, request
 from flask_jwt_extended import create_access_token, jwt_required
 from flask_jwt_extended import get_jwt_identity
 from models import storage
+from models.user import User
+import os
+from imagekitio import ImageKit
 
 auth = Blueprint('auth', __name__, url_prefix='/api/v1')
+upload = Blueprint('upload', __name__, url_prefix='/api/v1')
+
+
+# ImageKit Credentials
+IMAGEKIT_PRIVATE_KEY = "private_edl1a45K3hzSaAhroLRPpspVRqM="
+IMAGEKIT_PUBLIC_KEY = "public_tTc9vCi5O7L8WVAQquK6vQWNx08="
+IMAGEKIT_URL_ENDPOINT = "https://ik.imagekit.io/loayalsaid1/"
+
+
+ik = ImageKit(
+    private_key=IMAGEKIT_PRIVATE_KEY,
+    public_key=IMAGEKIT_PUBLIC_KEY,
+    url_endpoint=IMAGEKIT_URL_ENDPOINT
+)
 
 
 @auth.route('/auth/login', methods=['POST'], strict_slashes=False)
@@ -15,7 +32,7 @@ def login():
     email = request.json.get('email')
     password = request.json.get('password')
 
-    #import pdb; pdb.set_trace()
+    # import pdb; pdb.set_trace()
 
     if not email or not password:
         return jsonify({"msg": "Missing email or password"}), 400
@@ -36,3 +53,33 @@ def refresh():
     current_user = get_jwt_identity()  # Get current user
     new_token = create_access_token(identity=current_user)  # Create new token
     return jsonify(access_token=new_token), 200
+
+
+@auth.route('/upload', methods=['POST'])
+@jwt_required()
+def upload_image():
+    if 'image' not in request.files:
+        return jsonify({"error": "No image file provided"}), 400
+
+    image = request.files['image']
+    user_id = get_jwt_identity()
+    user = storage.get(User, user_id)
+
+    if not user:
+        return jsonify({"error": "User not found"}), 404
+
+    extention = image.filename.split('.')[-1]
+    temp_file_path = f'temp_image.{extention}'
+    image.save(temp_file_path)
+
+    with open(temp_file_path, 'rb') as f:
+        result = ImageKit.upload_file(
+            file=f, file_name=f'{user.user_name}.{extention}')
+
+    os.remove(temp_file_path)
+
+    if result['error']:
+        return jsonify({"error": "Failed to upload image"}), 500
+
+    image_url = result['response']['url']
+    return jsonify({"url": image_url}), 200
