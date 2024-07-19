@@ -20,19 +20,37 @@ $(document).ready(function() {
   $(".magnify_icon").off("click").click(function(event) {
     event.stopPropagation();
     const articleTag = $(this).closest('article');
-    const imgTag = articleTag.find('.reminder_image');
-    const src = imgTag.attr('src');
-    $('.fullscreen_container img').attr('src', src);
+    if (articleTag.data('type') == 'image') {
+      const imgTag = articleTag.find('.reminder_image');
+      const src = imgTag.attr('src');
+      $('.fullscreen_container img').attr('src', src);
+      $('.fullscreen_container img').show();
+
+    } else {
+      const text = articleTag.find('.shown p').text();
+      $('.fullscreen_container p').text(text);
+      $('.fullscreen_container p').show();
+
+    }
     $('.fullscreen_container').css('display', 'flex');
     $('.fullscreen_container').fadeIn(300);
     blur_main();
     
+    const scrollY = $('main').scrollTop();
+    const mainHeight = $('main').height();
+    const mainWidth = $('main').width();
+
+    $('.fullscreen_container').css({
+      'top': `${scrollY + mainHeight / 2}px`,
+      'left': `${mainWidth / 2}px`,
+    })
   /**
    * Blur the main element when clicking outside the fullscreen container
    */
   $('main').off('click').click(function(event) {
     $('.fullscreen_container').fadeOut(300);
-    $('.fullscreen_container img').attr('src', '');
+    $('.fullscreen_container p').hide();
+    $('.fullscreen_container img').hide();
     $('main > *').css('filter', 'none');
   })
   
