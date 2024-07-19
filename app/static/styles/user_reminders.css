@@ -1,17 +1,29 @@
 main {
 	background-color: var(--color-1);
 
+	height: calc(100vh - var(--header-height));
     width: calc(var(--main-width) + 20px);
 	margin: calc(var(--header-height) + var(--small-gap)) auto;
 	margin-bottom: var(--small-gap);
-	
+
 	display: flex;
     justify-content: space-evenly;
 	flex-wrap: wrap;
 	align-content: flex-start;
-	
-	overflow: auto;
+
+	position: relative;
+
+	overflow: scroll;
 	transition: opacity 0.3s ease-in-out;
+}
+
+main::-webkit-scrollbar {
+    display: none;
+}
+
+main {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }
 
 article,
@@ -45,7 +57,7 @@ article:hover .shown,
 	color: white;
 	font-weight: 100;
 
-	
+
 }
 
 .hidden {
@@ -75,14 +87,14 @@ article:hover .hidden {
 .lock_icon {
     color: white !important;
     background: var(--color-3);
-    
+
 	font-size: 1.7rem;
-    
+
 	position: absolute;
-    
+
 	width: 30px;
     height: 30px;
-    
+
 	display: flex;
     align-items: center;
     justify-content: center;
@@ -99,7 +111,7 @@ article:hover .hidden {
 .hidden .menu_icon {
 	top: 20px;
 	right: 20px;
-	z-index: 1000;
+	z-index: 1;
 	opacity: 0;
     transition: opacity 0.3s ease-in-out;
 }
@@ -120,7 +132,6 @@ article:hover .hidden {
     font-weight: bold;
     /* font-family: fantasy; */
     letter-spacing: 1px;
-
 	transition: .3s;
 }
 
@@ -180,14 +191,49 @@ article:hover .hidden {
 .reminder_options {
 	cursor: pointer;
 }
-/* 
-<span class="material-symbols-outlined">
-delete
-</span>
 
-<span class="material-symbols-outlined">
-f
-</span>
-<span class="material-symbols-outlined">
-	logout
-</span>
+
+/* MAGNIFY IMAGE */
+
+.fullscreen_container {
+	position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+	width: 100%;
+	max-width: 100%;
+	height: calc(100% - var(--header-height));
+	display: none;
+	justify-content: center;
+	align-items: center;
+
+	z-index: 9999;
+}
+
+.fullscreen_container > * {
+	display: none;
+}
+
+.fullscreen_container img {
+	margin: 20px;
+	padding: 20px;
+	max-width: 100%;
+	max-height: 100vh;
+
+	object-fit: contain;
+}
+
+.fullscreen_container p {
+	background: #2f4f4fb3;
+    font-size: 2em;
+    font-weight: 600;
+    line-height: 3.7rem;
+	
+	padding: 39px;
+    width: fit-content;
+    height: fit-content;
+    color: #dddddd;
+    font-family: monospace;
+    border-radius: 15px;
+}

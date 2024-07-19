@@ -37,6 +37,7 @@ body {
 
 button,
 a,
-input[type="submit"] {
+input[type="submit"],
+.cancel_icon {
 	cursor: pointer;
 }
