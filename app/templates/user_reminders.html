@@ -10,14 +10,14 @@
 	<link rel="stylesheet" href="../static/styles/header.css">
 	<link rel="stylesheet" href="../static/styles/aside.css">
 	<link rel="stylesheet" href="../static/styles/user_reminders.css">
-	<link rel="stylesheet" href="../static/styles/add_reminder.css">
-	
+	<link rel="stylesheet" href="../static/styles/add_reminder.css">	
 	{% endblock %}
 
 	{% block scripts %}
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script src="../static/scripts/user_reminders.js"></script>
 	<script src="../../static/scripts/add_reminder.js"></script>
+	<script src="../../static/scripts/reminder_options.js"></script>
 
 	{% endblock %}
 
@@ -47,17 +47,17 @@
 					menu
 				</span>
 				<ul class="reminder_options">
-					<li>
+					<li class="edit_reminder">
 						<span class="material-symbols-outlined">
 							edit
 						</span>
 					</li>
-					<li>
+					<li class="toggle_visibility">
 						<span class="material-symbols-outlined">
 							visibility_lock
 						</span>
 					</li>
-					<li>
+					<li class="delete_reminder">
 						<span class="material-symbols-outlined">
 							delete
 						</span>
@@ -80,18 +80,18 @@
 			</div>
 
 			<form class="add_image_reminder_form" method="POST" enctype="multipart/form-data">
-				<input type="file" name="reminder_image" id="reminder_image" onchange="loadFile(event)" />
+				<input type="file" name="reminder_image" id="reminder_image" onchange="loadFile(event)"  required />
 				<label for="reminder_image">Upload Image</label>
 
 				<label for="caption">Caption:</label>
-				<textarea name="caption" id="caption" rows="2"></textarea>
+				<textarea name="caption" id="caption" rows="2" required ></textarea>
 
 				<label>Reminder Visibility</label>
 				<div class="visibility_section">
-					<input type="radio" id="img_private" name="reminder_visibility" value="private">
+					<input type="radio" id="img_private" name="reminder_visibility" value="private" required >
 					<label for="img_private">Private</label>
 
-					<input type="radio" id="img_public" name="reminder_visibility" value="public">
+					<input type="radio" id="img_public" name="reminder_visibility" value="public" required >
 					<label for="img_public">Public</label>
 				</div>
 
@@ -108,16 +108,16 @@
 			<h2>Add Text Reminder</h2>
 			<form class="add_reminder_form" method="POST" enctype="multipart/form-data" action="#">
 				<label for="reminder_text">Reminder Text:</label>
-				<textarea name="reminder_text" id="reminder_text" rows="2"></textarea>
+				<textarea name="reminder_text" id="reminder_text" rows="2" required ></textarea>
 
 				<label for="caption">Caption:</label>
-				<textarea name="caption" id="caption" rows="2"></textarea>
+				<textarea name="caption" id="caption" rows="2" required ></textarea>
 				<label>Reminder Visibility</label>
 				<div class="visibility_section">
-					<input type="radio" id="private" name="reminder_visibility" value="private">
+					<input type="radio" id="private" name="reminder_visibility" value="private" required >
 					<label for="private">Private</label>
 
-					<input type="radio" id="public" name="reminder_visibility" value="public">
+					<input type="radio" id="public" name="reminder_visibility" value="public" required >
 					<label for="public">Public</label>
 				</div>
 
