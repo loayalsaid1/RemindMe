@@ -46,7 +46,7 @@ $(document).ready(function() {
 		const imgURL = data.imge_url;
 
 		const reminder = `
-		<article data-reminder-id="${id}" data-type="${isText ? 'text' : 'image'}">
+		<article data-reminder-id="${id}" data-type="${isText ? 'text' : 'image'}"  data-visibility="${public ? 'public' : 'private'}">
 			<div class="shown">
 				${public
 					? ''
@@ -61,17 +61,17 @@ $(document).ready(function() {
 					menu
 				</span>
 				<ul class="reminder_options">
-					<li>
+					<li class="edit_reminder">
 						<span class="material-symbols-outlined">
 							edit
 						</span>
 					</li>
-					<li>
+					<li class="toggle_visibility">
 						<span class="material-symbols-outlined">
-							visibility_lock
+							${public ? 'visibility' : 'visibility_lock'}
 						</span>
 					</li>
-					<li>
+					<li class="delete_reminder">
 						<span class="material-symbols-outlined">
 							delete
 						</span>

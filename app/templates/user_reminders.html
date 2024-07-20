@@ -27,7 +27,11 @@
 	{% include 'aside.html' %}
 	<main>
 		{% for reminder in reminders %}
-		<article data-reminder-id="{{ reminder.id }}" data-type="{{ 'image' if not reminder.is_text else 'text' }}">
+		{% if reminder.public %}
+		<article data-reminder-id="{{ reminder.id }}" data-type="{{ 'image' if not reminder.is_text else 'text' }}" data-visibility="public">
+		{% else %}
+		<article data-reminder-id="{{ reminder.id }}" data-type="{{ 'image' if not reminder.is_text else 'text' }}" data-visibility="private">
+		{% endif %}
 			<div class="shown">
 				{% if reminder.public == False %}
 				<span class="material-symbols-outlined lock_icon">
@@ -54,7 +58,11 @@
 					</li>
 					<li class="toggle_visibility">
 						<span class="material-symbols-outlined">
+							{% if reminder.public %}
+							visibility
+							{% else %}
 							visibility_lock
+							{% endif %}
 						</span>
 					</li>
 					<li class="delete_reminder">
