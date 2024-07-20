@@ -38,3 +38,7 @@ def teardown_db(exception):
 def not_found(error):
     """This method handles 404 errors"""
     return jsonify({"error": "Uh uh, Not found"}), 404
+
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port="5001", debug=True)
