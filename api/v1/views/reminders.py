@@ -52,16 +52,18 @@ def get_reminders_by_user(user_id):
 @jwt_required()
 def create_reminder():
     """Creates new Reminder"""
-
+    print(1)
     # Get user_id from JWT token
     user_id = get_jwt_identity()
+    print(2)
 
     if not request.get_json():
         abort(400, description="Not a JSON")
+    print(3)
 
     data = request.get_json()  # Get data from request
     data['user_id'] = user_id
-
+    print(4)
     new_reminder = Reminder()  # Create new Reminder
     for key, value in data.items():
         if key not in ['id', 'created_at', 'updated_at']:
