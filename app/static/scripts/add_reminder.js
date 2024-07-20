@@ -135,8 +135,8 @@ $(document).ready(function() {
 
 // Call the refreshAccessToken function before creating the reminder
 
-$('main').on('click', '.reminder_button', function(event) {
-	event.preventDefault();
+	$('.add_reminder_form').off('submit').submit(function(event) {
+		event.preventDefault();
 
 		const form = new FormData(this);
 

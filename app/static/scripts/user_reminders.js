@@ -2,10 +2,8 @@ $(document).ready(function () {
   /**
    * toggle the options list of a reminder
    */
-  $(".menu_icon")
-    .off("click")
-    .click(function (event) {
-      event.stopPropagation(); // Prevent the event from bubbling up
+  $('main').on('click', '.menu_icon', function(event) {
+    event.stopPropagation(); // Prevent the event from bubbling up
       const reminderOptions = $(this).parent().find(".reminder_options");
 
       if (reminderOptions.css("display") === "none") {
@@ -18,10 +16,11 @@ $(document).ready(function () {
   /**
    * magnify an image
    */
-  $(".magnify_icon")
-    .off("click")
-    .click(function (event) {
+
+  $('main').on('click', '.magnify_icon', function(event) {
+
       event.stopPropagation();
+      event.preventDefault() 
       const articleTag = $(this).closest("article");
       if (articleTag.data("type") == "image") {
         const imgTag = articleTag.find(".reminder_image");
@@ -48,14 +47,13 @@ $(document).ready(function () {
       /**
        * Blur the main element when clicking outside the fullscreen container
        */
-      $("main")
-        .off("click")
+      $(".fullscreen_container")
+      .off("click")
         .click(function (event) {
           $(".fullscreen_container").fadeOut(300);
           $(".fullscreen_container p").hide();
           $(".fullscreen_container img").hide();
           $("main > *").css("filter", "none");
-          $('main').off('click');
         });
 
       /**
