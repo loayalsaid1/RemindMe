@@ -9,7 +9,7 @@ function getTokenFromCookie() {
 const token = getTokenFromCookie();
 
 if (token) {
-  const reminderId = '99e456dd-96b4-414f-b056-11a396f0b134';
+  const reminderId = '8b16d67b-3001-46b2-a07a-0f879b942f37';
   const apiUrl = `http://localhost:5001/api/v1/reminders/${reminderId}`;
 
   fetch(apiUrl, {
