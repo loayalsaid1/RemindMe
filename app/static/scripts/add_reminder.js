@@ -167,6 +167,10 @@ $(document).ready(function() {
 				$('main > *').css('filter', 'none');
 			},
 			error: function (error) {
+				if (error.status === 401) {
+					window.location.href = '/login';
+				}
+				
 				console.log(error);
 				alert('Failed to add reminder');
 			}
