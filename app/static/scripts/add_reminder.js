@@ -132,9 +132,6 @@ $(document).ready(function() {
 
 	/** Handle the forms */
 
-
-// Call the refreshAccessToken function before creating the reminder
-
 	$('.add_reminder_form').off('submit').submit(function(event) {
 		event.preventDefault();
 
