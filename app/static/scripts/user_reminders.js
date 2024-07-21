@@ -1,3 +1,10 @@
+/**
+ * Blur main section
+ */
+function blurMain() {
+  $("main > *").not(".fullscreen_container").css("filter", "blur(5px)");
+}
+
 $(document).ready(function () {
   /**
    * toggle the options list of a reminder
@@ -16,7 +23,6 @@ $(document).ready(function () {
   /**
    * magnify an image
    */
-
   $('main').on('click', '.magnify_icon', function(event) {
 
       event.stopPropagation();
@@ -55,12 +61,6 @@ $(document).ready(function () {
           $(".fullscreen_container img").hide();
           $("main > *").css("filter", "none");
         });
-
-      /**
-       * blur the main element
-       */
     });
-    function blurMain() {
-      $("main > *").not(".fullscreen_container").css("filter", "blur(5px)");
-    }
+
 });

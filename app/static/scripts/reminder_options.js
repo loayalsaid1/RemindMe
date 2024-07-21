@@ -50,6 +50,73 @@ function toggleVisibility (reminder, visibility) {
 		reminder.find('.toggle_visibility span').text('visibility_lock');
 	}
 }
+
+function setEditTextReminderWindow() {		
+	$('.text_reminder_form').off('submit').on('submit', function (event) {
+		event.stopPropagation();
+		event.preventDefault();
+
+		const form = new FormData(this);
+		const visibility = form.get('reminder_visibility');
+		const isText = true;
+		const public = visibility === 'public';
+		const reminderText = form.get('reminder_text');
+		const caption = form.get('caption');
+
+		const id = $(this).data('reminder-id');
+		const token = getCookie('access_token_cookie');
+		const url = `http://localhost:5001/api/v1/reminders/${id}`;
+		console.log('before the ajaxs in edit')
+		$.ajax({
+			url: url,
+			method: 'PUT',
+			contentType: 'application/json',
+			headers: {
+				'Authorization': `Bearer ${token}`,
+			},
+			data: JSON.stringify({
+				'is_text': isText,
+				'public': public,
+				'text': reminderText,
+				'caption': caption
+			}),
+			success: function () {
+				/**
+				 * get remider
+				 * edit contents of it
+				 * trigger toggle visibility if visibility changed
+				 * fadeout the form and unblur the main
+				 */
+				const reminder = $('article[data-reminder-id="' + id + '"]');
+				reminder.find('.shown p').text(reminderText);
+				reminder.find('.caption').text(caption);
+				
+				if (visibility !== reminder.data('visibility')) {
+					toggleVisibility(reminder, visibility);
+				}
+			},
+			error: function (error) {
+				console.error(error);
+				if (error.status === 401) {
+					window.location.href = '/login';
+				} else {
+					alert('Failed to edit reminder now!, sorry for that!');
+				}
+			}
+		})
+		/**
+		 * reset the form
+		 * remove edit class and get back add class
+		 */
+		$('main > *').css('filter', 'none');
+		$('.text_reminder_window').fadeOut(300);
+		$(this).trigger('reset');
+		console.log('sadf				')
+		$(this).removeClass('edit_reminder');
+		$(this).addClass('add_reminder');
+	})
+}
+
 $(document).ready(function () {
 	/***** Different remidner intactions ...... Edit, delete, toggle visibility to public */
 
@@ -141,72 +208,7 @@ $(document).ready(function () {
 	 *
 	 * let me see!
 	 */
-	function setEditTextReminderWindow() {		
-		$('.text_reminder_form').off('submit').on('submit', function (event) {
-			event.stopPropagation();
-			event.preventDefault();
-
-			const form = new FormData(this);
-			const visibility = form.get('reminder_visibility');
-			const isText = true;
-			const public = visibility === 'public';
-			const reminderText = form.get('reminder_text');
-			const caption = form.get('caption');
-
-			const id = $(this).data('reminder-id');
-			const token = getCookie('access_token_cookie');
-			const url = `http://localhost:5001/api/v1/reminders/${id}`;
-			console.log('before the ajaxs in edit')
-			$.ajax({
-				url: url,
-				method: 'PUT',
-				contentType: 'application/json',
-				headers: {
-					'Authorization': `Bearer ${token}`,
-				},
-				data: JSON.stringify({
-					'is_text': isText,
-					'public': public,
-					'text': reminderText,
-					'caption': caption
-				}),
-				success: function () {
-					/**
-					 * get remider
-					 * edit contents of it
-					 * trigger toggle visibility if visibility changed
-					 * fadeout the form and unblur the main
-					 */
-					const reminder = $('article[data-reminder-id="' + id + '"]');
-					reminder.find('.shown p').text(reminderText);
-					reminder.find('.caption').text(caption);
-					
-					if (visibility !== reminder.data('visibility')) {
-						toggleVisibility(reminder, visibility);
-					}
-				},
-				error: function (error) {
-					console.error(error);
-					if (error.status === 401) {
-						window.location.href = '/login';
-					} else {
-						alert('Failed to edit reminder now!, sorry for that!');
-					}
-				}
-			})
-			/**
-			 * reset the form
-			 * remove edit class and get back add class
-			 */
-			$('main > *').css('filter', 'none');
-			$('.text_reminder_window').fadeOut(300);
-			$(this).trigger('reset');
-			console.log('sadf				')
-			$(this).removeClass('edit_reminder');
-			$(this).addClass('add_reminder');
-		})
-	}
-
+	
 
 	$('main').on('click', 'article .edit_reminder', function (event) {
 		event.stopPropagation();
