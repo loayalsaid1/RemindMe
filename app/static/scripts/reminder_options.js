@@ -97,11 +97,11 @@ $(document).ready(function () {
 			},
 			error: function (error) {
 				console.log(error);
-				// if (error.status === 401) {
-				// 	// window.location.href = '/login';
-				// } else {
-				// 	alert('Failed to toggle visibility now, sorry for that!');
-				// }
+				if (error.status === 401) {
+					// window.location.href = '/login';
+				} else {
+					alert('Failed to toggle visibility now, sorry for that!');
+				}
 			}
 		});
 	});
