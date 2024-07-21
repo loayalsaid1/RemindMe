@@ -168,7 +168,14 @@ $(document).ready(function() {
 		blurMain();
 	})
 
-	/************************/
+	/**
+	 * Get back the placeholder image when resetting the
+	 * form of adding an image reminder
+	 */
+	$('.add_image_reminder button[type="reset"]').click(function(event) {
+		event.stopPropagation();
+		$('.add_image_reminder img').attr('src', 'https:///designshack.net/wp-content/uploads/placehold.jpg');
+	})
 
 	/**
 		* Hide the form & unblur the main
