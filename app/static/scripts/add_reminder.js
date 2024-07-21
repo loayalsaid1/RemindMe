@@ -132,7 +132,7 @@ $(document).ready(function() {
 
 	/** Handle the forms */
 
-	$('.add_reminder_form').off('submit').submit(function(event) {
+	$('.text_reminder_form').off('submit').submit(function(event) {
 		event.preventDefault();
 
 		const form = new FormData(this);

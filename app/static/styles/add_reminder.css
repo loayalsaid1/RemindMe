@@ -39,7 +39,7 @@
 }
 
 .add_image_reminder_form,
-.add_reminder_form {
+.text_reminder_form {
 	width: 100%;
 	display: flex;
 	flex-direction: column;
@@ -47,7 +47,7 @@
 }
 
 .add_image_reminder_form > label,
-.add_reminder_form > label {
+.text_reminder_form > label {
 	margin-bottom: var(--small-gap);
 
 	font-weight: 600;
@@ -55,12 +55,12 @@
 }
 
 .add_image_reminder_form label[for="img_private"],
-.add_reminder_form label[for="private"] {
+.text_reminder_form label[for="private"] {
 	margin-right: var(--large-gap);
 }
 
 .add_image_reminder_form textarea,
-.add_reminder_form textarea {
+.text_reminder_form textarea {
 	padding: 7px;
 	margin-bottom: var(--medium-gap);
 

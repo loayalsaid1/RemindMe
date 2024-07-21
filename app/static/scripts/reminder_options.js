@@ -105,4 +105,12 @@ $(document).ready(function () {
 			}
 		});
 	});
+
+	/***Abit trecky one!
+	 * 
+	 * use the add_reminder form to edit a reminder
+	 * 
+	 * let me see!
+	 */
+	
 })
