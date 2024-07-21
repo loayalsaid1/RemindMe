@@ -16,8 +16,8 @@ app = Flask(__name__, template_folder='templates')
     These are just arbitrary values for now.
 """
 app.config['JWT_SECRET_KEY'] = 'CIBwsUdxn67Uezxe8JAa_OLHuiPn0wQIHFZvv3pjEZo'
-# app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(days=356)
-# app.config['JWT_REFRESH_TOKEN_EXPIRES'] = timedelta(days=356)
+app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(days=356)
+app.config['JWT_REFRESH_TOKEN_EXPIRES'] = timedelta(days=356)
 app.config['JWT_TOKEN_LOCATION'] = ['headers']
 jwt = JWTManager(app)
 
