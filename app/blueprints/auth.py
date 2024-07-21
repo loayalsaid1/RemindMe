@@ -97,44 +97,44 @@ def finalize_profile():
     """
     form = FinalizeProfile()
     if request.method == "POST":
-       print(form.username.data)
-    if form.validate_on_submit():
-        image_file = form.image.data
-        username = form.username.data
-        gender = form.gender.data
-        description = form.description.data
+        # print(form.username.data)
+        if form.validate_on_submit():
+            image_file = form.image.data
+            username = form.username.data
+            gender = form.gender.data
+            description = form.description.data
 
-        if username != current_user.user_name:
-            # print(current_user.user_name)
-            if storage.filter_objects(User, "user_name", username):
-                # print(2)
-                # print(username)
-                # print(storage.filter_objects(User, "user_name", username))
-                flash("Username already exists", category="danger")
-                return render_template('finalize_profile.html', form=form)
-        if image_file:
-            extention = image_file.filename.split('.')[-1]
-            temp_file_path = f'temp_image.{extention}'
-            with open(temp_file_path, 'wb') as f:
-                image_file.save(f)
-            with open(temp_file_path, 'rb') as f:
-                result = ik.upload_file(
-                    file=f, file_name=f'{current_user.user_name}.{extention}')
-            os.remove(temp_file_path)
+            if username != current_user.user_name:
+                # print(current_user.user_name)
+                if storage.filter_objects(User, "user_name", username):
+                    # print(2)
+                    # print(username)
+                    # print(storage.filter_objects(User, "user_name", username))
+                    flash("Username already exists", category="danger")
+                    return render_template('finalize_profile.html', form=form)
+            if image_file:
+                extention = image_file.filename.split('.')[-1]
+                temp_file_path = f'temp_image.{extention}'
+                with open(temp_file_path, 'wb') as f:
+                    image_file.save(f)
+                with open(temp_file_path, 'rb') as f:
+                    result = ik.upload_file(
+                        file=f, file_name=f'{current_user.user_name}.{extention}')
+                os.remove(temp_file_path)
 
-            if result.response_metadata.http_status_code == 200:
-                image_url = result.url
-            else:
-                flash("Failed to upload image", category="danger")
-                return render_template('finalize_profile.html', form=form)
+                if result.response_metadata.http_status_code == 200:
+                    image_url = result.url
+                else:
+                    flash("Failed to upload image", category="danger")
+                    return render_template('finalize_profile.html', form=form)
 
-        current_user.user_name = username
-        current_user.gender = gender
-        current_user.description = description
-        current_user.img_url = image_url
-        storage.save()
+            current_user.user_name = username
+            current_user.gender = gender
+            current_user.description = description
+            current_user.img_url = image_url
+            storage.save()
 
-        return redirect(url_for('profile'))
+            return redirect(url_for('profile'))
 
     return render_template(
         'finalize_profile.html', form=form, user=current_user)
@@ -170,6 +170,7 @@ def login():
         except TypeError:
             user = None
 
+        # check if user exists, verify password and login
         if not user or not user.verify_password(password):
             flash('Wrong username or password', category='error')
             return redirect(url_for('auth.login'))
