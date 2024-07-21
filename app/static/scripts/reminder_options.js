@@ -1,4 +1,26 @@
 /**
+ * position add reminder windows
+ */
+function positionAddReminderWindows() {
+	const scrollY = $("main").scrollTop();
+	const mainHeight = $("main").height();
+	const mainWidth = $("main").width();
+
+	$(".add_reminder_window").css({
+		top: `${scrollY + mainHeight / 2}px`,
+		left: `${mainWidth / 2}px`,
+	});
+}
+
+/**
+ * blur main section except for the froms
+ */
+function blurMain() {
+	$('main > *').not('.add_image_reminder').not('.add_text_reminder').css('filter', 'blur(2px)');
+}
+
+
+/**
  * To Get the access_token_cookie for JWT
  */
 function getCookie(name) {
@@ -114,10 +136,102 @@ $(document).ready(function () {
 	});
 
 	/***Abit trecky one!
-	 * 
+	 *
 	 * use the add_reminder form to edit a reminder
-	 * 
+	 *
 	 * let me see!
 	 */
-	
+	function setEditTextReminderWindow() {		
+		$('.text_reminder_form').off('submit').on('submit', function (event) {
+			event.stopPropagation();
+			event.preventDefault();
+
+			const form = new FormData(this);
+			const visibility = form.get('reminder_visibility');
+			const isText = true;
+			const public = visibility === 'public';
+			const reminderText = form.get('reminder_text');
+			const caption = form.get('caption');
+
+			const id = $(this).data('reminder-id');
+			const token = getCookie('access_token_cookie');
+			const url = `http://localhost:5001/api/v1/reminders/${id}`;
+			console.log('before the ajaxs in edit')
+			$.ajax({
+				url: url,
+				method: 'PUT',
+				contentType: 'application/json',
+				headers: {
+					'Authorization': `Bearer ${token}`,
+				},
+				data: JSON.stringify({
+					'is_text': isText,
+					'public': public,
+					'text': reminderText,
+					'caption': caption
+				}),
+				success: function () {
+					/**
+					 * get remider
+					 * edit contents of it
+					 * trigger toggle visibility if visibility changed
+					 * fadeout the form and unblur the main
+					 */
+					const reminder = $('article[data-reminder-id="' + id + '"]');
+					reminder.find('.shown p').text(reminderText);
+					reminder.find('.caption').text(caption);
+					
+					if (visibility !== reminder.data('visibility')) {
+						toggleVisibility(reminder, visibility);
+					}
+				},
+				error: function (error) {
+					console.error(error);
+					if (error.status === 401) {
+						window.location.href = '/login';
+					} else {
+						alert('Failed to edit reminder now!, sorry for that!');
+					}
+				}
+			})
+			/**
+			 * reset the form
+			 * remove edit class and get back add class
+			 */
+			$('main > *').css('filter', 'none');
+			$('.text_reminder_window').fadeOut(300);
+			$(this).trigger('reset');
+			console.log('sadf				')
+			$(this).removeClass('edit_reminder');
+			$(this).addClass('add_reminder');
+		})
+	}
+
+
+	$('main').on('click', 'article .edit_reminder', function (event) {
+		event.stopPropagation();
+		positionAddReminderWindows()
+
+		setEditTextReminderWindow()
+		const form = $('.text_reminder_form');
+		const reminderId = $(this).closest('article').data('reminder-id');
+		form.data('reminder-id', reminderId);
+		form.parent().find('h2').text('Text Reminder');
+		form.find('button[type=submit]').text('Done');
+
+		form.removeClass('add_reminder').addClass('edit_reminder');
+
+		const reminder = $(this).closest('article');
+		const caption = reminder.find('.caption').text();
+		const text = reminder.find('.shown p').text();
+		const visibility = reminder.data('reminder-visibility');
+
+		form.find('textarea[name="caption"]').val(caption);
+		form.find('textarea[name="reminder_text"]').val(text);
+		form.find(`input[name="reminder_visibility"][value="${visibility}"]`).attr('checked', true);
+		blurMain();
+
+		$('.text_reminder_window').fadeIn(300);
+	});
+
 })

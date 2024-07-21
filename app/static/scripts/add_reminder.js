@@ -2,7 +2,7 @@ $(document).ready(function() {
 	/**
 	 * blur main section except for the froms
 	 */
-	function blur_main() {
+	function blurMain() {
 		$('main > *').not('.add_image_reminder').not('.add_text_reminder').css('filter', 'blur(2px)');
 	}
 
@@ -87,6 +87,59 @@ $(document).ready(function() {
 
 		return reminder;
 	}
+
+
+	/**
+	 * set text reminder widnwo for adding
+	 */
+	function setAddTextReminderWindow() {
+		$('.text_reminder_form').off('submit');
+		$('.text_reminder_form').submit(function(event) {
+			event.stopPropagation();
+			event.preventDefault();
+	
+			const form = new FormData(this);
+	
+			const data = {
+				isText: true,
+				public: form.get('reminder_visibility') === 'public',
+				text: form.get('reminder_text'),
+				caption: form.get('caption')
+			}
+	
+			const token = getCookie('access_token_cookie');
+			const endpointURL = 'http://localhost:5001/api/v1/reminders';
+	
+			$.ajax({
+				url: endpointURL,
+				method: 'POST',
+				data: JSON.stringify(data),
+				contentType: 'application/json',
+				headers: {
+					'Authorization': `Bearer ${token}`
+				},
+				success: function (data) {
+					console.log(data);
+					const reminder = makeTextReminder(data);
+					$('main').prepend(reminder);
+	
+					$('.add_text_reminder').fadeOut(100);
+					$('main > *').css('filter', 'none');
+				},
+				error: function (error) {
+					if (error.status === 401) {
+						window.location.href = '/login';
+					}
+					
+					console.log(error);
+					alert('Failed to add reminder');
+				}
+			})
+
+			$('main').css('filter', 'none');
+		});
+	}
+
 	/**
 	 * Showing the add text reminder form whwen chlicking the button
 	 * and the buttons to choose
@@ -94,9 +147,10 @@ $(document).ready(function() {
 	$('.add_text_reminder_button').off('click').click(function(event) {
 		event.stopPropagation();
 		positionAddReminderWindows()
+		setAddTextReminderWindow();
 		$('.add_image_reminder').fadeOut(100);
 		$('.add_text_reminder').fadeIn(300);
-		blur_main();
+		blurMain();
 	})
 
 
@@ -109,7 +163,7 @@ $(document).ready(function() {
 		positionAddReminderWindows()
 		$('.add_text_reminder').fadeOut(100);
 		$('.add_image_reminder').fadeIn(300);
-		blur_main();
+		blurMain();
 	})
 
 	/************************/
@@ -126,51 +180,4 @@ $(document).ready(function() {
 		$('main > *').css('filter', 'none');
 	})
 
-
-
-	/*******************/
-
-	/** Handle the forms */
-
-	$('.text_reminder_form').off('submit').submit(function(event) {
-		event.preventDefault();
-
-		const form = new FormData(this);
-
-		const data = {
-			isText: true,
-			public: form.get('reminder_visibility') === 'public',
-			text: form.get('reminder_text'),
-			caption: form.get('caption')
-		}
-
-		const token = getCookie('access_token_cookie');
-		const endpointURL = 'http://localhost:5001/api/v1/reminders';
-
-		$.ajax({
-			url: endpointURL,
-			method: 'POST',
-			data: JSON.stringify(data),
-			contentType: 'application/json',
-			headers: {
-				'Authorization': `Bearer ${token}`
-			},
-			success: function (data) {
-				console.log(data);
-				const reminder = makeTextReminder(data);
-				$('main').prepend(reminder);
-
-				$('.add_text_reminder').fadeOut(100);
-				$('main > *').css('filter', 'none');
-			},
-			error: function (error) {
-				if (error.status === 401) {
-					window.location.href = '/login';
-				}
-				
-				console.log(error);
-				alert('Failed to add reminder');
-			}
-		})
-	});
 })

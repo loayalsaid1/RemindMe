@@ -34,7 +34,7 @@ $(document).ready(function () {
       }
       $(".fullscreen_container").css("display", "flex");
       $(".fullscreen_container").fadeIn(300);
-      blur_main();
+      blurMain();
 
       const scrollY = $("main").scrollTop();
       const mainHeight = $("main").height();
@@ -60,7 +60,7 @@ $(document).ready(function () {
        * blur the main element
        */
     });
-    function blur_main() {
+    function blurMain() {
       $("main > *").not(".fullscreen_container").css("filter", "blur(5px)");
     }
 });
