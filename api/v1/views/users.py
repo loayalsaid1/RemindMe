@@ -50,7 +50,7 @@ def create_user():
 @app_views.route('/users/<user_id>', methods=['PUT'], strict_slashes=False)
 @jwt_required()
 def update_user(user_id):
-    """Update the profile of RemindMe user"""
+    """Update the profile of a RemindMe user"""
     current_user_id = get_jwt_identity()
     if current_user_id != user_id:
         abort(403, description="Access forbidden")

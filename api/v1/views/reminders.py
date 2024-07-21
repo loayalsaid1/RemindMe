@@ -1,5 +1,9 @@
 #!/usr/bin/python3
-"""Module that handles views for reminders"""
+"""
+This module defines an API endpoint to delete a specific reminder.
+It includes a function `delete_reminder` that deletes an existing
+reminder if the user has permission to do so.
+"""
 
 from imagekitio import ImageKit
 from flask import request
@@ -68,17 +72,17 @@ def get_reminders_by_user(user_id):
 def create_reminder():
     """Creates new Reminder"""
     # Get user_id from JWT token
-    # user_id = get_jwt_identity()
-    user_id = "55882be5-acd3-4f31-ad15-d28f824ca577"
+    user_id = get_jwt_identity()
 
     if not request.get_json():
         abort(400, description="Not a JSON")
 
     data = request.get_json()  # Get data from request
-    data['user_id'] = user_id
+    data['user_id'] = user_id  # Add user_id to data
 
     new_reminder = Reminder()  # Create new Reminder
 
+    # Upload image to ImageKit for image reminders
     if 'is_text' in data and data['is_text'] == False:
         if 'image' in request.files:
             image = request.files['image']
@@ -86,7 +90,6 @@ def create_reminder():
             temp_file_path = f'temp_image.{extention}'
             image.save(temp_file_path)
 
-            # Upload image to ImageKit
             response = ik.upload([temp_file_path], options={
                                  "use_unique_file_name": False})
             img_url = response['files'][0]['url']
@@ -147,7 +150,13 @@ def update_reminder(reminder_id):
     "/reminders/<reminder_id>", strict_slashes=False, methods=["DELETE"])
 @jwt_required()
 def delete_reminder(reminder_id):
-    """Deletes an existing Reminder"""
+    """
+    Deletes an existing Reminder
+    Parameters:
+        reminder_id (int): The ID of the reminder to be deleted
+    Returns:
+        tuple: A tuple containing an empty JSON response and code of 200
+    """
     user_id = get_jwt_identity()  # Get current user id
     reminder = storage.get(Reminder, reminder_id)
     if not reminder:
