@@ -1,5 +1,3 @@
-
-
 if (token) {
   const apiUrl = `http://localhost:5001/api/v1/reminders/${reminderId}`;
 

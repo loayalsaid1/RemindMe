@@ -56,31 +56,24 @@ def refresh():
 
 
 @auth.route('/upload', methods=['POST'])
-@jwt_required()
 def upload_image():
     """Method to upload an image"""
     if 'image' not in request.files:
         return jsonify({"error": "No image file provided"}), 400
 
     image = request.files['image']
-    user_id = get_jwt_identity()
-    user = storage.get(User, user_id)
-
-    if not user:
-        return jsonify({"error": "User not found"}), 404
 
     extention = image.filename.split('.')[-1]
     temp_file_path = f'temp_image.{extention}'
     image.save(temp_file_path)
 
     with open(temp_file_path, 'rb') as f:
-        result = ImageKit.upload_file(
-            file=f, file_name=f'{user.user_name}.{extention}')
+        result = ik.upload_file(
+            file=f, file_name=f'mrnobody.{extention}')
 
     os.remove(temp_file_path)
 
-    if result['error']:
-        return jsonify({"error": "Failed to upload image"}), 500
 
-    image_url = result['response']['url']
-    return jsonify({"url": image_url}), 200
+    if result.response_metadata.http_status_code == 200:
+        image_url = result.url
+        return jsonify({"url": image_url}), 200
