@@ -97,7 +97,6 @@ def finalize_profile():
     """
     form = FinalizeProfile()
     if request.method == "POST":
-        # print(form.username.data)
         if form.validate_on_submit():
             image_file = form.image.data
             username = form.username.data
@@ -105,11 +104,7 @@ def finalize_profile():
             description = form.description.data
 
             if username != current_user.user_name:
-                # print(current_user.user_name)
                 if storage.filter_objects(User, "user_name", username):
-                    # print(2)
-                    # print(username)
-                    # print(storage.filter_objects(User, "user_name", username))
                     flash("Username already exists", category="danger")
                     return render_template('finalize_profile.html', form=form)
             if image_file:
@@ -134,7 +129,7 @@ def finalize_profile():
             current_user.img_url = image_url
             storage.save()
 
-            return redirect(url_for('profile'))
+            return redirect(url_for('users.profile'))
 
     return render_template(
         'finalize_profile.html', form=form, user=current_user)
