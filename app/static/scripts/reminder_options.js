@@ -8,6 +8,26 @@ function getCookie(name) {
 }
 
 
+/**
+ * Toggle the icons and attibutes of a reminder when
+ * visibility attibute changes
+ */
+function toggleVisibility (reminder, visibility) {
+	reminder.data('visibility', visibility);
+	console.log(visibility);
+	if (visibility === "public") {
+		console.log('1')
+		reminder.find('.lock_icon').remove()
+		console.log('2')
+
+		reminder.find('.toggle_visibility span').text('visibility');
+	} else {
+		console.log('3')
+
+		reminder.find('.shown').prepend(`<span class="material-symbols-outlined lock_icon">visibility_lock</span>`);
+		reminder.find('.toggle_visibility span').text('visibility_lock');
+	}
+}
 $(document).ready(function () {
 	/***** Different remidner intactions ...... Edit, delete, toggle visibility to public */
 
@@ -80,25 +100,12 @@ $(document).ready(function () {
 			success: function () {
 				console.log('1')
 				console.log(reminder.data('visibility'));
-				reminder.data('visibility', visibility);
-				console.log(visibility);
-				if (visibility === "public") {
-					console.log('1')
-					reminder.find('.lock_icon').remove()
-					console.log('2')
-
-					reminder.find('.toggle_visibility span').text('visibility');
-				} else {
-					console.log('3')
-
-					reminder.find('.shown').prepend(`<span class="material-symbols-outlined lock_icon">visibility_lock</span>`);
-					reminder.find('.toggle_visibility span').text('visibility_lock');
-				}
+				toggleVisibility(reminder, visibility);
 			},
 			error: function (error) {
 				console.log(error);
 				if (error.status === 401) {
-					// window.location.href = '/login';
+					window.location.href = '/login';
 				} else {
 					alert('Failed to toggle visibility now, sorry for that!');
 				}
