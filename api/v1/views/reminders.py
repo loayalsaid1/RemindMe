@@ -64,11 +64,12 @@ def get_reminders_by_user(user_id):
 
 
 @app_views.route("/reminders", strict_slashes=False, methods=["POST"])
-@jwt_required()
+# @jwt_required()
 def create_reminder():
     """Creates new Reminder"""
     # Get user_id from JWT token
-    user_id = get_jwt_identity()
+    # user_id = get_jwt_identity()
+    user_id = "55882be5-acd3-4f31-ad15-d28f824ca577"
 
     if not request.get_json():
         abort(400, description="Not a JSON")
