@@ -35,7 +35,7 @@ function getCookie(name) {
  * Mkae  a text reminder out of api response of newliy created reminder
  * 
  */
-function makeTextReminder(data) {
+function makeReminder(data) {
 	const text = data.text;
 	const caption = data.caption;
 	const public = data.public;
@@ -119,7 +119,7 @@ function setAddTextReminderWindow() {
 			},
 			success: function (data) {
 				console.log(data);
-				const reminder = makeTextReminder(data);
+				const reminder = makeReminder(data);
 				$('main').prepend(reminder);
 
 				$('.add_text_reminder').fadeOut(100);
@@ -141,6 +141,18 @@ function setAddTextReminderWindow() {
 
 
 $(document).ready(function() {
+	
+	/**
+		* Hide the form & unblur the main
+		*
+		*
+		* when clicking the cancel icon
+		*/
+	$('.cancel_icon').off('click').click(function(event) {
+		event.stopPropagation();
+		$(this).parent().fadeOut(300);
+		$('main > *').css('filter', 'none');
+	})
 
 	/**
 	 * Showing the add text reminder form whwen chlicking the button
@@ -178,15 +190,11 @@ $(document).ready(function() {
 	})
 
 	/**
-		* Hide the form & unblur the main
-		*
-		*
-		* when clicking the cancel icon
-		*/
-	$('.cancel_icon').off('click').click(function(event) {
-		event.stopPropagation();
-		$(this).parent().fadeOut(300);
-		$('main > *').css('filter', 'none');
-	})
-
+	 * when submitting n image..
+	 * submit it..
+	 * get the data of it..
+	 * get hte file
+	 * sedn an ajax request.
+	 * 
+	 */
 })
