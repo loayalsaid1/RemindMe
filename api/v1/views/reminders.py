@@ -102,19 +102,25 @@ def create_reminder():
             image.save(temp_file_path)
 
             # Upload image to ImageKit
-            response = ik.upload([temp_file_path], options={
-                                 "use_unique_file_name": False})
-            img_url = response['files'][0]['url']
+            with open(temp_file_path, 'rb') as f:
+                result = ik.upload_file(
+                    file=f, file_name=f'{new_reminder.id}.{extention}')
+            os.remove(temp_file_path)
 
-            os.remove(temp_file_path)  # Remove temporary file
-
-            data['img_url'] = img_url
+            if result.response_metadata.http_status_code == 200:
+                image_url = result.url
+            else:
+                abort(500, description="Failed to upload image")
+            print(image_url)
+            data['img_url'] = image_url
+            print(data)
 
     for key, value in data.items():
         if key not in ['id', 'created_at', 'updated_at']:
             setattr(new_reminder, key, value)
 
     new_reminder.save()
+    print(new_reminder.to_dict())
     return jsonify(new_reminder.to_dict()), 201
 
 
