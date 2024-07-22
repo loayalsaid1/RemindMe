@@ -36,14 +36,14 @@ function getCookie(name) {
  * 
  */
 function makeReminder(data) {
+	console.log(data);
 	const text = data.text;
 	const caption = data.caption;
 	const public = data.public;
 	const userId = data.user_id;
 	const isText = data.is_text;
 	const id = data.id;
-	const imgURL = data.imge_url;
-
+	const imgURL = data.img_url;
 	const reminder = `
 	<article data-reminder-id="${id}" data-type="${isText ? 'text' : 'image'}"  data-visibility="${public ? 'public' : 'private'}">
 		<div class="shown">
@@ -222,8 +222,8 @@ $(document).ready(function() {
 			data: form,
 			processData: false,
 			contentType: false,
-			mimeType: 'multipart/form-data',
 			success: function (data) {
+				console.log(data);
 				const reminder = makeReminder(data);
 				$('main').prepend(reminder);
 			},
@@ -237,9 +237,9 @@ $(document).ready(function() {
 			}
 		})
 		
-		$('.add_text_reminder').fadeOut(100);
+		$('.add_image_reminder').fadeOut(100);
 		$('main > *').css('filter', 'none');
-		$('.add_text_reminder_form').trigger('reset');
+		$('.add_image_reminder_form').trigger('reset');
 
 	})
 })
