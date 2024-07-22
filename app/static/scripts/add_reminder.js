@@ -200,6 +200,10 @@ $(document).ready(function() {
 		event.preventDefault();
 		event.stopPropagation();
 
+		if ($(this).find('input[type=file]')[0].files.length === 0) {
+			alert('Select a reminder  before you submit');
+			return;
+		}
 		const form = new FormData(this);
 
 		form.append('is_text', false);
