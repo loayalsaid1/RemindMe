@@ -181,7 +181,7 @@ $(document).ready(function() {
 	 * Get back the placeholder image when resetting the
 	 * form of adding an image reminder
 	 */
-	$('.add_image_reminder button[type="reset"]').click(function(event) {
+	$('.add_image_reminder').on('reset', function(event) {
 		event.stopPropagation();
 		$('.add_image_reminder img').attr('src', 'https:///designshack.net/wp-content/uploads/placehold.jpg');
 	})
