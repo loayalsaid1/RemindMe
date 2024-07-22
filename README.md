@@ -15,6 +15,7 @@ RemindMe is a user-friendly web application designed to help users manage their 
 - [Technologies](#technologies)
 - [Contributing](#contributing)
 - [License](#license)
+- [Contact](#contact)
 
 ## Features
 
@@ -114,8 +115,14 @@ Contributions from the community are welcome. You might want to contact us first
 
 ## License
 
-Information about the license for the app.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Contact
 
-Contact information for the app maintainer.
+For inquiries, reach out to us:
+1. [Loay Al-Said on GitHub](https://github.com/loayalsaid1)
+ - [Loay Al-Said on X](https://x.com/LoayAlsaid1)
+
+2. [Iygeal Anozie on GitHub](https://github.com/iygeal)
+ - [Iygeal Anozie on X](https://x.com/iygeal)
+ - [Iygeal Anozie on LinkedIn](https://www.linkedin.com/in/iygeal/)
