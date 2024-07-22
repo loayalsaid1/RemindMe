@@ -26,11 +26,11 @@ RemindMe is a user-friendly web application designed to help users manage their 
 ## Installation
 
 ### Prerequisites
+
 Make sure you have these installed before proceeding to next steps:
 
 - Python 3.x
 - MySQL
-
 
 ### Steps
 
@@ -40,20 +40,77 @@ Make sure you have these installed before proceeding to next steps:
    cd RemindMe
    ```
 2. Set Up Virtual Environment
+   ```
+   python3 -m venv venv
+   source venv/bin/activate
+   ```
+3. Install the Dependencies
+   ```
+   pip install -r ./config/requirements.txt
+   ```
+4. Launch MySQL And Set Up The Following:
     ```
-    python3 -m venv venv
-    source venv/bin/activate
+    CREATE DATABASE IF NOT EXISTS remind_me_dev_db;
+    CREATE USER IF NOT EXISTS 'remind_me_dev'@'localhost' IDENTIFIED BY 'Remind_me_dev_pwd1';
+    GRANT ALL PRIVILEGES ON `remind_me_dev_db`.* TO 'remind_me_dev'@'localhost';
+    GRANT SELECT ON `performance_schema`.* TO 'remind_me_dev'@'localhost';
+    FLUSH PRIVILEGES;
     ```
-3.
+5. Run the Application
+    ```
+    ./config/run_servers.sh
+    ```
+
 
 
 ## Usage
+### Access the Application
 
-Instructions on how to use the app.
+`Open your web browser and navigate to http://localhost:5000 to access the RemindMe application.
+`
+
+### User Registration and Login
+* Register: Create a new account using the registration form.
+* Login: Access your account using your email and password.
+
+### Reminder Management
+- Create Reminder: Add new reminders with descriptions and optional tags.
+- View Reminders: View a list of your reminders.
+- Update Reminder: Edit the details of an existing reminder.
+- Delete Reminder: Remove reminders that are no longer needed.
+
+### Profile Management
+- Update Profile: Modify your username, gender, and description.
+- Upload Profile Picture: Add or change your profile picture using ImageKit.
+
+## API Endpoints
+### Authentication
+1. Register: POST /api/v1/auth/register
+2. Login: POST /api/v1/auth/login
+### Reminders
+1. Create Reminder: POST /api/v1/reminders
+2. Get Reminders: GET /api/v1/reminders
+3. Update Reminder: PUT /api/v1/reminders/:id
+4. Delete Reminder: DELETE /api/v1/reminders/:id
+### Profile
+1. Update Profile: PUT /api/v1/profile
+2. Upload Profile Picture: POST /api/v1/profile/upload
+
+## Technologies
+1. Backend: Flask, Flask-Login, Flask-JWT, SQLAlchemy
+2. Frontend: HTML, CSS, JavaScript
+3. Database: MySQL
+4. Image Handling: ImageKit
+5. Deployment: Docker, Gunicorn, Nginx
+
 
 ## Contributing
-
-Guidelines for contributing to the app.
+Contributions from the community are welcome. You might want to contact us first to discus desired features.
+1. Fork the repository.
+2. Create your feature branch: `git checkout -b feature/your-feature-name`
+3. Commit your changes: `git commit -m 'Add some feature'`
+4. Push to the branch: `git push origin feature/your-feature-name`
+5. Open a pull request.
 
 ## License
 
