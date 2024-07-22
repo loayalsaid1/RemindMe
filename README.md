@@ -120,9 +120,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## Contact
 
 For inquiries, reach out to us:
-1. [Loay Al-Said on GitHub](https://github.com/loayalsaid1)
-    - [Loay Al-Said on X](https://x.com/LoayAlsaid1)
+1. ### Loay Al-Said [GitHub](https://github.com/loayalsaid1)/[Twitter](https://x.com/LoayAlsaid1)
 
-2. [Iygeal Anozie on GitHub](https://github.com/iygeal)
-     - [Iygeal Anozie on X](https://x.com/iygeal)
-    - [Iygeal Anozie on LinkedIn](https://www.linkedin.com/in/iygeal/)
+2. ### Iygeal Anozie [GitHub](https://github.com/iygeal)/[Twitter](https://x.com/iygeal)/[LinkedIn](https://www.linkedin.com/in/iygeal/)
