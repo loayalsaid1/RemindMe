@@ -2,7 +2,7 @@
  * blur main section except for the froms
  */
 function blurMain() {
-	$('main > *').not('.add_image_reminder').not('.add_text_reminder').css('filter', 'blur(2px)');
+	$('main > *').not('.add_image_reminder').not('.add_text_reminder').css('filter', 'blur(5px)');
 }
 
 
