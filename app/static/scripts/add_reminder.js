@@ -36,7 +36,6 @@ function getCookie(name) {
  * 
  */
 function makeReminder(data) {
-	console.log(data);
 	const text = data.text;
 	const caption = data.caption;
 	const public = data.public;
@@ -118,7 +117,6 @@ function setAddTextReminderWindow() {
 				'Authorization': `Bearer ${token}`
 			},
 			success: function (data) {
-				console.log(data);
 				const reminder = makeReminder(data);
 				$('main').prepend(reminder);
 			},
@@ -210,8 +208,6 @@ $(document).ready(function() {
 
 		const token = getCookie('access_token_cookie');
 		const url = 'http://localhost:5001/api/v1/reminders';
-		console.log(form.keys())
-		console.log(form.values())
 
 		$.ajax({
 			url: url,
@@ -223,7 +219,6 @@ $(document).ready(function() {
 			processData: false,
 			contentType: false,
 			success: function (data) {
-				console.log(data);
 				const reminder = makeReminder(data);
 				$('main').prepend(reminder);
 			},

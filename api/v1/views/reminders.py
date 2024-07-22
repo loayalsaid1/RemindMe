@@ -93,9 +93,7 @@ def create_reminder():
     new_reminder = Reminder()  # Create new Reminder
 
     if 'is_text' in data and data['is_text'] == False:
-        print(1)
         if 'reminder_image' in request.files:
-            print(2)
             image = request.files['reminder_image']
             extention = image.filename.split('.')[-1]
             temp_file_path = f'temp_image.{extention}'
@@ -111,16 +109,13 @@ def create_reminder():
                 image_url = result.url
             else:
                 abort(500, description="Failed to upload image")
-            print(image_url)
             data['img_url'] = image_url
-            print(data)
 
     for key, value in data.items():
         if key not in ['id', 'created_at', 'updated_at']:
             setattr(new_reminder, key, value)
 
     new_reminder.save()
-    print(new_reminder.to_dict())
     return jsonify(new_reminder.to_dict()), 201
 
 
