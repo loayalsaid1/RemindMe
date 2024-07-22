@@ -121,9 +121,6 @@ function setAddTextReminderWindow() {
 				console.log(data);
 				const reminder = makeReminder(data);
 				$('main').prepend(reminder);
-
-				$('.add_text_reminder').fadeOut(100);
-				$('main > *').css('filter', 'none');
 			},
 			error: function (error) {
 				if (error.status === 401) {
@@ -134,7 +131,9 @@ function setAddTextReminderWindow() {
 				alert('Failed to add reminder');
 			}
 		})
-
+		
+		$('.add_text_reminder').fadeOut(100);
+		$('main > *').css('filter', 'none');
 		$('main').css('filter', 'none');
 	});
 }
@@ -191,10 +190,56 @@ $(document).ready(function() {
 
 	/**
 	 * when submitting n image..
-	 * submit it..
 	 * get the data of it..
 	 * get hte file
 	 * sedn an ajax request.
-	 * 
+	 * with token, to url to with files. 
+	 * make a reminder out of the data.
+	 * nd fadeaway and unblur the things;
+	 * and reset the form
 	 */
+	$('.add_image_reminder_form').submit(function (event) {
+		event.preventDefault();
+		event.stopPropagation();
+
+		const form = new FormData(this);
+
+		form.append('is_text', false);
+		form.set('public', form.get('reminder_visibility') === 'public');
+		form.delete('reminder_visibility');
+
+		const token = getCookie('access_token_cookie');
+		const url = 'http://localhost:5001/api/v1/reminders';
+		console.log(form.keys())
+		console.log(form.values())
+
+		$.ajax({
+			url: url,
+			method: 'POST',
+			headers: {
+				'Authorization': `Bearer ${token}`
+			},
+			data: form,
+			processData: false,
+			contentType: false,
+			mimeType: 'multipart/form-data',
+			success: function (data) {
+				const reminder = makeReminder(data);
+				$('main').prepend(reminder);
+			},
+			error: function (error) {
+				if (error.status === 401) {
+					window.location.href = '/login';
+				} else {
+					alert('Failed to add reminder for now, sorry for that!');
+				}
+				console.log(error);
+			}
+		})
+		
+		$('.add_text_reminder').fadeOut(100);
+		$('main > *').css('filter', 'none');
+		$('.add_text_reminder_form').trigger('reset');
+
+	})
 })

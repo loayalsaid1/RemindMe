@@ -24,6 +24,16 @@ ik = ImageKit(
 )
 
 
+def validate_booleans(dictionary):
+    """Replace all the string 'false' or 'true' into boolean"""
+    for key, value in dictionary.items():
+        if isinstance(value, str) and value.lower() in ['false', 'true']:
+            dictionary[key] = value.lower() == 'true'
+        elif isinstance(value, dict):
+            dictionary[key] = validate_booleans(value)
+    return dictionary
+
+
 @app_views.route("/reminders", strict_slashes=False, methods=["GET"])
 def get_reminders():
     """Retrieves the list of all public reminders in the RemindMe app"""
@@ -64,24 +74,29 @@ def get_reminders_by_user(user_id):
 
 
 @app_views.route("/reminders", strict_slashes=False, methods=["POST"])
-# @jwt_required()
+@jwt_required()
 def create_reminder():
     """Creates new Reminder"""
-    # Get user_id from JWT token
-    # user_id = get_jwt_identity()
-    user_id = "55882be5-acd3-4f31-ad15-d28f824ca577"
+    # Get user_id from JWT tokenzz
+    user_id = get_jwt_identity()
 
-    if not request.get_json():
-        abort(400, description="Not a JSON")
+    # if not request.get_json():
+    #     abort(400, description="Not a JSON")
 
-    data = request.get_json()  # Get data from request
+    if 'application/json' in request.headers.get('Content-Type'):
+        data = request.get_json()  # Get data from request
+    else:
+        data = request.form.to_dict()
+        data = validate_booleans(data)
     data['user_id'] = user_id
 
     new_reminder = Reminder()  # Create new Reminder
 
     if 'is_text' in data and data['is_text'] == False:
-        if 'image' in request.files:
-            image = request.files['image']
+        print(1)
+        if 'reminder_image' in request.files:
+            print(2)
+            image = request.files['reminder_image']
             extention = image.filename.split('.')[-1]
             temp_file_path = f'temp_image.{extention}'
             image.save(temp_file_path)
