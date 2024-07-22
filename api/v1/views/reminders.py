@@ -130,10 +130,12 @@ def update_reminder(reminder_id):
         abort(404, description="Reminder not found")
     if reminder.user_id != user_id:
         abort(403, description="Access forbidden")
-    if not request.get_json():
-        abort(400, description="Not a JSON")
 
-    data = request.get_json()  # Get data from request
+    if 'application/json' in request.headers.get('Content-Type'):
+        data = request.get_json()  # Get data from request
+    else:
+        data = request.form.to_dict()
+        data = validate_booleans(data)
 
     if 'is_text' in data and data['is_text'] is False:
         if 'image' in request.files:

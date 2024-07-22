@@ -210,7 +210,7 @@ $(document).ready(function () {
 	 */
 	
 
-	$('main').on('click', 'article .edit_reminder', function (event) {
+	$('main').on('click', 'article[data-type="text"] .edit_reminder', function (event) {
 		event.stopPropagation();
 		positionAddReminderWindows()
 
@@ -236,4 +236,41 @@ $(document).ready(function () {
 		$('.text_reminder_window').fadeIn(300);
 	});
 
+
+	/**
+	 * I 'm really now out of focus and time...
+	 * let me make it in a separete event handler just for now;
+	 * 
+	 * edit images reminder
+	 */
+
+	$('main').on('click', 'article[data-type="image"] .edit_reminder', function (event) {
+		event.stopPropagation();
+		positionAddReminderWindows()
+		blurMain()
+		setEditReminderForm();
+		
+		const reminder = $(this).closest('article');
+		const window = $('.add_image_reminder');
+
+		window.find('h2').text('Image Reminder');
+		window.find('button[type=submit]').text('Done');
+
+
+		window.data('reminder-id', reminder.data('reminder-id'));
+
+		window.fadeIn(300);
+
+	});
+	
 })
+
+/**
+ * edit image reminder..
+ * populate it with data.
+ * fix submision behaviour
+	* take id, other things to it's place
+	if there is a file, upload io
+ * show it
+ * hide it and let it get back to it's place
+ */
