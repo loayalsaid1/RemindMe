@@ -238,7 +238,9 @@ $(document).ready(function() {
 		
 		$('.add_image_reminder').fadeOut(100);
 		$('main > *').css('filter', 'none');
-		$('.add_image_reminder_form').trigger('reset');
+		setTimeout(function() {
+			$('.add_image_reminder_form').trigger('reset');
+		}, 100);
 
 	})
 })
