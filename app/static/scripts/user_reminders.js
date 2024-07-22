@@ -1,11 +1,13 @@
-/**
- * Blur main section
- */
-function blurMain() {
-  $("main > *").not(".fullscreen_container").css("filter", "blur(5px)");
-}
 
 $(document).ready(function () {
+  /**
+   * Blur main section
+   */
+  function blurMain() {
+    $("main > *").not(".fullscreen_container").css("filter", "blur(5px)");
+  }
+
+  
   /**
    * toggle the options list of a reminder
    */
