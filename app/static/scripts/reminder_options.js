@@ -146,8 +146,9 @@ function setEditImageReminderform() {
 		if (reminder.find('.caption').text() === form.get('caption')) {
 			form.delete('caption');
 		}
-		if (reminder.data('visibility') === form.get('reminder_visibility')) {
-			form.delete('reminder_visibility');
+
+		if ($(this).find('input[type=file]')[0].files.length === 0) {
+			form.delete('reminder_image');
 		}
 
 		$.ajax({
@@ -179,6 +180,7 @@ function setEditImageReminderform() {
 
 		$('.add_image_reminder').fadeOut(300);
 		$('main > *').css('filter', 'none');
+		$('.add_image_reminder').attr('data-reminder-id', '');
 		$(this).trigger('reset');
 
 	})
@@ -326,7 +328,7 @@ $(document).ready(function () {
 		const imgURL = reminder.find('img').attr('src');
 		window.find('textarea[name="caption"]').val(caption);
 		window.find('#placeholder_image').attr('src', imgURL);
-
+		
 		window.data('reminder-id', reminder.data('reminder-id'));
 
 		window.fadeIn(300);
