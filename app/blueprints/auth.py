@@ -119,7 +119,7 @@ def finalize_profile():
         current_user.img_url = image_url
         storage.save()
 
-        return redirect(url_for('profile'))
+        return redirect(url_for('users.nonesense'))
 
     return render_template(
         'finalize_profile.html', form=form, user=current_user)
