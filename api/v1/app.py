@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Module for the Flask app"""
+"""Module for the Flask API v1 app"""
 
 from flask import Flask, jsonify
 from api.v1.views import app_views
@@ -25,6 +25,7 @@ jwt = JWTManager(app)
 app.register_blueprint(auth)
 app.register_blueprint(app_views)
 
+# Enable CORS across origins
 CORS(app, resources={r"/api/v1/*": {"origins": "*"}})
 
 

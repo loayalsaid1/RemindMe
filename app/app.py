@@ -27,14 +27,14 @@ app.register_blueprint(users)
 
 @login_manager.user_loader
 def load_user(user_id):
+    """This function called to load a user from the user ID"""
     return storage.get(User, user_id)
 
 
 @app.errorhandler(404)
 def not_found(error):
     """Handle 404 error"""
-    # Or.. Lost? ... probaby you need a reminder.
-    return "<h1>Lost?!\n Consider having some remidner!</h1>", 404
+    return "<h1>Lost?!\n Consider having some reminders!</h1>", 404
 
 
 @app.teardown_appcontext
@@ -52,4 +52,4 @@ def home():
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5000)
+    app.run(debug=True, host="0.0.0.0", port=5000)

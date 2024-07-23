@@ -1,37 +1,26 @@
 #!/usr/bin/python3
-"""Set up the flask app
+"""Blueprint for authentication routes"""
 
-
-    I foundout that user_name should be username
-"""
-from flask import Blueprint, render_template, redirect, url_for, request,\
-    flash, make_response
+from flask import Blueprint, render_template, redirect, url_for, request
+from flask import flash, make_response
 from flask_login import login_user, logout_user, current_user, login_required
 from flask_jwt_extended import create_access_token
 from models import storage
 from models.user import User
-from app.blueprints.utils import RegisterFrom, LoginFrom,\
-    is_safe_url, make_initial_username, FinalizeProfile
+from app.blueprints.utils import RegisterFrom, LoginFrom, is_safe_url
+from app.blueprints.utils import make_initial_username, FinalizeProfile
 import os
 from imagekitio import ImageKit
 
 
 auth = Blueprint("auth", __name__)
 
-"""
-Just playing around with forms and file uploads
-
-This branch is so bad interms of me practicing nad playing around
-without paying attention to making atomic commits.. and all these things
-I will just clean up form now on
-"""
-
-# Replace with your actual values
+# ImageKit Credentials
 IMAGEKIT_PRIVATE_KEY = "private_edl1a45K3hzSaAhroLRPpspVRqM="
 IMAGEKIT_PUBLIC_KEY = "public_tTc9vCi5O7L8WVAQquK6vQWNx08="
 IMAGEKIT_URL_ENDPOINT = "https://ik.imagekit.io/loayalsaid1/"
 
-
+# Create an instance of ImageKit with the credentials
 ik = ImageKit(
     private_key=IMAGEKIT_PRIVATE_KEY,
     public_key=IMAGEKIT_PUBLIC_KEY,
@@ -42,7 +31,7 @@ ik = ImageKit(
 @auth.route('/register', methods=["GET", "POST"],
             strict_slashes=False)
 def register():
-    """Register new user"""
+    """Register a new user"""
     form = RegisterFrom()
     if form.validate_on_submit():
         email = request.form.get("email")
@@ -61,12 +50,14 @@ def register():
         user.password = request.form.get("password")
 
         user.user_name = make_initial_username(first_name, last_name)
+        user.set_password(user.password)  # Hash and set password
         user.save()
 
         flash("Successfully registered", category="success")
 
         login_user(user, remember=True)
 
+        # Create access token and set it in the cookie for authentication
         token = create_access_token(identity=user.id)
 
         response = make_response(redirect(url_for('auth.finalize_profile')))
@@ -80,9 +71,31 @@ def register():
 @auth.route('/finalize_profile', methods=["GET", "POST"], strict_slashes=False)
 @login_required
 def finalize_profile():
+    """
+    Finalize the user profile by updating the user's information.
+
+    This route is accessible only to authenticated users. It handles the
+    finalization of the user profile after the user has submitted the form. The
+    form is validated using the `FinalizeProfile` class. If the
+    username is different from the current user's username, it checks if the
+    username already exists in the database. If the username exists, it displays
+    an error message and returns the 'finalize_profile.html' template with the
+    form.
+
+    Returns:
+    - If the form is valid and the user submits the form:
+        - If the username is different and already exists:
+            - Render the 'finalize_profile.html' template with the form.
+        - If the form contains an image file:
+            - Upload the image file to the image storage service.
+            - Set the image URL in the user's profile.
+            - Update the user's information.
+            - Redirect to the 'profile' route.
+    - If the form is not valid or the user does not submit the form:
+        - Render the 'finalize_profile.html' template with the form and the
+          current user's information.
+    """
     form = FinalizeProfile()
-    if request.method == "POST":
-        print(form.username.data)
     if form.validate_on_submit():
         image_file = form.image.data
         username = form.username.data
@@ -90,11 +103,7 @@ def finalize_profile():
         description = form.description.data
 
         if username != current_user.user_name:
-            print(current_user.user_name)
             if storage.filter_objects(User, "user_name", username):
-                print(2)
-                print(username)
-                print(storage.filter_objects(User, "user_name", username))
                 flash("Username already exists", category="danger")
                 return render_template('finalize_profile.html', form=form)
         if image_file:
@@ -109,6 +118,7 @@ def finalize_profile():
 
             if result.response_metadata.http_status_code == 200:
                 image_url = result.url
+                current_user.img_url = image_url
             else:
                 flash("Failed to upload image", category="danger")
                 return render_template('finalize_profile.html', form=form)
@@ -116,10 +126,10 @@ def finalize_profile():
         current_user.user_name = username
         current_user.gender = gender
         current_user.description = description
-        current_user.img_url = image_url
         storage.save()
 
-        return redirect(url_for('users.nonesense'))
+        return redirect(url_for('users.user_profile'))
+
 
     return render_template(
         'finalize_profile.html', form=form, user=current_user)
@@ -155,7 +165,8 @@ def login():
         except TypeError:
             user = None
 
-        if not user or not user.password == password:
+        # check if user exists, verify password and login
+        if not user or not user.verify_password(password):
             flash('Wrong username or password', category='error')
             return redirect(url_for('auth.login'))
 

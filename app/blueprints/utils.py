@@ -6,8 +6,8 @@
 from flask import request
 from urllib.parse import urlparse, urljoin
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, FileField,\
-    RadioField, TextAreaField
+from wtforms import StringField, PasswordField, SubmitField, FileField
+from wtforms import RadioField, TextAreaField
 from wtforms.validators import InputRequired, Regexp, Length, Email
 from flask_wtf.file import FileField, FileAllowed
 from models import storage
@@ -77,7 +77,7 @@ class FinalizeProfile(FlaskForm):
 
 
 def is_safe_url(target):
-    """Function to check hte safety of urls to pretect against XSS attacks
+    """Function to check the safety of urls to pretect against XSS attacks
         in redirections and stuff
     """
     ref_url = urlparse(request.host_url)

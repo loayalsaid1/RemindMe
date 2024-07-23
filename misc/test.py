@@ -19,6 +19,7 @@ DB_URL = f'mysql+mysqldb://{DB_USER}:{DB_PWD}@{DB_HOST}/{DB_NAME}'
 # Create the engine and session
 engine = create_engine(DB_URL)
 
+Base.metadata.drop_all(engine)
 Base.metadata.create_all(engine)
 Session = sessionmaker(bind=engine)
 session = Session()

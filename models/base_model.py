@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Make the basemodel for the models"""
+"""Make the basemodel for the other models"""
 from datetime import datetime
 from uuid import uuid4
 import models
