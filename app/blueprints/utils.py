@@ -67,7 +67,7 @@ class FinalizeProfile(FlaskForm):
         'Gender', choices=[('male', 'Male'), ('female', 'Female')],
          validators=[InputRequired()])
     image = FileField(
-        'Profile Image', validators=[FileAllowed(['jpg', 'png', 'gif'])])
+        'Profile Image', validators=[FileAllowed(['jpg', 'jpeg', 'png', 'gif', 'webp'])])
     description = TextAreaField('Description', validators=[
         InputRequired(),
         Length(max=512)
