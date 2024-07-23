@@ -19,13 +19,15 @@
 				{{ user.description }}
 			</p>
 		{% endif %}
-
+		
+		{% if not profile_owner %}
 		<button type="button" class="edit_profile" onclick="alert('You can\'t fake your identity here...\nAt least for now.. \nBut if you insest.\n Here is an insider bug.\ngo to /finalize_profile and fill the form. \n\nHey, Keep it a secret')">
 			<span class="material-symbols-outlined">
 				edit
 			</span>
 			Edit profile
 		</button>
+		{% endif %}
 	</div>
 	<div class="add_reminder">
 		<ul class="choose_reminder_type">

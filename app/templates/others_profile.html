@@ -1,0 +1,144 @@
+{% extends "layout.html" %}
+
+	{% block title %}
+	<title>{{ profile_owner.user_name }} Reminders</title>
+	{% endblock %}
+
+	{% block styles %}
+	<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+	<link rel="stylesheet" href="../static/styles/common.css">
+	<link rel="stylesheet" href="../static/styles/header.css">
+	<link rel="stylesheet" href="../static/styles/aside.css">
+	<link rel="stylesheet" href="../static/styles/user_reminders.css">
+	<link rel="stylesheet" href="../static/styles/add_reminder.css">	
+	{% endblock %}
+
+	{% block scripts %}
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="../static/scripts/user_reminders.js"></script>
+	<script src="../../static/scripts/add_reminder.js"></script>
+	<!-- <script src="../../static/scripts/reminder_options.js"></script> -->
+
+	{% endblock %}
+
+	{% block content %}
+	{% include 'header.html' %}
+
+	{% include 'aside.html' %}
+	<main>
+		{% for reminder in reminders %}
+		<article data-reminder-id="{{ reminder.id }}" data-type="{{ 'image' if not reminder.is_text else 'text' }}" data-visibility="public">
+			<div class="shown">
+				{% if reminder.is_text %}
+				<p>{{ reminder.text }}</p>
+				{% else %}
+				<img class="reminder_image" src="{{ reminder.img_url }}"
+				alt="" class="">
+				{% endif %}
+			</div>
+			<div class="hidden">
+				<p class="caption">{{ reminder.caption }}</p>
+				<!-- <span class="material-symbols-outlined hidden_icons menu_icon">
+					menu
+				</span> -->
+				<!-- <ul class="reminder_options">
+					<li class="edit_reminder">
+						<span class="material-symbols-outlined">
+							edit
+						</span>
+					</li>
+					<li class="toggle_visibility">
+						<span class="material-symbols-outlined">
+							{% if reminder.public %}
+							visibility
+							{% else %}
+							visibility_lock
+							{% endif %}
+						</span>
+					</li>
+					<li class="delete_reminder">
+						<span class="material-symbols-outlined">
+							delete
+						</span>
+					</li>
+				</ul> -->
+				<span class="material-symbols-outlined hidden_icons magnify_icon">
+					zoom_in
+				</span>
+				<button class="show_reminder" type="button">Show reflections</button>
+			</div>
+		</article>
+		{% endfor %}
+		<section class="add_image_reminder add_reminder_window">
+			<span class="material-symbols-outlined cancel_icon">
+				close
+			</span>
+			<h2>Add image Reminder</h2>
+			<div class="image_placeholder_container">
+				<img id="placeholder_image" src="https:///designshack.net/wp-content/uploads/placehold.jpg"  alt="Hey, I am a placeholder image">
+			</div>
+
+			<form class="add_image_reminder_form" method="POST" enctype="multipart/form-data">
+				<input type="file" name="reminder_image" id="reminder_image" onchange="loadFile(event)" accept="image/*" />
+				<label for="reminder_image">Upload Image</label>
+
+				<label for="caption">Caption:</label>
+				<textarea name="caption" id="caption" rows="2" ></textarea>
+
+				<label>Reminder Visibility</label>
+				<div class="visibility_section">
+					<input type="radio" id="img_private" name="reminder_visibility" value="private" required >
+					<label for="img_private">Private</label>
+
+					<input type="radio" id="img_public" name="reminder_visibility" value="public" required >
+					<label for="img_public">Public</label>
+				</div>
+
+				<div class="form_buttons">
+					<button type="reset" class="reset_button">Reset</button>
+					<button type="submit" class="add_reminder_button">Add Reminder</button>
+				</div>
+			</form>
+		</section>
+		<section class="add_text_reminder add_reminder_window text_reminder_window">
+			<span class="material-symbols-outlined cancel_icon">
+				close
+			</span>
+			<h2>Add Text Reminder</h2>
+			<form class="text_reminder_form add_reminder" method="POST" enctype="multipart/form-data">
+				<label for="reminder_text">Reminder Text:</label>
+				<textarea name="reminder_text" id="reminder_text" rows="2" required ></textarea>
+
+				<label for="caption">Caption:</label>
+				<textarea name="caption" id="caption" rows="2" ></textarea>
+				<label>Reminder Visibility</label>
+				<div class="visibility_section">
+					<input type="radio" id="private" name="reminder_visibility" value="private" required >
+					<label for="private">Private</label>
+
+					<input type="radio" id="public" name="reminder_visibility" value="public" required >
+					<label for="public">Public</label>
+				</div>
+
+				<div class="form_buttons">
+					<button type="reset" class="reset_button">Reset</button>
+					<button type="submit" class="add_reminder_button">Add Reminder</button>
+				</div>
+			</form>
+		</section>
+		<div class="fullscreen_container">
+			<img src="" alt="">
+			<p></p>
+		</div>
+	</main>
+	<script>
+        function loadFile(event) {
+            const image = document.getElementById('placeholder_image');
+            image.src = URL.createObjectURL(event.target.files[0]);
+            image.onload = () => {
+                URL.revokeObjectURL(image.src); // free memory
+            }
+        }
+    </script>
+
+	{% endblock %}
