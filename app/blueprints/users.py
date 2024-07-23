@@ -35,7 +35,7 @@ def public_reminders():
         public_ewall=True
         )
 
-@users.route('/users/<username>', strict_slashes=False)
+@users.route('/profile/<username>', strict_slashes=False)
 @login_required
 def user_profile_by_username(username):
     """Show other users profiles"""
