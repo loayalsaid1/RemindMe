@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 """A storage engine based on mysql server"""
+from sqlalchemy.sql import func
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
 from os import getenv
@@ -118,3 +119,7 @@ class DBStorage:
     def get_user_by_email(self, email):
         """Get specific user by their email"""
         return self.__session.query(User).filter(User.email == email).first()
+
+    def get_random_public_reminders(self, limit=10):
+        """Get 40 random reminder from the database"""
+        return self.__session.query(Reminder).filter(Reminder.is_public == True).order_by(func.random()).limit(limit).all()
