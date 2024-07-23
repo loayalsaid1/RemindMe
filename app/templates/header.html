@@ -9,8 +9,13 @@
 
 		<nav>
 			<ul>
+				{%if public_wall %}
+				<li class="active"><a href="#">Public reminders</a></li>
+				<li><a href="#">Your reminders</a></li>
+				{% else %}
 				<li><a href="#">Public reminders</a></li>
 				<li class="active"><a href="#">Your reminders</a></li>
+				{% endif %}
 			</ul>
 		</nav>
 		<div class="profile_icon_section">
