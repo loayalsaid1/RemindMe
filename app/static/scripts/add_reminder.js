@@ -209,6 +209,7 @@ $(document).ready(function() {
 		positionAddReminderWindows()
 		setAddTextReminderWindow();
 		$('.add_image_reminder').fadeOut(100);
+		$('.add_text_reminder form').trigger('reset');
 		$('.add_text_reminder').fadeIn(300);
 		blurMain();
 	})
@@ -223,6 +224,7 @@ $(document).ready(function() {
 		positionAddReminderWindows()
 		setAddImageReminderForm();
 		$('.add_text_reminder').fadeOut(100);
+		$('.add_image_reminder form').trigger('reset');
 		$('.add_image_reminder').fadeIn(300);
 		blurMain();
 	})
