@@ -90,3 +90,13 @@ def delete_user(user_id):
     user.delete()
     storage.save()
     return jsonify({}), 200
+
+@app_views.route('/check_user/<username>', strict_slashes=False)
+def check_user(username):
+    """Check if a user with a username exists"""
+    user = storage.filter_objects(User, "user_name", username)
+    if user:
+        return jsonify({'exists': True}), 200
+
+    else:
+        return jsonify({'exists': False}), 404
