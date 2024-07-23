@@ -122,4 +122,4 @@ class DBStorage:
 
     def get_random_public_reminders(self, limit=10):
         """Get 40 random reminder from the database"""
-        return self.__session.query(Reminder).filter(Reminder.is_public == True).order_by(func.random()).limit(limit).all()
+        return self.__session.query(Reminder).filter(Reminder.public == True).order_by(func.random()).limit(limit).all()

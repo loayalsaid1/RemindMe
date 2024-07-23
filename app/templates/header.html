@@ -1,6 +1,6 @@
 <header>
 	<div class="logo">
-		<a href="#">
+		<a href="{{ url_for('users.user_profile') }}">
 			<img src="https://via.placeholder.com/50x50" alt="">
 			<h2>RemindMe</h2>
 		</a>
@@ -10,18 +10,18 @@
 		<nav>
 			<ul>
 				{%if public_ewall %}
-				<li class="active"><a href="#">Public reminders</a></li>
-				<li><a href="#">Your reminders</a></li>
+				<li class="active"><a href="{{ url_for('users.public_reminders') }}">Public reminders</a></li>
+				<li><a href="{{ url_for('users.user_profile') }}">Your reminders</a></li>
 				{% else %}
-				<li><a href="#">Public reminders</a></li>
-				<li class="active"><a href="#">Your reminders</a></li>
+				<li><a href="{{ url_for('users.public_reminders') }}">Public reminders</a></li>
+				<li class="active"><a href="{{ url_for('users.user_profile') }}">Your reminders</a></li>
 				{% endif %}
 			</ul>
 		</nav>
 		<div class="profile_icon_section">
 			<img src="{{ user.img_url }}" alt="">
 			<div class="profile_dropdown">
-				<a href="#">
+				<a href="{{ url_for('users.user_profile') }}">
 					<span class="material-symbols-outlined">
 						person
 					</span>

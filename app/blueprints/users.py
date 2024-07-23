@@ -24,7 +24,8 @@ def public_reminders():
 
         Get 40 random public reminder
     """
-    reminders = storage.get_random_reminders(40)
+    reminders = storage.get_random_public_reminders(limit=40)
+    
     return render_template(
         'public_reminders.html',
         user=current_user,
