@@ -65,14 +65,17 @@ class FinalizeProfile(FlaskForm):
     ])
     gender = RadioField(
         'Gender', choices=[('male', 'Male'), ('female', 'Female')],
-         validators=[InputRequired()])
+        validators=[InputRequired()])
     image = FileField(
-        'Profile Image', validators=[FileAllowed(['jpg', 'jpeg', 'png', 'gif', 'webp'])])
+        'Profile Image', validators=[FileAllowed(
+            ['jpg', 'jpeg', 'png', 'gif', 'webp'])])
     description = TextAreaField('Description', validators=[
         InputRequired(),
         Length(max=512)
         ])
     submit = SubmitField('Done!')
+
+
 def is_safe_url(target):
     """Function to check hte safety of urls to pretect against XSS attacks
         in redirections and stuff
@@ -81,6 +84,7 @@ def is_safe_url(target):
     test_url = urlparse(urljoin(request.host_url, target))
     return test_url.scheme in ('http', 'https') and\
         ref_url.netloc == test_url.netloc
+
 
 def make_initial_username(first_name, last_name):
     """Make initial usrname based on first and last name"""

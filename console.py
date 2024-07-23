@@ -32,7 +32,7 @@ class RemindMeConsole(cmd.Cmd):
             return True
         elif text == "False":
             return False
-        else:                
+        else:
             try:
                 return int(text)
             except ValueError:

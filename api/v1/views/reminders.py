@@ -55,7 +55,8 @@ def get_reminder(reminder_id):
     return jsonify(reminder.to_dict())
 
 
-@app_views.route("/users/<user_id>/reminders", strict_slashes=False, methods=["GET"])
+@app_views.route("/users/<user_id>/reminders", strict_slashes=False,
+                 methods=["GET"])
 @jwt_required()
 def get_reminders_by_user(user_id):
     """Gets all reminders by a specific user"""
@@ -92,7 +93,7 @@ def create_reminder():
 
     new_reminder = Reminder()  # Create new Reminder
 
-    if 'is_text' in data and data['is_text'] == False:
+    if 'is_text' in data and data['is_text'] is False:
         if 'reminder_image' in request.files:
             image = request.files['reminder_image']
             extention = image.filename.split('.')[-1]

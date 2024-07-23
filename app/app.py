@@ -24,6 +24,7 @@ jwt = JWTManager(app)
 app.register_blueprint(auth)
 app.register_blueprint(users)
 
+
 @login_manager.user_loader
 def load_user(user_id):
     return storage.get(User, user_id)
@@ -41,13 +42,13 @@ def cut_connection(error):
     """define behavior after each request"""
     storage.close()
 
+
 @app.route('/')
 def home():
     """Home page"""
     if current_user.is_authenticated:
         return render_template('index.html', username=current_user.user_name)
     return render_template('index.html')
-
 
 
 if __name__ == "__main__":

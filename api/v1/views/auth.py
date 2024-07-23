@@ -73,7 +73,6 @@ def upload_image():
 
     os.remove(temp_file_path)
 
-
     if result.response_metadata.http_status_code == 200:
         image_url = result.url
         return jsonify({"url": image_url}), 200

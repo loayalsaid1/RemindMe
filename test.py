@@ -102,14 +102,12 @@ def add_sample_data():
 
     session.commit()
 
-
     print("Sample data added successfully!")
-    # Drop all rows from the table
-    # Note: This is a risky command, use with caution
 
-# Call the function to add sample data
+
 if __name__ == "__main__":
-    print("Executing this command will drop all rows from the tables, are you sure you want to proceed? (y/n)")
+    print("Executing this command will drop all rows from the tables,\
+     are you sure you want to proceed? (y/n)")
     response = input()
     if response.lower() == 'y':
         for table in Base.metadata.tables.values():
