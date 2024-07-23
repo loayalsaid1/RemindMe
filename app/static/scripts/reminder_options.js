@@ -117,6 +117,72 @@ function setEditTextReminderWindow() {
 	})
 }
 
+/***
+ * Set the submit behaviour of edit reminder form
+ */
+function setEditImageReminderform() {
+	/**
+	 * prevent default
+	 * send image... visibility ... caption to the server
+	 * make a form out of it.
+	 * get url 
+	 * get token
+	 * send the form
+	 * on success... 
+	 * get the response and edit the reminder
+	 */
+
+	$('.add_image_reminder_form').off('submit').on('submit', function (event) {
+		event.stopPropagation();
+		event.preventDefault();
+
+		const reminderId = $('.add_image_reminder').data('reminder-id');
+		const reminder = $(`article[data-reminder-id="${reminderId}"]`)
+		const token = getCookie('access_token_cookie');
+		const url = `http://localhost:5001/api/v1/reminders/${reminderId}`;
+		console.log(reminderId, url, reminder);
+		const form = new FormData(this);
+		form.append('is_text', false);
+		if (reminder.find('.caption').text() === form.get('caption')) {
+			form.delete('caption');
+		}
+		if (reminder.data('visibility') === form.get('reminder_visibility')) {
+			form.delete('reminder_visibility');
+		}
+
+		$.ajax({
+			url: url,
+			method: 'PUT',
+			headers: {
+				'Authorization': `Bearer ${token}`
+			},
+			data: form,
+			processData: false,
+			contentType: false,
+			success: function (data) {
+				console.log(data);
+				reminder.find('.reminder_image').attr('src', data.img_url);
+				reminder.find('.caption').text(data.caption);
+				if (reminder.data('visibility') !== form.get('reminder_visibility')) {
+					toggleVisibility(reminder, form.get('reminder_visibility'));
+				}
+			},
+			error: function (error) {
+				if (error.status === 401) {
+					window.location.href = '/login';
+				} else {
+					console.log(error);
+					alert('Can\'t update reminder now, sorry!');
+				}
+			}
+		})
+
+		$('.add_image_reminder').fadeOut(300);
+		$('main > *').css('filter', 'none');
+		$(this).trigger('reset');
+
+	})
+}
 $(document).ready(function () {
 	/***** Different remidner intactions ...... Edit, delete, toggle visibility to public */
 
@@ -248,14 +314,18 @@ $(document).ready(function () {
 		event.stopPropagation();
 		positionAddReminderWindows()
 		blurMain()
-		setEditReminderForm();
-		
+		setEditImageReminderform();
+
 		const reminder = $(this).closest('article');
 		const window = $('.add_image_reminder');
 
 		window.find('h2').text('Image Reminder');
 		window.find('button[type=submit]').text('Done');
 
+		const caption = reminder.find('.caption').text();
+		const imgURL = reminder.find('img').attr('src');
+		window.find('textarea[name="caption"]').val(caption);
+		window.find('#placeholder_image').attr('src', imgURL);
 
 		window.data('reminder-id', reminder.data('reminder-id'));
 
