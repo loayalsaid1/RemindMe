@@ -36,16 +36,11 @@ function getCookie(name) {
  */
 function toggleVisibility (reminder, visibility) {
 	reminder.data('visibility', visibility);
-	console.log(visibility);
 	if (visibility === "public") {
-		console.log('1')
 		reminder.find('.lock_icon').remove()
-		console.log('2')
 
 		reminder.find('.toggle_visibility span').text('visibility');
 	} else {
-		console.log('3')
-
 		reminder.find('.shown').prepend(`<span class="material-symbols-outlined lock_icon">visibility_lock</span>`);
 		reminder.find('.toggle_visibility span').text('visibility_lock');
 	}
@@ -66,7 +61,6 @@ function setEditTextReminderWindow() {
 		const id = $(this).data('reminder-id');
 		const token = getCookie('access_token_cookie');
 		const url = `http://localhost:5001/api/v1/reminders/${id}`;
-		console.log('before the ajaxs in edit')
 		$.ajax({
 			url: url,
 			method: 'PUT',
@@ -111,7 +105,6 @@ function setEditTextReminderWindow() {
 		$('main > *').css('filter', 'none');
 		$('.text_reminder_window').fadeOut(300);
 		$(this).trigger('reset');
-		console.log('sadf				')
 		$(this).removeClass('edit_reminder');
 		$(this).addClass('add_reminder');
 	})
@@ -140,7 +133,6 @@ function setEditImageReminderform() {
 		const reminder = $(`article[data-reminder-id="${reminderId}"]`)
 		const token = getCookie('access_token_cookie');
 		const url = `http://localhost:5001/api/v1/reminders/${reminderId}`;
-		console.log(reminderId, url, reminder);
 		const form = new FormData(this);
 		form.append('is_text', false);
 		if (reminder.find('.caption').text() === form.get('caption')) {
@@ -161,7 +153,6 @@ function setEditImageReminderform() {
 			processData: false,
 			contentType: false,
 			success: function (data) {
-				console.log(data);
 				reminder.find('.reminder_image').attr('src', data.img_url);
 				reminder.find('.caption').text(data.caption);
 				if (reminder.data('visibility') !== form.get('reminder_visibility')) {
@@ -243,7 +234,6 @@ $(document).ready(function () {
 		const token = getCookie('access_token_cookie');
 
 		const visibility = reminder.data('visibility') === 'public' ? 'private' : 'public';
-		console.log(visibility);
 		$.ajax({
 			url: url,
 			method: 'PUT',
@@ -255,8 +245,6 @@ $(document).ready(function () {
 				'public': visibility === 'public'
 			}),
 			success: function () {
-				console.log('1')
-				console.log(reminder.data('visibility'));
 				toggleVisibility(reminder, visibility);
 			},
 			error: function (error) {
