@@ -136,67 +136,8 @@ function setAddTextReminderWindow() {
 	});
 }
 
-
-$(document).ready(function() {
-	
-	/**
-		* Hide the form & unblur the main
-		*
-		*
-		* when clicking the cancel icon
-		*/
-	$('.cancel_icon').off('click').click(function(event) {
-		event.stopPropagation();
-		$(this).parent().fadeOut(300);
-		$('main > *').css('filter', 'none');
-	})
-
-	/**
-	 * Showing the add text reminder form whwen chlicking the button
-	 * and the buttons to choose
-	 */
-	$('.add_text_reminder_button').off('click').click(function(event) {
-		event.stopPropagation();
-		positionAddReminderWindows()
-		setAddTextReminderWindow();
-		$('.add_image_reminder').fadeOut(100);
-		$('.add_text_reminder').fadeIn(300);
-		blurMain();
-	})
-
-
-	/**
-	 * Showing the add image reminder form whwen chlicking the button
-	 * and the buttons to choose
-	 */
-	$('.add_image_reminder_button').off('click').click(function(event) {
-		event.stopPropagation();
-		positionAddReminderWindows()
-		$('.add_text_reminder').fadeOut(100);
-		$('.add_image_reminder').fadeIn(300);
-		blurMain();
-	})
-
-	/**
-	 * Get back the placeholder image when resetting the
-	 * form of adding an image reminder
-	 */
-	$('.add_image_reminder').on('reset', function(event) {
-		event.stopPropagation();
-		$('.add_image_reminder img').attr('src', 'https:///designshack.net/wp-content/uploads/placehold.jpg');
-	})
-
-	/**
-	 * when submitting n image..
-	 * get the data of it..
-	 * get hte file
-	 * sedn an ajax request.
-	 * with token, to url to with files. 
-	 * make a reminder out of the data.
-	 * nd fadeaway and unblur the things;
-	 * and reset the form
-	 */
-	$('.add_image_reminder_form').submit(function (event) {
+function setAddImageReminderForm() {
+	$('.add_image_reminder_form').off('submit').submit(function (event) {
 		event.preventDefault();
 		event.stopPropagation();
 
@@ -243,4 +184,58 @@ $(document).ready(function() {
 		}, 100);
 
 	})
+}
+
+$(document).ready(function() {
+	
+	/**
+		* Hide the form & unblur the main
+		*
+		*
+		* when clicking the cancel icon
+		*/
+	$('.cancel_icon').off('click').click(function(event) {
+		event.stopPropagation();
+		$(this).parent().fadeOut(300);
+		$('main > *').css('filter', 'none');
+	})
+
+	/**
+	 * Showing the add text reminder form whwen chlicking the button
+	 * and the buttons to choose
+	 */
+	$('.add_text_reminder_button').off('click').click(function(event) {
+		event.stopPropagation();
+		positionAddReminderWindows()
+		setAddTextReminderWindow();
+		$('.add_image_reminder').fadeOut(100);
+		$('.add_text_reminder').fadeIn(300);
+		blurMain();
+	})
+
+
+	/**
+	 * Showing the add image reminder form whwen chlicking the button
+	 * and the buttons to choose
+	 */
+	$('.add_image_reminder_button').off('click').click(function(event) {
+		event.stopPropagation();
+		positionAddReminderWindows()
+		setAddImageReminderForm();
+		$('.add_text_reminder').fadeOut(100);
+		$('.add_image_reminder').fadeIn(300);
+		blurMain();
+	})
+
+	/**
+	 * Get back the placeholder image when resetting the
+	 * form of adding an image reminder
+	 */
+	$('.add_image_reminder').on('reset', function(event) {
+		event.stopPropagation();
+		$('.add_image_reminder img').attr('src', 'https:///designshack.net/wp-content/uploads/placehold.jpg');
+	})
+
+
+	
 })
