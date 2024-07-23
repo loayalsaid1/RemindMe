@@ -138,20 +138,23 @@ def update_reminder(reminder_id):
         data = validate_booleans(data)
 
     if 'is_text' in data and data['is_text'] is False:
-        if 'image' in request.files:
-            image = request.files['image']
+        if 'reminder_image' in request.files:
+            image = request.files['reminder_image']
             extention = image.filename.split('.')[-1]
             temp_file_path = f'temp_image.{extention}'
             image.save(temp_file_path)
 
             # Upload image to ImageKit
-            response = ik.upload([temp_file_path], options={
-                                 "use_unique_file_name": False})
-            img_url = response['files'][0]['url']
+            with open(temp_file_path, 'rb') as f:
+                result = ik.upload_file(
+                    file=f, file_name=f'{reminder.id}.{extention}')
+            os.remove(temp_file_path)
 
-            os.remove(temp_file_path)  # Remove temporary file
-
-            data['img_url'] = img_url
+            if result.response_metadata.http_status_code == 200:
+                image_url = result.url
+            else:
+                abort(500, description="Failed to upload image")
+            data['img_url'] = image_url
 
     for key, value in data.items():
         if key not in ['id', 'created_at', 'updated_at']:
