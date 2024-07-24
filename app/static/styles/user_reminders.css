@@ -73,7 +73,7 @@ article:hover .shown,
 	height: var(--card-height);
 
 	color: white;
-    background-color: #2f4f4f8a;
+    background-color: #354c5c69;
     opacity: 0;
     transition: opacity 0.3s ease-in-out;
 }
@@ -141,7 +141,7 @@ article:hover .hidden {
     padding: 8px;
     position: absolute;
     bottom: 16px;
-    color: black;
+    color: white;
     left: 60px;
     border-radius: 15px;
     opacity: 0;

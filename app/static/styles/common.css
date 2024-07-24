@@ -8,9 +8,9 @@
 	--medium-gap: 10px;
 	--large-gap: 20px;
 	
-	--color-1: #58756a;
-	--color-2: #a9a9a92b;
-	--color-3: darkslategray;
+	--color-1: #34495E  ;
+	--color-2: #44647a69   ;
+	--color-3: #2C3E50  ;
 }
 
 * {
@@ -26,7 +26,7 @@ body {
 	
 	display: flex;
 	justify-content: center;
-	
+	color: #ECF0F1  ;
 	line-height: 1.3rem;
 
 }
