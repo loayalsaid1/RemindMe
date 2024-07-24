@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 	{% block title %}
-	<title>{{user.username}}'s Reminders'</title>
+	<title>{{ profile_owner.user_name }} Reminders</title>
 	{% endblock %}
 
 	{% block styles %}
@@ -17,8 +17,8 @@
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script src="../static/scripts/user_reminders.js"></script>
 	<script src="../../static/scripts/add_reminder.js"></script>
-	<script src="../../static/scripts/reminder_options.js"></script>
 	<script src="../../static/scripts/header.js"></script>
+	<!-- <script src="../../static/scripts/reminder_options.js"></script> -->
 
 	{% endblock %}
 
@@ -28,17 +28,8 @@
 	{% include 'aside.html' %}
 	<main>
 		{% for reminder in reminders %}
-		{% if reminder.public %}
 		<article data-reminder-id="{{ reminder.id }}" data-type="{{ 'image' if not reminder.is_text else 'text' }}" data-visibility="public">
-		{% else %}
-		<article data-reminder-id="{{ reminder.id }}" data-type="{{ 'image' if not reminder.is_text else 'text' }}" data-visibility="private">
-		{% endif %}
 			<div class="shown">
-				{% if reminder.public == False %}
-				<span class="material-symbols-outlined lock_icon">
-					visibility_lock
-				</span>
-				{% endif %}
 				{% if reminder.is_text %}
 				<p>{{ reminder.text }}</p>
 				{% else %}
@@ -48,10 +39,10 @@
 			</div>
 			<div class="hidden">
 				<p class="caption">{{ reminder.caption }}</p>
-				<span class="material-symbols-outlined hidden_icons menu_icon">
+				<!-- <span class="material-symbols-outlined hidden_icons menu_icon">
 					menu
-				</span>
-				<ul class="reminder_options">
+				</span> -->
+				<!-- <ul class="reminder_options">
 					<li class="edit_reminder">
 						<span class="material-symbols-outlined">
 							edit
@@ -71,7 +62,7 @@
 							delete
 						</span>
 					</li>
-				</ul>
+				</ul> -->
 				<span class="material-symbols-outlined hidden_icons magnify_icon">
 					zoom_in
 				</span>

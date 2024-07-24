@@ -1,6 +1,8 @@
 from flask_login import login_required, current_user
-from flask import render_template, Blueprint
+from flask import render_template, Blueprint, abort
 from models import storage
+from models.user import User
+
 
 users = Blueprint('users', __name__)
 
@@ -31,4 +33,22 @@ def public_reminders():
         user=current_user,
         reminders=reminders,
         public_ewall=True
+        )
+
+@users.route('/profile/<username>', strict_slashes=False)
+@login_required
+def user_profile_by_username(username):
+    """Show other users profiles"""
+    try:
+        profile_owner = storage.filter_objects(User, "user_name", username)[0]
+    except IndexError:
+        abort(404, description="User not found")
+    
+    reminders = storage.get_user_public_reminders(profile_owner.id)
+
+    return render_template(
+        'others_profile.html',
+        user=current_user,
+        reminders=reminders,
+        profile_owner=profile_owner
         )

@@ -1,20 +1,33 @@
 <aside>
 	<div class="user_info">
-		<img src="{{ user.img_url }}" alt="">
+		{% if profile_owner %}
+			<img src="{{ profile_owner.img_url }}" alt="">
 
-		<h2 class="user_full_name">{{ user.first_name }} {{ user.last_name }}</h2>
-		<h3 class="username">@{{ user.user_name }}</h3>
+			<h2 class="user_full_name">{{ profile_owner.first_name }} {{ profile_owner.last_name }}</h2>
+			<h3 class="username">@{{ profile_owner.user_name }}</h3>
 
-		<p class="user_description">
-			{{ user.description }}
-		</p>
+			<p class="user_description">
+				{{ profile_owner.description }}
+			</p>
+		{% else %}
+			<img src="{{ user.img_url }}" alt="">
 
+			<h2 class="user_full_name">{{ user.first_name }} {{ user.last_name }}</h2>
+			<h3 class="username">@{{ user.user_name }}</h3>
+
+			<p class="user_description">
+				{{ user.description }}
+			</p>
+		{% endif %}
+		
+		{% if not profile_owner %}
 		<button type="button" class="edit_profile" onclick="alert('You can\'t fake your identity here...\nAt least for now.. \nBut if you insest.\n Here is an insider bug.\ngo to /finalize_profile and fill the form. \n\nHey, Keep it a secret')">
 			<span class="material-symbols-outlined">
 				edit
 			</span>
 			Edit profile
 		</button>
+		{% endif %}
 	</div>
 	<div class="add_reminder">
 		<ul class="choose_reminder_type">
