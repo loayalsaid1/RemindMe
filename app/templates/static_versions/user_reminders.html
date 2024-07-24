@@ -20,18 +20,22 @@
 	<div class='full'></div>
 	<header class="header">
 		<div class="logo">
-			<a href="#">
+			<a href="{{ url_for('users.user_profile') }}">
 				<img src="https://via.placeholder.com/50x50" alt="">
 				<h2>RemindMe</h2>
 			</a>
 		</div>
+		<nav>
+			<ul>
+				<li><a href="#">Public reminders</a></li>
+				<li class="active"><a href="#">Your reminders</a></li>
+			</ul>
+		</nav>
 		<div class="left">
-			<nav>
-				<ul>
-					<li><a href="#">Public reminders</a></li>
-					<li class="active"><a href="#">Your reminders</a></li>
-				</ul>
-			</nav>
+			<div class="search-bar">
+				<input type="text" placeholder="Search for username">
+				<!-- <button>Search</button> -->
+			</div>
 			<div class="profile_icon_section">
 				<img src="../../static/images/profile_placeholder.png" alt="">
 				<div class="profile_dropdown">

@@ -1,26 +1,28 @@
 <header>
-	<div class="logo">
-		<a href="{{ url_for('users.user_profile') }}">
-			<img src="https://via.placeholder.com/50x50" alt="">
-			<h2>RemindMe</h2>
-		</a>
+	<div>
+		<div class="logo">
+			<a href="{{ url_for('users.user_profile') }}">
+				<img src="https://via.placeholder.com/50x50" alt="">
+				<h2>RemindMe</h2>
+			</a>
+		</div>
+	</div>
+	<nav>
+		<ul>
+			{%if public_ewall %}
+			<li class="active"><a href="{{ url_for('users.public_reminders') }}">Public reminders</a></li>
+			<li><a href="{{ url_for('users.user_profile') }}">Your reminders</a></li>
+			{% else %}
+			<li><a href="{{ url_for('users.public_reminders') }}">Public reminders</a></li>
+			<li class="active"><a href="{{ url_for('users.user_profile') }}">Your reminders</a></li>
+			{% endif %}
+		</ul>
+	</nav>
+	<div class="left">
 		<div class="search-bar">
 			<input type="text" placeholder="Search for username">
 			<!-- <button>Search</button> -->
 		</div>
-	</div>
-	<div class="left">
-		<nav>
-			<ul>
-				{%if public_ewall %}
-				<li class="active"><a href="{{ url_for('users.public_reminders') }}">Public reminders</a></li>
-				<li><a href="{{ url_for('users.user_profile') }}">Your reminders</a></li>
-				{% else %}
-				<li><a href="{{ url_for('users.public_reminders') }}">Public reminders</a></li>
-				<li class="active"><a href="{{ url_for('users.user_profile') }}">Your reminders</a></li>
-				{% endif %}
-			</ul>
-		</nav>
 		<div class="profile_icon_section">
 			<img src="{{ user.img_url }}" alt="">
 			<div class="profile_dropdown">

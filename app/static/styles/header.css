@@ -115,7 +115,9 @@ nav ul li {
 	border: 1px solid #ccc;
 	border-radius: 4px;
 	flex: 1;
-	margin-right: 10px;
+	/* margin-right: 10px; */
+	border-radius: 15px;
+    background: #ffffffd1;
 }
 .search-bar button {
 	padding: 10px 20px;
