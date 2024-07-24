@@ -111,7 +111,7 @@ function setAddTextReminderWindow() {
     };
 
     const token = getCookie('access_token_cookie');
-    const endpointURL = 'http://0.0.0.0:5001/api/v1/reminders';
+    const endpointURL = 'http://remindme.iygeal.tech:5001/api/v1/reminders';
 
     $.ajax({
       url: endpointURL,
@@ -159,7 +159,7 @@ function setAddImageReminderForm() {
       form.delete('reminder_visibility');
 
       const token = getCookie('access_token_cookie');
-      const url = 'http://0.0.0.0:5001/api/v1/reminders';
+      const url = 'http://remindme.iygeal.tech:5001/api/v1/reminders';
 
       $.ajax({
         url: url,
