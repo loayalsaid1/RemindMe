@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """Core of the application"""
-from flask import Flask, render_template
+from flask import Flask, redirect, url_for
 from flask_jwt_extended import JWTManager
 from flask_login import LoginManager, current_user
 from markupsafe import escape
@@ -46,9 +46,7 @@ def cut_connection(error):
 @app.route('/')
 def home():
     """Home page"""
-    if current_user.is_authenticated:
-        return render_template('index.html', username=current_user.user_name)
-    return render_template('index.html')
+    return redirect(url_for('users.user_profile'))
 
 
 if __name__ == "__main__":

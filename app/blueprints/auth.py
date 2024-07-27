@@ -109,9 +109,9 @@ def finalize_profile():
         if image_file:
             extention = image_file.filename.split('.')[-1]
             temp_file_path = f'temp_image.{extention}'
-            with open(temp_file_path, 'wb') as f:
-                image_file.save(f)
-            with open(temp_file_path, 'rb') as f:
+#            with open(temp_file_path, 'wb') as f:
+ #               image_file.save(f)
+            with open(image_file, 'rb') as f:
                 result = ik.upload_file(
                     file=f, file_name=f'{current_user.user_name}.{extention}')
             os.remove(temp_file_path)
