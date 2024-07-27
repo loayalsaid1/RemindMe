@@ -108,10 +108,23 @@ def finalize_profile():
                 return render_template('finalize_profile.html', form=form)
         if image_file:
             extention = image_file.filename.split('.')[-1]
+            """
+                No one shall ask what the heck am I doing here.
+                because this is the only way it worked.. 
+                Even when I do what the documentation says.
+                nothing..
+                tyring many diffrent objects in python represeting bytes and files.
+                nothing.
+                never recognized the file as image and always sent and empty file.
+
+
+                Is it a problem with imagekitio..
+                I don't know for sure
+            """
             temp_file_path = f'temp_image.{extention}'
-#            with open(temp_file_path, 'wb') as f:
- #               image_file.save(f)
-            with open(image_file, 'rb') as f:
+            with open(temp_file_path, 'wb') as f:
+                image_file.save(f)
+            with open(temp_file_path, 'rb') as f:
                 result = ik.upload_file(
                     file=f, file_name=f'{current_user.user_name}.{extention}')
             os.remove(temp_file_path)
