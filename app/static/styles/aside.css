@@ -30,11 +30,22 @@ aside.top::-webkit-scrollbar {
 
 .user_info {
 	width: 100%;
+	
+	align-self: center;
+
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	
 	padding: 10px;
+	margin-bottom: var(--large-gap);
 	background-color: var(--color-1);
+	
+	border: 1px solid #20303f;
+    border-radius: 10px;
+    box-shadow: 0 0 8px 1px #20303f, 0 0 8px 1px #20303f inset;
+
+	
 }
 
 .user_info img {
