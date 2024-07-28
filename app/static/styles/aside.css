@@ -154,14 +154,19 @@ button .material-symbols-outlined {
 
 
 .featured_ewalls {
-	padding: var(--medium-gap) 0;
+	padding: var(--medium-gap);
 
 	display: flex;
 	flex-direction: column;
+
+	border: 1px solid white;
+	border-radius: 15px;
 }
 
 .featured_ewalls h3 {
-	align-self: flex-start
+	align-self: flex-start;
+
+	margin-bottom: var(--medium-gap);
 }
 
 .featured_ewalls .ewall {
@@ -170,7 +175,7 @@ button .material-symbols-outlined {
 	display: flex;
 
 	padding: var(--small-gap);
-	margin: var(--small-gap) 0;
+	margin-top: var(--small-gap);
 }
 
 .featured_ewalls .ewall img {
