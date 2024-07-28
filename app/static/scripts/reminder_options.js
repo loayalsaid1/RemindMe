@@ -67,7 +67,7 @@ function setEditTextReminderWindow() {
 
       const id = $(this).data('reminder-id');
       const token = getCookie('access_token_cookie');
-      const url = `http://remindme.iygeal.tech:5001/api/v1/reminders/${id}`;
+      const url = `http://localhost:5001/api/v1/reminders/${id}`;
       $.ajax({
         url: url,
         method: 'PUT',
@@ -141,7 +141,7 @@ function setEditImageReminderform() {
       const reminderId = $('.add_image_reminder').data('reminder-id');
       const reminder = $(`article[data-reminder-id="${reminderId}"]`);
       const token = getCookie('access_token_cookie');
-      const url = `http://remindme.iygeal.tech:5001/api/v1/reminders/${reminderId}`;
+      const url = `http://localhost:5001/api/v1/reminders/${reminderId}`;
       const form = new FormData(this);
       form.append('is_text', false);
       if (reminder.find('.caption').text() === form.get('caption')) {
@@ -193,7 +193,7 @@ $(document).ready(function () {
     const reminder = $(this).closest('article');
     const id = reminder.data('reminder-id');
     const token = getCookie('access_token_cookie');
-    const url = `http://remindme.iygeal.tech:5001/api/v1/reminders/${id}`;
+    const url = `http://localhost:5001/api/v1/reminders/${id}`;
 
     if (confirm('You are deleting one of your reminders now!') === false) {
       return;
@@ -236,7 +236,7 @@ $(document).ready(function () {
 
     const reminder = $(this).closest('article');
     const id = reminder.data('reminder-id');
-    const url = 'http://remindme.iygeal.tech:5001/api/v1/reminders/' + id;
+    const url = 'http://localhost:5001/api/v1/reminders/' + id;
     const token = getCookie('access_token_cookie');
 
     const visibility =
