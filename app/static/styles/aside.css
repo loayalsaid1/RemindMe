@@ -15,6 +15,8 @@ aside {
 }
 
 aside .top {
+	width: 100%;
+
 	overflow: auto;
 	margin-bottom: 40px;
 	
@@ -143,4 +145,53 @@ aside.top::-webkit-scrollbar {
 
 button .material-symbols-outlined {
 	margin-right: var(--small-gap);
+}
+
+
+/*****************************
+	Featured E-Walls
+***************/
+
+
+.featured_ewalls {
+	padding: var(--medium-gap) 0;
+
+	display: flex;
+	flex-direction: column;
+}
+
+.featured_ewalls h3 {
+	align-self: flex-start
+}
+
+.featured_ewalls .ewall {
+	height: var(--featured-ewall-height);
+
+	display: flex;
+
+	padding: var(--small-gap);
+	margin: var(--small-gap) 0;
+}
+
+.featured_ewalls .ewall img {
+	display: inline-block;
+
+	height: 40px;
+	width: 40px;
+
+	border-radius: 50%;
+
+	margin-right: var(--small-gap);
+}
+
+.featured_ewalls .ewall_info {
+	width: calc(100% - 45px);
+	white-space: nowrap;
+}
+
+.ewall_description {
+	overflow: hidden;
+	text-overflow: ellipsis;
+
+	font-size: small;
 }

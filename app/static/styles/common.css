@@ -1,9 +1,12 @@
 :root {
 	--header-height: 70px;
+	--card-height: 258px;
+	--featured-ewall-height: 50px;
+	
 	--main-width: 800px;
 	--card-width: 383px;
-	--card-height: 258px;
 	--aside-width: 300px;
+	
 	--small-gap: 5px;
 	--medium-gap: 10px;
 	--large-gap: 20px;
