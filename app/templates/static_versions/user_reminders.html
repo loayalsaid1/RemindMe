@@ -11,9 +11,12 @@
 	<link rel="stylesheet" href="../../static/styles/aside.css">
 	<link rel="stylesheet" href="../../static/styles/user_reminders.css">
 	<link rel="stylesheet" href="../../static/styles/add_reminder.css">
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+	<script src="../../static/scripts/jquery-3.7.1.min.js"></script>
 	<script src="../../static/scripts/user_reminders.js"></script>
 	<script src="../../static/scripts/add_reminder.js"></script>
+	<script src="../../static/scripts/reminder_options.js"></script>
+	<script src="../../static/scripts/header.js"></script>
 </head>
 
 <body>
@@ -56,23 +59,53 @@
 		</div>
 	</header>
 	<aside>
-		<div class="user_info">
-			<img src="../../static/images/profile_placeholder.png" alt="">
+		<div class="top">
+			<div class="user_info">
+				<img src="../../static/images/profile_placeholder.png" alt="">
 
-			<h2 class="user_full_name">Loay AL-Said</h2>
-			<h3 class="username">@loayalsaid</h3>
+				<h2 class="user_full_name">Loay AL-Said</h2>
+				<h3 class="username">@loayalsaid</h3>
 
-			<p class="user_description">
-				Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos maxime omnis,
-				repellendus odio facere dicta ratione magni dolorem animi in.
-			</p>
+				<p class="user_description">
+					Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos maxime omnis,
+					repellendus odio facere dicta ratione magni dolorem animi in.
+				</p>
 
-			<button class"edit_profile">
-				<span class="material-symbols-outlined">
-					edit
-				</span>
-				Edit profile
-			</button>
+				<button class"edit_profile">
+					<span class="material-symbols-outlined">
+						edit
+					</span>
+					Edit profile
+				</button>
+			</div>
+			<section class="featured_ewalls">
+				<h3>Featured Elements</h3>
+				<div class="ewall">
+					<img src="../../static/images/profile_placeholder.png" alt="sadfsdfsdfdsf">
+					<div class="ewall_info">
+						<h4 class="ewall_name"><a href="#">ALX-OGs' Whys</a></h4>
+						<p class="ewall_description">Some of the OGs of ALX answering WHY and HOW questoins by
+							C-2-bleneded
+							studensts</p>
+					</div>
+				</div>
+				<div class="ewall">
+					<img src="../../static/images/profile_placeholder.png" alt="">
+					<div class="ewall_info">
+						<h4 class="ewall_name"><a href="#">Loay Al-Said</a></h4>
+						<p class="ewall_description">RemindMe deveolper and Lorem ipsum dolor sit amet, consectetur
+							adipisicing elit. Ut nisi necessitatibus mollitia corporis quisquam</p>
+					</div>
+				</div>
+				<div class="ewall">
+					<img src="../../static/images/profile_placeholder.png" alt="">
+					<div class="ewall_info">
+						<h4 class="ewall_name"><a href="#">Loay Al-Said</a></h4>
+						<p class="ewall_description">RemindMe deveolper and Lorem ipsum dolor sit amet, consectetur
+							adipisicing elit. Ut nisi necessitatibus mollitia corporis quisquam</p>
+					</div>
+				</div>
+			</section>
 		</div>
 		<div class="add_reminder">
 			<ul class="choose_reminder_type">
