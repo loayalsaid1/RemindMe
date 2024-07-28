@@ -1,6 +1,7 @@
 <aside>
-	<div class="user_info">
-		{% if profile_owner %}
+	<div class="top">
+		<div class="user_info">
+			{% if profile_owner %}
 			<img src="{{ profile_owner.img_url }}" alt="">
 
 			<h2 class="user_full_name">{{ profile_owner.first_name }} {{ profile_owner.last_name }}</h2>
@@ -9,7 +10,7 @@
 			<p class="user_description">
 				{{ profile_owner.description }}
 			</p>
-		{% else %}
+			{% else %}
 			<img src="{{ user.img_url }}" alt="">
 
 			<h2 class="user_full_name">{{ user.first_name }} {{ user.last_name }}</h2>
@@ -18,16 +19,36 @@
 			<p class="user_description">
 				{{ user.description }}
 			</p>
-		{% endif %}
-		
-		{% if not profile_owner %}
-		<button type="button" class="edit_profile" onclick="alert('You can\'t fake your identity here...\nAt least for now.. \nBut if you insest.\n Here is an insider bug.\ngo to /finalize_profile and fill the form. \n\nHey, Keep it a secret')">
-			<span class="material-symbols-outlined">
-				edit
-			</span>
-			Edit profile
-		</button>
-		{% endif %}
+			{% endif %}
+
+			{% if not profile_owner %}
+			<button type="button" class="edit_profile"
+				onclick="alert('You can\'t fake your identity here...\nAt least for now.. \nBut if you insest.\n Here is an insider bug.\ngo to /finalize_profile and fill the form. \n\nHey, Keep it a secret')">
+				<span class="material-symbols-outlined">
+					edit
+				</span>
+				Edit profile
+			</button>
+			{% endif %}
+		</div>
+		<section class="featured_ewalls">
+			<h3>Featured Elements</h3>
+			<div>
+				<img src="../static/images/profile_placeholder.png" alt="">
+				<div>
+					<h4>ALX-OGs' Whys</h4>
+					<p>Some of the OGs of ALX answering WHY and HOW questoins by C-2-bleneded studensts</p>
+				</div>
+			</div>
+			<div>
+				<img src="../static/images/profile_placeholder.png" alt="">
+				<div>
+					<h4>Loay Al-Said</h4>
+					<p>RemindMe deveolper and Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut nisi
+						necessitatibus mollitia corporis quisquam</p>
+				</div>
+			</div>
+		</section>
 	</div>
 	<div class="add_reminder">
 		<ul class="choose_reminder_type">
