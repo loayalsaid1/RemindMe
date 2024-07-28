@@ -182,6 +182,13 @@ button .material-symbols-outlined {
 	margin-bottom: var(--medium-gap);
 }
 
+.featured_ewalls h4 a{
+	text-decoration: none;
+
+    color: white;
+
+}
+
 .featured_ewalls .ewall {
 	height: var(--featured-ewall-height);
 
