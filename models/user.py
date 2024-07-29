@@ -6,7 +6,7 @@ from models.reminder import Reminder
 from models.reflection import Reflection
 from models.streak import Streak
 from sqlalchemy.orm import relationship
-from sqlalchemy import Column, String, Enum, Integer
+from sqlalchemy import Column, String, Enum, Integer, ForeignKey
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask_login import UserMixin
 
@@ -25,6 +25,8 @@ class User(UserMixin, BaseModel, Base):
         gender = Column(Enum("Male", "Female", name="gender"))
         description = Column(String(512))
         img_url = Column(String(500))
+        longest_streak_id = Column(String(36))
+        current_streak_id = Column(String(36))
 
         reminders = relationship("Reminder", backref="user",
                                  cascade="all, delete, delete-orphan")
@@ -32,6 +34,7 @@ class User(UserMixin, BaseModel, Base):
                                    cascade="all, delete, delete-orphan")
         streaks = relationship("Streak", backref="user",
                                cascade="all, delete, delete-orphan")
+
     else:
         user_name = ""
         user_custom_id = 0
@@ -73,6 +76,21 @@ class User(UserMixin, BaseModel, Base):
                     user_streaks.append(streak.id)
 
             return user_streaks
+    @property
+    def longest_streak(self):
+        """Get uesr longest streak"""
+        if not self.longest_streak_id:
+            return None
+
+        return models.storage.get(Streak, self.longest_streak_id)
+
+    @property
+    def current_streak(self):
+        """Return user's current running streak if any"""
+        if not self.current_streak_id:
+            return None
+
+        return models.storage.get(Streak, self.current_streak_id)
 
     def set_password(self, password):
         """Hash and set the password before saving it to the database"""
