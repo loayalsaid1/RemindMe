@@ -3,6 +3,7 @@
 from models.base_model import BaseModel, Base
 from models import storage_t
 from sqlalchemy import Column, String, Integer, ForeignKey
+from datetime import date
 
 
 class Streak(BaseModel, Base):
@@ -15,3 +16,25 @@ class Streak(BaseModel, Base):
     else:
         user_id = ""
         days = 1
+
+    def status(self):
+        """Check the status of the streak
+            
+            Returns one of three:
+                'expired' => If hasn't been updated for 2 days
+                'running' => If not expired but will expire today if not updated
+                'updated' => If updated today
+        """
+        # TODO => consider users from different time zones
+        today = date.today()
+        last_update_date = self.updated_at.date()
+
+        difference  = (today - last_update_date)
+
+        if difference.days == 0:
+            return 'updated'
+        elif difference.days == 1 or difference.days == 2:
+            # A glitch to encourage some users
+            return 'running'
+        else:
+            return 'expired'
