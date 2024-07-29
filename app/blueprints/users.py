@@ -11,6 +11,7 @@ users = Blueprint('users', __name__)
 @login_required
 def user_profile():
     """Get user profile page"""
+    current_user.expand_streak()
     reminders = current_user.reminders
     return render_template(
         'user_reminders.html',
