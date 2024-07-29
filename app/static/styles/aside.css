@@ -68,7 +68,7 @@ aside.top::-webkit-scrollbar {
     font-weight: 500;
 }
 
-.user_info p {
+.user_info .user_description {
     text-align: center;
     margin: 15px 0;
     line-height: 1.5rem;
@@ -237,4 +237,25 @@ button .material-symbols-outlined {
     background-color: var(--color-1);
 
 	transition: .3s;
+}
+
+.streaks {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.streaks div {
+	display: flex;
+	flex-direction: column-reverse;
+	justify-content: space-evenly;
+	align-items: center;
+}
+
+.streaks div p {
+	text-align: center;
+    line-height: 1.5rem;
+    font-size: large;
+    font-weight: 600;
 }
