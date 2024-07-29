@@ -3,12 +3,13 @@
 from sqlalchemy.sql import func
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
-from os import getenv
 from models.base_model import Base
 from models.user import User
 from models.reflection import Reflection
 from models.reminder import Reminder
 from models.streak import Streak
+from os import getenv
+from datetime import datetime
 
 
 classes = {
@@ -64,6 +65,8 @@ class DBStorage:
 
     def save(self):
         """Commit changes to the current DB session"""
+        for obj in list(self.__session.dirty):
+            obj.updated_at = datetime.now()
         self.__session.commit()
 
     def delete(self, obj=None):
