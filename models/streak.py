@@ -16,7 +16,7 @@ class Streak(BaseModel, Base):
     else:
         user_id = ""
         days = 1
-
+    @property
     def status(self):
         """Check the status of the streak
             
