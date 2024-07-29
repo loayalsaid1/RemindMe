@@ -99,3 +99,29 @@ class User(UserMixin, BaseModel, Base):
     def verify_password(self, password):
         """Verify hashed password"""
         return check_password_hash(self.password, password)
+
+    def update_longest_streak(self):
+        """Update longest streak if current streak is
+            longet that existing one.
+        """
+        current_streak = self.current_streak
+
+        if current_streak.days > self.longest_streak:
+            self.longest_streak_id = current_streak.id
+            
+    def expand_streak(self):
+        streak = self.current_streak
+        
+        if not streak or (streak and streak.status == 'expired'):
+            new_streak = Streak()
+            new_streak.user_id = self.id
+            new_streak.save()
+
+            self.current_streak_id = new_streak.id
+            models.storage.save()
+        elif streak.status == 'running':
+            streak.update()
+
+        self.update_longest_streak()
+
+        models.storage.save()

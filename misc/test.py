@@ -35,7 +35,7 @@ def add_sample_data():
     user1.user_name = "JohnDoe"
     user1.user_custom_id = 1
     user1.email = "john@example.com"
-    user1.password = "password123"
+    user1.set_password("password123")
     user1.first_name = "John"
     user1.last_name = "Doe"
     user1.profession = "Engineer"
@@ -46,7 +46,7 @@ def add_sample_data():
     user2.user_name = "JaneSmith"
     user2.user_custom_id = 2
     user2.email = "jane@example.com"
-    user2.password = "password123"
+    user2.set_password("password123")
     user2.first_name = "Jane"
     user2.last_name = "Smith"
     user2.profession = "Doctor"

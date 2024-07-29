@@ -3,7 +3,7 @@
 from models.base_model import BaseModel, Base
 from models import storage_t
 from sqlalchemy import Column, String, Integer, ForeignKey
-from datetime import date
+from datetime import date, datetime
 
 
 class Streak(BaseModel, Base):
@@ -38,3 +38,8 @@ class Streak(BaseModel, Base):
             return 'running'
         else:
             return 'expired'
+
+    def update(self):
+        """Add a day to the streak"""
+        self.days += 1
+        self.updated_at = datetime.utcnow()
