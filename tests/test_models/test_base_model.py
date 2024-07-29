@@ -79,7 +79,7 @@ class TestBaseModel(unittest.TestCase):
 
             we have all the attibutes
         """
-        time_now = datetime.now()
+        time_now = datetime.utcnow()
         attrs = {
             "__class__": "wronge_Class",
             "id": "test_id",

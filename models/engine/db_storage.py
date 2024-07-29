@@ -66,7 +66,7 @@ class DBStorage:
     def save(self):
         """Commit changes to the current DB session"""
         for obj in list(self.__session.dirty):
-            obj.updated_at = datetime.now()
+            obj.updated_at = datetime.utcnow()
         self.__session.commit()
 
     def delete(self, obj=None):

@@ -34,7 +34,7 @@ class BaseModel:
 
         else:
             self.id = str(uuid4())
-            self.created_at = self.updated_at = datetime.now()
+            self.created_at = self.updated_at = datetime.utcnow()
 
     def __str__(self):
         """Make a string representation of the object"""
@@ -43,7 +43,7 @@ class BaseModel:
 
     def save(self):
         """Update the updated_at attribute with the current datetime"""
-        self.updated_at = datetime.now()
+        self.updated_at = datetime.utcnow()
         models.storage.new(self)
         models.storage.save()
 
