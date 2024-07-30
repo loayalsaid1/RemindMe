@@ -21,6 +21,16 @@
 			</p>
 			{% endif %}
 			<div class="streaks">
+				{% if profile_owner %}
+				<div>
+					<p class="text">Current Streaks</p>
+					<p class="value">{{ profile_owner.current_streak.days or 0}}</p>
+				</div>
+				<div>
+					<p class="text">Longest Streak</p>
+					<p class="value">{{ profile_owner.longest_streak.days or 0}}</p>
+				</div>
+				{% else %}
 				<div>
 					<p class="text">Current Streaks</p>
 					<p class="value">{{ user.current_streak.days}}</p>
@@ -29,6 +39,7 @@
 					<p class="text">Longest Streak</p>
 					<p class="value">{{ user.longest_streak.days }}</p>
 				</div>
+				{% endif %}
 			</div>
 			{% if not profile_owner %}
 			<button type="button" class="edit_profile"
