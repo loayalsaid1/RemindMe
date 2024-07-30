@@ -1,0 +1,306 @@
+d
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+	<link rel="stylesheet" href="../../static/styles/common.css">
+	<link rel="stylesheet" href="../../static/styles/header.css">
+	<link rel="stylesheet" href="../../static/styles/aside.css">
+	<link rel="stylesheet" href="../../static/styles/reminders.css">
+	<link rel="stylesheet" href="../../static/styles/add_reminder.css">
+
+	<script src="../../static/scripts/jquery-3.7.1.min.js"></script>
+	<script src="../../static/scripts/add_reminder.js"></script>
+	<script src="../../static/scripts/reminder_options.js"></script>
+	<script src="../../static/scripts/header.js"></script>
+</head>
+
+<body>
+	<header class="header">
+		<div class="logo">
+			<a href="{{ url_for('users.user_profile') }}">
+				<img src="https://via.placeholder.com/50x50" alt="">
+				<h2>RemindMe</h2>
+			</a>
+		</div>
+		<nav>
+			<ul>
+				<li><a href="#">Public reminders</a></li>
+				<li class="active"><a href="#">Your reminders</a></li>
+			</ul>
+		</nav>
+		<div class="left">
+			<div class="search-bar">
+				<input type="text" placeholder="Search for username">
+				<!-- <button>Search</button> -->
+			</div>
+			<div class="profile_icon_section">
+				<img src="../../static/images/profile_placeholder.png" alt="">
+				<div class="profile_dropdown">
+					<a href="#">
+						<span class="material-symbols-outlined">
+							person
+						</span>
+						My Profile
+					</a>
+					<a href="#">
+						<span class="material-symbols-outlined">
+							logout
+						</span>
+						Log Out
+					</a>
+				</div>
+			</div>
+		</div>
+	</header>
+	<aside>
+		<div class="top">
+			<div class="user_info">
+				<img src="../../static/images/profile_placeholder.png" alt="">
+
+				<h2 class="user_full_name">Loay AL-Said</h2>
+				<h3 class="username">@loayalsaid</h3>
+
+				<p class="user_description">
+					Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos maxime omnis,
+					repellendus odio facere dicta ratione magni dolorem animi in.
+				</p>
+				<div class="streaks">
+					<div>
+						<p class="text">Current Streaks</p>
+						<p class="value">1</p>
+					</div>
+					<div>
+						<p class="text">Longest Streak</p>
+						<p class="value">3</p>
+					</div>
+				</div>
+				<button class"edit_profile">
+					<span class="material-symbols-outlined">
+						edit
+					</span>
+					Edit profile
+				</button>
+			</div>
+			<section class="featured_ewalls">
+				<h3>Featured Elements</h3>
+				<div class="ewall">
+					<img src="../../static/images/profile_placeholder.png" alt="sadfsdfsdfdsf">
+					<div class="ewall_info">
+						<h4 class="ewall_name"><a href="#">ALX-OGs' Whys</a></h4>
+						<p class="ewall_description">Some of the OGs of ALX answering WHY and HOW questoins by
+							C-2-bleneded
+							studensts</p>
+					</div>
+				</div>
+				<div class="ewall">
+					<img src="../../static/images/profile_placeholder.png" alt="">
+					<div class="ewall_info">
+						<h4 class="ewall_name"><a href="#">Loay Al-Said</a></h4>
+						<p class="ewall_description">RemindMe deveolper and Lorem ipsum dolor sit amet, consectetur
+							adipisicing elit. Ut nisi necessitatibus mollitia corporis quisquam</p>
+					</div>
+				</div>
+				<div class="ewall">
+					<img src="../../static/images/profile_placeholder.png" alt="">
+					<div class="ewall_info">
+						<h4 class="ewall_name"><a href="#">Loay Al-Said</a></h4>
+						<p class="ewall_description">RemindMe deveolper and Lorem ipsum dolor sit amet, consectetur
+							adipisicing elit. Ut nisi necessitatibus mollitia corporis quisquam</p>
+					</div>
+				</div>
+			</section>
+		</div>
+		<div class="add_reminder">
+			<ul class="choose_reminder_type">
+				<li>
+					<button type="button" class="add_image_reminder_button">
+						<span class="material-symbols-outlined">
+							image
+						</span>
+						Image Reminder
+					</button>
+				</li>
+				<li>
+					<button type="button" class="add_text_reminder_button">
+						<span class="material-symbols-outlined">
+							text_fields
+						</span>
+						Text Reminder
+					</button>
+				</li>
+			</ul>
+			<button class="aside_button">
+				<span class="material-symbols-outlined">
+					add
+				</span>
+				Add reminder
+			</button>
+		</div>
+	</aside>
+	<main data-reminder-id="id" data-reminder-type="text" data-user-id="userID">
+		<div class="reminder">
+			<div class="head">
+				<img src="../../static/images/profile_placeholder.png" alt="">
+				<div class="reminder_user_data">
+					<div class="user_name">
+						<p class="name">Loay Al-Said</p>
+						<p class="username">@loayalsaid1</p>
+					</div>
+					<p class="date">2024-7-30 00:00</p>
+				</div>
+			</div>
+			<div class="remidner_body">
+				<p class="caption">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi quos reprehenderit
+					itaque aliquid nesciunt corporis velit nostrum.</p>
+				<!-- Can be text_remidner_content or image_reminder_content in image reminders -->
+				<div class="text_reminder_content">
+					<p>
+						Lorem ipsum dolor, sit amet consectetur adipisicing elit. Alias, harum perspiciatis mollitia
+					</p>
+				</div>
+			</div>
+			<div class="metadata">
+				<p>Placeholder text.</p>
+				<p>Placeholder text.</p>
+			</div>
+			<div class="buttons">
+				<button>Resinates with me</button>
+				<button>Add my reflection</button>
+			</div>
+		</div>
+		<section class="reflections">
+			<artlicle class="reflection">
+				<span>menu</span>
+				<div class="reflection_head">
+					<img src="../../static/images/profile_placeholder.png" alt="">
+					<div>
+						<div class="user_name">
+							<p class="name">Mr.Nobody</p>
+							<p class="username">mrnobody1</p>
+						</div>
+						<p class="date">2024-2-26 12:01</p>
+					</div>
+				</div>
+				<p class="reflection_text">
+					Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente
+					aliquid, officia sunt iste eius voluptatum dolore, at deserunt eaque alias perferendis fugit
+					iure suscipit reprehenderit. Sed, vel fugiat! Tempora, earum.
+				</p>
+			</article>
+			<artlicle class="reflection">
+				<span>menu</span>
+				<div class="reflection_head">
+					<img src="../../static/images/profile_placeholder.png" alt="">
+					<div>
+						<div class="user_name">
+							<p class="name">Mr.Nobody</p>
+							<p class="username">mrnobody1</p>
+						</div>
+						<p class="date">2024-2-26 12:01</p>
+					</div>
+				</div>
+				<p class="reflection_text">
+					Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente
+					aliquid, officia sunt iste eius voluptatum dolore, at deserunt eaque alias perferendis fugit
+					iure suscipit reprehenderit. Sed, vel fugiat! Tempora, earum.
+				</p>
+			</article>
+			<artlicle class="reflection">
+				<span>menu</span>
+				<div class="reflection_head">
+					<img src="../../static/images/profile_placeholder.png" alt="">
+					<div>
+						<div class="user_name">
+							<p class="name">Mr.Nobody</p>
+							<p class="username">mrnobody1</p>
+						</div>
+						<p class="date">2024-2-26 12:01</p>
+					</div>
+				</div>
+				<p class="reflection_text">
+					Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente
+					aliquid, officia sunt iste eius voluptatum dolore, at deserunt eaque alias perferendis fugit
+					iure suscipit reprehenderit. Sed, vel fugiat! Tempora, earum.
+				</p>
+			</article>
+		</section>
+		<section class="add_image_reminder add_reminder_window">
+			<span class="material-symbols-outlined cancel_icon">
+				close
+			</span>
+			<h2>Add image Reminder</h2>
+			<div class="image_placeholder_container">
+				<img id="placeholder_image" src="https:///designshack.net/wp-content/uploads/placehold.jpg"
+					alt="Hey, I am a placeholder image">
+			</div>
+
+			<form class="add_image_reminder_form" method="POST" enctype="multipart/form-data">
+				<input type="file" name="reminder_image" id="reminder_image" onchange="loadFile(event)" />
+				<label for="reminder_image">Upload Image</label>
+
+				<label for="caption">Caption:</label>
+				<textarea name="caption" id="caption" rows="2"></textarea>
+
+				<label>Reminder Visibility</label>
+				<div class="visibility_section">
+					<input type="radio" id="img_private" name="reminder_visibility" value="private">
+					<label for="img_private">Private</label>
+
+					<input type="radio" id="img_public" name="reminder_visibility" value="public">
+					<label for="img_public">Public</label>
+				</div>
+
+				<div class="form_buttons">
+					<button type="reset" class="reset_button">Reset</button>
+					<button type="submit" class="add_reminder_button">Add Reminder</button>
+				</div>
+			</form>
+		</section>
+		<section class="add_text_reminder add_reminder_window">
+			<span class="material-symbols-outlined cancel_icon">
+				close
+			</span>
+			<h2>Add Text Reminder</h2>
+			<form class="text_reminder_form" method="POST" enctype="multipart/form-data" action="#">
+				<label for="reminder_text">Reminder Text:</label>
+				<textarea name="reminder_text" id="reminder_text" rows="2"></textarea>
+
+				<label for="caption">Caption:</label>
+				<textarea name="caption" id="caption" rows="2"></textarea>
+				<label>Reminder Visibility</label>
+				<div class="visibility_section">
+					<input type="radio" id="private" name="reminder_visibility" value="private">
+					<label for="private">Private</label>
+
+					<input type="radio" id="public" name="reminder_visibility" value="public">
+					<label for="public">Public</label>
+				</div>
+
+				<div class="form_buttons">
+					<button type="reset" class="reset_button">Reset</button>
+					<button type="submit" class="add_reminder_button">Add Reminder</button>
+				</div>
+			</form>
+		</section>
+		<div class="fullscreen_container">
+			<img src="" alt="">
+			<p></p>
+		</div>
+	</main>
+	<script>
+		function loadFile(event) {
+			const image = document.getElementById('placeholder_image');
+			image.src = URL.createObjectURL(event.target.files[0]);
+			image.onload = () => {
+				URL.revokeObjectURL(image.src); // free memory
+			}
+		}
+	</script>
+</body>
+
+</html>
