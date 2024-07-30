@@ -106,7 +106,9 @@ class User(UserMixin, BaseModel, Base):
         """
         current_streak = self.current_streak
 
-        if current_streak.days > self.longest_streak.days:
+        if not self.longest_streak:
+            self.longest_streak_id = current_streak.id
+        elif current_streak.days > self.longest_streak.days:
             self.longest_streak_id = current_streak.id
             
     def expand_streak(self):

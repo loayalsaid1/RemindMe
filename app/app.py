@@ -24,7 +24,6 @@ jwt = JWTManager(app)
 app.register_blueprint(auth)
 app.register_blueprint(users)
 
-
 @login_manager.user_loader
 def load_user(user_id):
     """This function called to load a user from the user ID"""
