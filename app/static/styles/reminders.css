@@ -130,7 +130,9 @@ main {
 }
 
 .add_reflection button {
-	padding: 15px;
+	display: flex;
+	
+	padding: 15px var(--small-gap);
     border-radius: 15px;
     color: white;
     background: var(--color-2);
@@ -147,19 +149,28 @@ main {
 	position: relative;
     
 	padding: var(--medium-gap);
-    margin: 10px 5px;
+    margin: var(--medium-gap) var(--small-gap);
     
 	background: var(--color-3);
     border-radius: 15px;
     box-shadow: 0.5px 0.5px 4px 0px white;
 }
 
-.reflection .menu_icon {
+.reflection .options {
 	position: absolute;
 	top: 20px;
 	right: 20px;
+
+	display: flex;
+	align-items: center
+}
+.options span {
+	display: flex;
 }
 
+.edit_icon {
+	margin-left: var(--medium-gap);
+}
 .reflection_head {
 	height: 50px;
 
