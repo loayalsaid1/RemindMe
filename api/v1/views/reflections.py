@@ -75,7 +75,22 @@ def create_reflection(reminder_id):
     
     reflection.save()
     
-    return jsonify(reflection.to_dict()), 201
+    response = reminder.to_dict()
+    response['updated_at'] = reminder.updated_at.strftime('%Y-%m-%d %H:%M GMT')
+
+    # I think this is kinda breaking the rules.. But I'm gonna do it anyways now. 😁😎😁
+    # 😉
+    # I'm going to send user name and username with the response to save myself an api call!
+    # and.....
+    # time 😅😇
+    # I think I could have done it in the time iam seaching for these emojies and writing this.
+    # ha ha ha
+
+    response['user_full_name'] = f"{reminder.user.first_name} {reminder.user.last_name}"
+    response['username'] = reminder.user.user_name
+    response['user_img_url'] = reminder.user.img_url
+
+    return jsonify(response), 201
 
 
 @app_views.route('/reflections/<reflection_id>', methods=[
