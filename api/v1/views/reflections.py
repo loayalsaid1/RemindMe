@@ -46,6 +46,7 @@ def get_reflections_by_user(user_id):
 
 @app_views.route('/reminders/<reminder_id>/reflections', methods=[
     'POST'], strict_slashes=False)
+@jwt_required()
 def create_reflection(reminder_id):
     """Creates a new reflection by a specific user"""
     user_id = get_jwt_identity()  # Get current user
@@ -70,13 +71,13 @@ def create_reflection(reminder_id):
 
     reflection = Reflection()
     reflection.user_id = user_id
-    reflection.reminder_id =reminder_id
+    reflection.reminder_id = reminder_id
     reflection.content = data['content']
     
     reflection.save()
     
-    response = reminder.to_dict()
-    response['updated_at'] = reminder.updated_at.strftime('%Y-%m-%d %H:%M GMT')
+    response = reflection.to_dict()
+    response['updated_at'] = reflection.updated_at.strftime('%Y-%m-%d %H:%M GMT')
 
     # I think this is kinda breaking the rules.. But I'm gonna do it anyways now. 😁😎😁
     # 😉
@@ -86,9 +87,9 @@ def create_reflection(reminder_id):
     # I think I could have done it in the time iam seaching for these emojies and writing this.
     # ha ha ha
 
-    response['user_full_name'] = f"{reminder.user.first_name} {reminder.user.last_name}"
-    response['username'] = reminder.user.user_name
-    response['user_img_url'] = reminder.user.img_url
+    response['user_full_name'] = f"{reflection.user.first_name} {reminder.user.last_name}"
+    response['username'] = reflection.user.user_name
+    response['user_img_url'] = reflection.user.img_url
 
     return jsonify(response), 201
 

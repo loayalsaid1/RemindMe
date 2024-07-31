@@ -33,6 +33,7 @@ function makeReflectionElement(data) {
 			</p>
 		</article>
 	`
+	return reflection;
 }
 
 $(document).ready(function () {
@@ -52,14 +53,16 @@ $(document).ready(function () {
 		$.ajax({
 			url: url,
 			method: 'POST',
+			contentType: 'application/json',
 			headers: {
 				'Authorization': `Bearer ${token}`,
 			},
-			data: {'content': content},
+			data: JSON.stringify({content: content}),
 			success: function (data) {
 				const reflection = makeReflectionElement(data);
-				$('.reflections').prepend(reminder);
-				$(this).reset();
+				console.log(data);
+				$('.reflections').prepend(reflection);
+				$('.add_reflection').trigger('reset');
 			},
 			error: function (error) {
 				if (error.status === 401) {
