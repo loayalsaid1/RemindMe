@@ -44,32 +44,37 @@ def get_reflections_by_user(user_id):
     return jsonify(user_reflections)
 
 
-@app_views.route('/users/<user_id>/reflections', methods=[
+@app_views.route('/reminders/<reminder_id>/reflections', methods=[
     'POST'], strict_slashes=False)
-def create_reflection(user_id):
+def create_reflection(reminder_id):
     """Creates a new reflection by a specific user"""
-    current_user_id = get_jwt_identity()  # Get current user
-    if current_user_id != user_id:
+    user_id = get_jwt_identity()  # Get current user
+    if not user_id:
+        # Idon't know why this message was written?!
         abort(403, description="Access forbidden")
 
     user = storage.get(User, user_id)
     if not user:
         abort(404, description="User not found")
-    if not request.json:
-        abort(400, description="Not a JSON")
+    
     data = request.get_json()
-    if 'reminder_id' not in data:
-        abort(400, description="Missing reminder_id")
+    if not data:
+        abort(400, "Where is the request JSON Body?!")
+
     if 'content' not in data:
         abort(400, description="Missing content")
 
-    reminder = storage.get(Reminder, data['reminder_id'])
+    reminder = storage.get(Reminder, reminder_id)
     if not reminder:
         abort(404, description="Reminder not found")
 
-    reflection = Reflection(user_id=user_id, reminder_id=data[
-        'reminder_id'], content=data['content'])
+    reflection = Reflection()
+    reflection.user_id = user_id
+    reflection.reminder_id =reminder_id
+    reflection.content = data['content']
+    
     reflection.save()
+    
     return jsonify(reflection.to_dict()), 201
 
 
