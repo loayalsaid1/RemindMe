@@ -7,24 +7,39 @@ function getCookie(name) {
 	if (parts.length === 2) return parts.pop().split(';').shift();
 }
 
+function makeReflectionElement(data) {
+	const reflection = `
+	<article data-user-id="${data.user_id}" data-reflection-id="${data.id}" class="reflection">
+			<div class="options">
+				<span class="material-symbols-outlined delete_icon">
+					delete
+				</span>
+				<span class="material-symbols-outlined edit_icon">
+					edit
+				</span>
+			</div>
+			<div class="reflection_head">
+				<img src="${data.user_img_url}" alt="">
+				<div class="reflection_user_data">
+					<div class="user_name">
+						<p class="name">${data.user_full_name}</p>
+						<p class="username">@${data.username}</p>
+					</div>
+					<p class="date">${data.updated_at}</p>
+				</div>
+			</div>
+			<p class="reflection_text">
+				${data.content}
+			</p>
+		</article>
+	`
+}
 
 $(document).ready(function () {
 	$('.add_reflection').submit(function (event) {
 		event.preventDefault();
 		event.stopPropagation();
-		/**
-		 * get the data from the form.
-		 * usubmit with token to api/v1/users/user_id/reflections
-		 * 
-		 * neded data is
-		 * caption
-		 * usr_id
-		 * token
-		 * 
-		 * endpoint
-		 * remnder_id
-		 * content
-		 */
+
 
 		//  get data
 		const reminderID = $('main').data('reminder-id');
