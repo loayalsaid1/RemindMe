@@ -75,4 +75,40 @@ $(document).ready(function () {
 			}
 		})
 	})
+
+	/**
+	 * delete a reflection
+	 */
+	$('main').on('click', '.reflection .delete_icon', function (event) {
+		event.stopPropagation();
+
+		const reflectionID = $(this).closest('article').data('reflection-id');
+		const token = getCookie('access_token_cookie');
+		const url = `http://localhost:5001/api/v1/reflections/${reflectionID}`;
+
+		if (confirm('You are deleting your reflection now!, confirm?') === false) {
+			return;
+		}
+
+		$.ajax({
+			url: url,
+			method: 'DELETE',
+			headers: {
+				Authorization: `Bearer ${token}`
+			},
+			success: function () {
+				$(`article[data-reflection-id=${reflectionID}]`).remove()
+			},
+			error: function (error) {
+				if (error.status === 401) {
+					// TODO: Get user back here agian.. Search when network is back
+					window.location.href = '/login';
+				} else {
+					console.error(error);
+					alert('Failed to delete the reflection now. Sorry for that!');
+				}
+			}
+		})
+		``
+	})
 })
