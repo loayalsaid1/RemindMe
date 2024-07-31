@@ -24,14 +24,14 @@
 {% include 'header.html' %}
 
 {% include 'aside.html' %}
-<main data-reminder-id="{{ reminder.id }}" data-reminder-type="{{ reminder.is_text ? 'text' : 'image' }}" data-user-id="{{ profile_owner.id }}">
+<main data-reminder-id="{{ reminder.id }}" data-reminder-type="{{ 'text' if reminder.is_text else 'image' }}" data-user-id="{{ profile_owner.id }}">
 	<div class="reminder">
 		<div class="head">
 			<img src="{{ profile_owner.img_url}}" alt="">
 			<div class="reminder_user_data">
 				<div class="user_name">
 					<p class="name">{{ profile_owner.first_name }} {{ profile_owner.last_name }}</p>
-					<p class="username">@{{ profile_owner.user_name }}" /p>
+					<p class="username">@{{ profile_owner.user_name }}</p>
 				</div>
 				<p class="date">{{reminder.updated_at.strftime('%Y-%m-%d %H:%M GMT')}}</p>
 			</div>
@@ -74,7 +74,7 @@
 	</div>
 	<hr>
 	<section class="reflections">
-		{{ for reflection in reflections }}
+		{% for reflection in reflections %}
 		<article data-user-id="{{ reflection.user_id }}" data-reflection-id="{{ reflection.id }}" class="reflection">
 			<div class="options">
 				{% if owner or reflection.user_id == current_user.id %}
@@ -94,15 +94,16 @@
 				<div class="reflection_user_data">
 					<div class="user_name">
 						<p class="name">{{ reflection.user.first_name }} {{reflection.user.last_name }}</p>
-						<p class="username">@{{ reflection.user.img_url }</p>
+						<p class="username">@{{ reflection.user.user_name }}</p>
 					</div>
 					<p class="date">{{ reflection.updated_at.strftime('%Y-%m-%d %H:%M GMT') }}</p>
 				</div>
 			</div>
 			<p class="reflection_text">
-				{{ reflection.text }}
+				{{ reflection.content }}
 			</p>
 		</article>
+		{% endfor %}
 	</section>
 	<section class="add_image_reminder add_reminder_window">
 		<span class="material-symbols-outlined cancel_icon">

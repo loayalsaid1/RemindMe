@@ -6,6 +6,7 @@ from flask_login import LoginManager, current_user
 from markupsafe import escape
 from app.blueprints.auth import auth
 from app.blueprints.users import users
+from app.blueprints.reminders import reminders
 from models import storage
 from models.user import User
 
@@ -23,6 +24,7 @@ jwt = JWTManager(app)
 
 app.register_blueprint(auth)
 app.register_blueprint(users)
+app.register_blueprint(reminders)
 
 @login_manager.user_loader
 def load_user(user_id):
