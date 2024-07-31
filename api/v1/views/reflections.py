@@ -99,6 +99,7 @@ def update_reflection(reflection_id):
     return jsonify(reflection.to_dict()), 200
 
 
+# TODO Refactor this for more security.. No time now.
 @app_views.route('/reflections/<reflection_id>', methods=[
     'DELETE'], strict_slashes=False)
 @jwt_required()
