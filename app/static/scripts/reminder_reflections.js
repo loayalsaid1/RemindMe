@@ -36,7 +36,7 @@ $(document).ready(function () {
 
 		//  get data
 		const reminderID = $('main').data('reminder-id');
-		const url = `http://localhost:5001/api/v1/reminders/${reminderID}/reflections`;
+		const url = `${apiDomain}/api/v1/reminders/${reminderID}/reflections`;
 		const token = getCookie('access_token_cookie');
 
 		const form = new FormData(this);
@@ -76,7 +76,7 @@ $(document).ready(function () {
 
 		const reflectionID = $(this).closest('article').data('reflection-id');
 		const token = getCookie('access_token_cookie');
-		const url = `http://localhost:5001/api/v1/reflections/${reflectionID}`;
+		const url = `${apiDomain}/api/v1/reflections/${reflectionID}`;
 
 		if (confirm('You are deleting your reflection now!, confirm?') === false) {
 			return;
@@ -101,6 +101,5 @@ $(document).ready(function () {
 				}
 			}
 		})
-		``
 	})
 })

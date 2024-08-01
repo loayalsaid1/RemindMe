@@ -111,7 +111,7 @@ function setAddTextReminderWindow() {
     };
 
     const token = getCookie('access_token_cookie');
-    const endpointURL = 'http://localhost:5001/api/v1/reminders';
+    const endpointURL = `${apiDomain}/api/v1/reminders`;
 
     $.ajax({
       url: endpointURL,
@@ -159,7 +159,7 @@ function setAddImageReminderForm() {
       form.delete('reminder_visibility');
 
       const token = getCookie('access_token_cookie');
-      const url = 'http://localhost:5001/api/v1/reminders';
+      const url = `${apiDomain}/api/v1/reminders`;
 
       $.ajax({
         url: url,

@@ -4,7 +4,7 @@ $(document).ready(function() {
 			event.preventDefault();
 
 			const username = $(this).val();
-			const url = `http://localhost:5001/api/v1/check_user/${username}`;
+			const url = `${apiDomain}/api/v1/check_user/${username}`;
 
 			$.ajax({
 				url: url,

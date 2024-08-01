@@ -26,3 +26,5 @@ $(document).ready(function () {
 		window.location.href = `/reminders/${reminderID}`;
 	})
 })
+
+clear
