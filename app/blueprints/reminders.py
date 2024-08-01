@@ -15,7 +15,8 @@ def get_reminder(reminder_id):
 		abort(404, 'Reminder not fount')
 
 	reflections = storage.filter_objects(Reflection, 'reminder_id', reminder_id)
-
+	if not reflections:
+		reflections = []
 	# Add user reflections in the begenning of the list
 	for i in range(len(reflections)):
 		if reflections[i].user_id == current_user.id:
