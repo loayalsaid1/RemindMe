@@ -1,11 +1,3 @@
-/**
- * Get the access_token_cookie for JWT
- */
-function getCookie(name) {
-	let value = '; ' + document.cookie;
-	let parts = value.split('; ' + name + '=');
-	if (parts.length === 2) return parts.pop().split(';').shift();
-}
 
 function makeReflectionElement(data) {
 	const reflection = `

@@ -12,24 +12,6 @@ function positionAddReminderWindows() {
   });
 }
 
-/**
- * blur main section except for the froms
- */
-function blurMain() {
-  $('main > *')
-    .not('.add_image_reminder')
-    .not('.add_text_reminder')
-    .css('filter', 'blur(5px)');
-}
-
-/**
- * To Get the access_token_cookie for JWT
- */
-function getCookie(name) {
-  let value = '; ' + document.cookie;
-  let parts = value.split('; ' + name + '=');
-  if (parts.length === 2) return parts.pop().split(';').shift();
-}
 
 /**
  * Toggle the icons and attibutes of a reminder when
@@ -338,12 +320,3 @@ $(document).ready(function () {
   );
 });
 
-/**
- * edit image reminder..
- * populate it with data.
- * fix submision behaviour
-	* take id, other things to it's place
-	if there is a file, upload io
- * show it
- * hide it and let it get back to it's place
- */
