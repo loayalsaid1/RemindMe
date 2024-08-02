@@ -58,6 +58,13 @@ main {
 	margin-bottom: var(--small-gap);
 }
 
+.reflection .user_name:hover,
+.reminder .user_name:hover {
+	text-decoration: underline;
+	cursor: pointer;
+	text-shadow: 1px 1px 10px white;
+}
+
 .reminder_user_data .name {
 	margin-right: var(--small-gap);
 	
