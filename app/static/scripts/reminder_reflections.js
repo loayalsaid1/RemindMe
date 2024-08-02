@@ -29,6 +29,19 @@ function makeReflectionElement(data) {
 }
 
 $(document).ready(function () {
+	/**
+	 * Add a reflection from the text bar in reminder.html
+	 * 
+	 * What is this comment here?
+	 * Am I ok?
+	 * any way... If anyone is reading this right now.. 
+	 * Thanks for taking a look at my code..
+	 * I hope you the best..
+	 * Have a great life. And lavarage all challneges you face.
+	 * 🙂
+	 * and remember.. God is the best planners. It happened for you...
+	 * 	It's for your best. You have to see where is the exercise here.
+	 */
 	$('.add_reflection').submit(function (event) {
 		event.preventDefault();
 		event.stopPropagation();
@@ -102,4 +115,28 @@ $(document).ready(function () {
 			}
 		})
 	})
+
+
+	/**
+	 * Make user info ontop of the reminder body a link to the
+	 * reminder owner
+	 */
+	$('.reminder .head').not('.date').click(function (event) {
+		event.stopPropagation();
+
+		const username = $(this).find('username').text().substr(1);
+
+		window.location.href = `/profile/${username}`;
+	})
+
+	
+	/**
+	 * make the userinfo ontop of reflections point to reflection writer
+	 */
+	$('.reflections').on('click', '.reflection_head > img, .reflection_head .user_name', function (event) {
+		const username = $(this).parent().find('.username').text().substr(1);
+
+		window.location.href = `/profile/${username}`;
+	})
+
 })

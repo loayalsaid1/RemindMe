@@ -26,10 +26,8 @@
 {% include 'header.html' %}
 
 {% include 'aside.html' %}
-<!-- TODO.. TO be changed to make user-id the profile_owner not current_user..
-  This is just for now to not refactor the API because of time -->
 <main data-reminder-id="{{ reminder.id }}" data-reminder-type="{{ 'text' if reminder.is_text else 'image' }}"
-	data-user-id="{{ user.id }}">
+	data-user-id="{{ profile_owner.id }}">
 	<div class="reminder">
 		<div class="head">
 			<img src="{{ profile_owner.img_url}}" alt="">
