@@ -139,4 +139,20 @@ $(document).ready(function () {
 		window.location.href = `/profile/${username}`;
 	})
 
+	
+	/**
+	 * When click on edit icon for a reflection, Change it into a text area to edit it
+	 */
+	$('.reflections').on('click', '.edit_icon', function (event) {
+		event.stopPropagation();
+		console.log(33);
+		
+		const reflection = $(this).closest('article').find('.reflection_text');
+
+		const inputField = $('<textarea>', {'class': 'edit_reflection_input'});
+		$(inputField).val(reflection.text().trim());
+
+		reflection.hide(100);
+		reflection.parent().append(inputField);
+	})
 })
