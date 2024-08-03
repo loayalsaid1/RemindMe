@@ -147,14 +147,22 @@ main {
 
 .add_reflection button {
 	display: flex;
+	justify-content: center;
+	align-items: center;
 
-	padding: 15px var(--small-gap);
-    border-radius: 15px;
-    color: white;
+	padding: var(--medium-gap);
+    border-radius: 10px;
+    
+	font-size: medium;
+
+	color: white;
     background: var(--color-2);
     box-shadow: 0 0 7px 1px white;
 }
 
+.add_reflection button span {
+	margin: 0;
+}
 .reflections {
 	background-color: var(--color-2);
 	border-radius: 0 0 10px 10px;
