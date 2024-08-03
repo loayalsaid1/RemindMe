@@ -145,12 +145,18 @@ $(document).ready(function () {
 	 */
 	$('.reflections').on('click', '.edit_icon', function (event) {
 		event.stopPropagation();
-		console.log(33);
-		
+	
+		$(this).hide();
+
 		const reflection = $(this).closest('article').find('.reflection_text');
 
-		const inputField = $('<textarea>', {'class': 'edit_reflection_input'});
-		$(inputField).val(reflection.text().trim());
+		const inputField = `
+		<form class="edit_reflection_form">
+			<textarea class="edit_reflection_input" name="edit_input">${reflection.text().trim()}</textarea>
+			<button class="cancel" type="button">Cancel</button>
+			<button type="submit">Done!</button>
+		</form>
+		`
 
 		reflection.hide(100);
 		reflection.parent().append(inputField);
