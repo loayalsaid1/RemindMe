@@ -161,4 +161,17 @@ $(document).ready(function () {
 		reflection.hide(100);
 		reflection.parent().append(inputField);
 	})
+
+	/**
+	 * Remove the edit form when clicking cancel button
+	 */
+	$('.reflections').on('click', '.edit_reflection_form .cancel', function (event) {
+		const reflection = $(this).parent().parent();
+
+		$(reflection).find('.edit_reflection_form').fadeOut(100);
+		$(reflection).find('.reflection_text').fadeIn(100);
+		$(reflection).find('.edit_icon').fadeIn(100);
+		
+		$(reflection).find('.edit_reflection_form').remove();
+	})
 })
