@@ -165,7 +165,7 @@ $(document).ready(function () {
 
 		const inputField = `
 		<form class="edit_reflection_form">
-			<textarea class="edit_reflection_input" name="edit_input">${reflection.text().trim()}</textarea>
+			<textarea class="edit_reflection_input" name="edit_input" maxlength="1024" >${reflection.text().trim()}</textarea>
 			<button class="cancel" type="button">Cancel</button>
 			<button type="submit">Done!</button>
 		</form>
