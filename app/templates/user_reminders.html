@@ -28,7 +28,7 @@
 	{% include 'header.html' %}
 
 	{% include 'aside.html' %}
-	<main>
+	<main allow-add-reminder>
 		{% for reminder in reminders %}
 		{% if reminder.public %}
 		<article data-reminder-id="{{ reminder.id }}" data-type="{{ 'image' if not reminder.is_text else 'text' }}" data-visibility="public">

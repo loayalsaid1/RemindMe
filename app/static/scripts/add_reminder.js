@@ -123,7 +123,7 @@ function setAddTextReminderWindow() {
       },
       success: function (data) {
         const reminder = makeReminder(data);
-        $('main').prepend(reminder);
+        $('main[allow-add-reminder]').prepend(reminder);
       },
       error: function (error) {
         if (error.status === 401) {
@@ -172,7 +172,7 @@ function setAddImageReminderForm() {
         contentType: false,
         success: function (data) {
           const reminder = makeReminder(data);
-          $('main').prepend(reminder);
+          $('main[allow-add-reminder]').prepend(reminder);
         },
         error: function (error) {
           if (error.status === 401) {
