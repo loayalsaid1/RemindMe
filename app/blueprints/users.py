@@ -17,6 +17,7 @@ def user_profile():
         'user_reminders.html',
         user=current_user,
         reminders=reminders,
+        user_reminders=True
         )
 
 

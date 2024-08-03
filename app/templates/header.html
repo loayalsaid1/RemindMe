@@ -12,9 +12,12 @@
 			{%if public_ewall %}
 			<li class="active"><a href="{{ url_for('users.public_reminders') }}">Public reminders</a></li>
 			<li><a href="{{ url_for('users.user_profile') }}">Your reminders</a></li>
-			{% else %}
+			{% elif user_reminders %}
 			<li><a href="{{ url_for('users.public_reminders') }}">Public reminders</a></li>
 			<li class="active"><a href="{{ url_for('users.user_profile') }}">Your reminders</a></li>
+			{% else %}
+			<li><a href="{{ url_for('users.public_reminders') }}">Public reminders</a></li>
+			<li><a href="{{ url_for('users.user_profile') }}">Your reminders</a></li>
 			{% endif %}
 		</ul>
 	</nav>
