@@ -28,6 +28,19 @@ function makeReflectionElement(data) {
 	return reflection;
 }
 
+/**
+ * removeEditForm - remove edit form either after successful request or cencel action
+ * 
+ * takes <reflection> as argument representing the reflection article tag
+ */
+function removeEditForm (reflection) {
+	reflection.find('.edit_reflection_form').fadeOut(100);
+	reflection.find('.reflection_text').fadeIn(100);
+	reflection.find('.edit_icon').fadeIn(100);
+	
+	reflection.find('.edit_reflection_form').remove();
+}
+
 $(document).ready(function () {
 	/**
 	 * Add a reflection from the text bar in reminder.html
@@ -173,5 +186,53 @@ $(document).ready(function () {
 		$(reflection).find('.edit_icon').fadeIn(100);
 		
 		$(reflection).find('.edit_reflection_form').remove();
+	})
+
+	/**
+	 * Send a request to edit a reflection if chnaged
+	 */
+	$('.reflections').on('submit', '.edit_reflection_form', function (event) {
+		event.preventDefault();
+
+		const reflection = $(this).closest('article');
+		const form = $(this);
+
+		if (reflection.find('.reflection_text').text() ===
+		form.find('.edit_reflection_input').val()) {
+			form.find('.cancel').click()
+			return;
+		}
+
+		const url = apiDomain + `/api/v1/reflections/${reflection.data('reflection-id')}`;
+		const token = getCookie('access_token_cookie');
+
+		const content = $(this).find('.edit_reflection_input').val();
+		
+		$.ajax({
+			method: 'PUT',
+			url: url,
+
+			headers:{
+				'Authorization':`Bearer ${token}`,
+			},
+			
+			contentType: 'application/json',
+			
+			data: JSON.stringify({'content': content}),
+
+			success: function (data) {
+				reflection.find('.reflection_text').text(data.content);
+				
+				removeEditForm(reflection);
+			},
+			error (error) {
+				if (error.status === 401) {
+					window.location.href = `/login?next=${window.location.pathname}`;
+				} else {
+					alert('Failed to edit the reflection now. Sorry for that!');
+
+				}
+			}
+		});	
 	})
 })

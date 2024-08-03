@@ -10,6 +10,9 @@ from api.v1.views import app_views
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
 
+# TODO Make sure to put some safegaurds in the requests!
+
+
 @app_views.route('/reminders/<reminder_id>/reflections', methods=[
     'GET'], strict_slashes=False)
 @jwt_required()
