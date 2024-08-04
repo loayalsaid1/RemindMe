@@ -14,9 +14,9 @@ from imagekitio import ImageKit
 auth = Blueprint('auth', __name__, url_prefix='/api/v1')
 
 # ImageKit Credentials
-IMAGEKIT_PRIVATE_KEY = "private_edl1a45K3hzSaAhroLRPpspVRqM="
-IMAGEKIT_PUBLIC_KEY = "public_tTc9vCi5O7L8WVAQquK6vQWNx08="
-IMAGEKIT_URL_ENDPOINT = "https://ik.imagekit.io/loayalsaid1/"
+IMAGEKIT_PRIVATE_KEY = os.getenv('IMAGEKIT_PRIVATE_KEY')
+IMAGEKIT_PUBLIC_KEY = os.getenv('IMAGEKIT_PUBLIC_KEY')
+IMAGEKIT_URL_ENDPOINT = os.getenv('IMAGEKIT_URL_ENDPOINT')
 
 # Create an instance of ImageKit with the credentials
 ik = ImageKit(

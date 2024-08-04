@@ -8,14 +8,14 @@ from flask_cors import CORS
 from flask_jwt_extended import JWTManager
 from api.v1.views.auth import auth
 from datetime import timedelta
-
+from os import getenv
 app = Flask(__name__, template_folder='templates')
 
 # JWT configuration
 """
     These are just arbitrary values for now.
 """
-app.config['JWT_SECRET_KEY'] = 'CIBwsUdxn67Uezxe8JAa_OLHuiPn0wQIHFZvv3pjEZo'
+app.config['JWT_SECRET_KEY'] = getenv('JWT_SECRET_KEY')
 app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(days=356)
 app.config['JWT_REFRESH_TOKEN_EXPIRES'] = timedelta(days=356)
 app.config['JWT_TOKEN_LOCATION'] = ['headers']

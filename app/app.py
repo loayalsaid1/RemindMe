@@ -9,17 +9,17 @@ from app.blueprints.users import users
 from app.blueprints.reminders import reminders
 from models import storage
 from models.user import User
-
+from os import getenv
 
 app = Flask(__name__)
 app.config['SESSION_PERMANENT'] = True
-app.secret_key = b"secret_key"
+app.secret_key = bytes(getenv("SECRET_KEY"), encoding='utf8')
 
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = "auth.login"
 
-app.config['JWT_SECRET_KEY'] = 'CIBwsUdxn67Uezxe8JAa_OLHuiPn0wQIHFZvv3pjEZo'
+app.config['JWT_SECRET_KEY'] = getenv("JWT_SECRET_KEY")
 jwt = JWTManager(app)
 
 app.register_blueprint(auth)
