@@ -1,1 +1,1 @@
-const apiDomain = 'http://localhost:5001';
+const apiDomain = window.location.origin;
