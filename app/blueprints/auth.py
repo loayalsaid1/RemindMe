@@ -121,7 +121,7 @@ def finalize_profile():
                 Is it a problem with imagekitio..
                 I don't know for sure
             """
-            temp_file_path = f'temp_image.{extention}'
+            temp_file_path = f'/tmp/temp_image.{extention}'
             with open(temp_file_path, 'wb') as f:
                 image_file.save(f)
             with open(temp_file_path, 'rb') as f:
