@@ -65,7 +65,7 @@ def upload_image():
     image = request.files['image']  # Get image from request
 
     extention = image.filename.split('.')[-1]  # Get image extention
-    temp_file_path = f'temp_image.{extention}'  # Create temporary file
+    temp_file_path = f'/tmp/temp_image.{extention}'  # Create temporary file
     image.save(temp_file_path)  # Save image to temporary file
 
     # Upload image to ImageKit

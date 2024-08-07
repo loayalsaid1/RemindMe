@@ -32,7 +32,7 @@ class DBStorage:
         host = getenv('REMIND_ME_MYSQL_HOST')
         db = getenv('REMIND_ME_MYSQL_DB')
         self.__engine = create_engine(
-            f"mysql+mysqldb://{user}:{password}@{host}/{db}",
+            f"mysql+mysqlconnector://{user}:{password}@{host}/{db}",
             pool_pre_ping=True
         )
 

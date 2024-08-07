@@ -103,7 +103,7 @@ def create_reminder():
             image = request.files['reminder_image']
 
             extention = image.filename.split('.')[-1]
-            temp_file_path = f'temp_image.{extention}'
+            temp_file_path = f'/tmp/temp_image.{extention}'
             image.save(temp_file_path)
 
             # Upload image to ImageKit
@@ -149,7 +149,7 @@ def update_reminder(reminder_id):
         if 'reminder_image' in request.files:
             image = request.files['reminder_image']
             extention = image.filename.split('.')[-1]
-            temp_file_path = f'temp_image.{extention}'
+            temp_file_path = f'/tmp/temp_image.{extention}'
             image.save(temp_file_path)
 
             # Upload image to ImageKit
