@@ -62,4 +62,11 @@ $(document).ready(function () {
         $('main > *').css('filter', 'none');
       });
   });
+  $('main').on('click', '.welcome .show-text-reminder-form', function (event) {
+    $('.add_text_reminder_button').trigger('click');
+  })
+  
+  $('main').on('click', '.welcome .show-image-reminder-form', function (event) {
+    $('.add_image_reminder_button').trigger('click');
+  })
 });
