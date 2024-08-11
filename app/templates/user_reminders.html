@@ -29,6 +29,15 @@
 
 	{% include 'aside.html' %}
 	<main allow-add-reminder>
+		<div class="welcome">
+			<p class="quote">A little reminder can make a significant change in your day</p>
+			<p class="message">Your E-Wall seems empty. Click below to stick the first one</p>
+			<div class="buttons">
+				<button type="button" class="show-text-reminder-form">Add a text reminder</button>
+				<span>Or</span>
+				<button type="button" class="show-image-reminder-form">Add an image reminder</button>
+			</div>
+		</div>
 		{% for reminder in reminders %}
 		{% if reminder.public %}
 		<article data-reminder-id="{{ reminder.id }}" data-type="{{ 'image' if not reminder.is_text else 'text' }}" data-visibility="public">
