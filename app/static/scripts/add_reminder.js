@@ -123,6 +123,7 @@ function setAddTextReminderWindow() {
       },
       success: function (data) {
         const reminder = makeReminder(data);
+        $('main .welcome').remove()
         $('main[allow-add-reminder]').prepend(reminder);
       },
       error: function (error) {
@@ -172,6 +173,7 @@ function setAddImageReminderForm() {
         contentType: false,
         success: function (data) {
           const reminder = makeReminder(data);
+          $('main .welcome').remove()
           $('main[allow-add-reminder]').prepend(reminder);
         },
         error: function (error) {
