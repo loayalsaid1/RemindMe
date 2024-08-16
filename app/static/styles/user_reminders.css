@@ -235,7 +235,15 @@ article:hover .hidden {
     font-family: monospace;
     border-radius: 15px;
 }
+/* 
+********** TODO ********
 
+I beleive this whole naming should be changed later
+Changed took place that affected the meaning of these names
++ it's not descriptive anyway.
+
+I 'm just rushing abit now
+ */
 .welcome {
 	display: flex;
 	flex-direction: column;
