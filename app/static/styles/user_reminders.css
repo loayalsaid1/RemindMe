@@ -227,7 +227,7 @@ article:hover .hidden {
     font-size: 2em;
     font-weight: 600;
     line-height: 3.7rem;
-	
+
 	padding: 39px;
     width: fit-content;
     height: fit-content;
@@ -244,15 +244,17 @@ article:hover .hidden {
 	padding: 15px;
 }
 
-.welcome .quote {
+.quote {
 	text-align: center;
     font-size: 1.7rem;
     font-weight: 500;
     letter-spacing: 1px;
     line-height: 1.3;
 	text-shadow: 1px 1px 1px black;
-    
+
     padding: 5px;
+	margin: 15px;
+	margin-bottom: 0;
 
 	color: black;
 	background: var(--color-2);
@@ -267,7 +269,7 @@ article:hover .hidden {
     font-size: 1rem;
     font-weight: 500;
     letter-spacing: 1px;
-	margin-top: 30px;
+	margin-top: 20px;
     margin-bottom: 15px;
 }
 
