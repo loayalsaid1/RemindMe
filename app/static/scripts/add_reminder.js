@@ -124,7 +124,7 @@ function setAddTextReminderWindow() {
       success: function (data) {
         const reminder = makeReminder(data);
         $('main .welcome').remove()
-        $('main[allow-add-reminder]').prepend(reminder);
+        $('main .quote').after(reminder);
       },
       error: function (error) {
         if (error.status === 401) {
@@ -174,7 +174,7 @@ function setAddImageReminderForm() {
         success: function (data) {
           const reminder = makeReminder(data);
           $('main .welcome').remove()
-          $('main[allow-add-reminder]').prepend(reminder);
+          $('main .quote').after(reminder);
         },
         error: function (error) {
           if (error.status === 401) {
