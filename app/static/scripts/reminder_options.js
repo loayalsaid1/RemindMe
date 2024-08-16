@@ -12,6 +12,22 @@ function positionAddReminderWindows() {
   });
 }
 
+/**
+ * If there is no reminders left in the main section
+ * show the welcome section
+ */
+function addWelcomeSection() {
+    const welcomeSection = `<div class="welcome">
+			<p class="message">Your E-Wall seems empty. Click below to stick the first one</p>
+			<div class="buttons">
+				<button type="button" class="show-text-reminder-form">Add a text reminder</button>
+				<span>Or</span>
+				<button type="button" class="show-image-reminder-form">Add an image reminder</button>
+			</div>
+		</div>`;
+
+    $('main > .quote').after(welcomeSection);
+}
 
 /**
  * Toggle the icons and attibutes of a reminder when
@@ -189,6 +205,10 @@ $(document).ready(function () {
       },
       success: function () {
         reminder.remove();
+        if ($('main > article').length === 0) {
+          addWelcomeSection();
+        }
+
       },
       error: function (error) {
         if (error.status === 401) {
