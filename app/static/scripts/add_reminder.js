@@ -165,15 +165,25 @@ function setAddImageReminderForm() {
         alert('Select a reminder  before you submit');
         return;
       }
-      const form = new FormData(this);
 
+      const form = new FormData(this);
       form.append('is_text', false);
       form.set('public', form.get('reminder_visibility') === 'public');
       form.delete('reminder_visibility');
 
+      const reminderData = {
+        is_text: false,
+        caption: form.get('caption'),
+        img_url: URL.createObjectURL($(this).find('input[type=file]')[0].files[0]),
+        public: form.get('reminder_visibility') === 'public',
+      };
+      const reminder = makeReminder({ ...reminderData, id: 'temp-img-id' })
+      $('main .welcome').remove()
+      $('main .quote').after(reminder);
+
+
       const token = getCookie('access_token_cookie');
       const url = `${apiDomain}/api/v1/reminders`;
-
       $.ajax({
         url: url,
         method: 'POST',
@@ -184,9 +194,8 @@ function setAddImageReminderForm() {
         processData: false,
         contentType: false,
         success: function (data) {
-          const reminder = makeReminder(data);
-          $('main .welcome').remove()
-          $('main .quote').after(reminder);
+          $('[data-reminder-id="temp-img-id"]').attr('data-reminder-id', data.id);
+          $('[data-reminder-id="temp-img-id"] img').attr('src', data.img_url);
         },
         error: function (error) {
           if (error.status === 401) {
