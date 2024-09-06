@@ -40,7 +40,7 @@ function makeReminder(data) {
   const caption = data.caption;
   const public = data.public;
   const userId = data.user_id;
-  const isText = data.is_text;
+  const isText = data.isText;
   const id = data.id;
   const imgURL = data.img_url;
   const reminder = `
@@ -110,9 +110,17 @@ function setAddTextReminderWindow() {
       caption: form.get('caption'),
     };
 
+    /**
+     * Here, to avoid the delay or the API and show the added reminder
+     * immedietly, I may a problem, or a conflict if somehow the user make edit the rmeinder
+     * while request not done yet, as there is no id in the reminder to make the other api call
+     */
+    const reminder = makeReminder({...data, id: "temp-id"})
+    $('main .welcome').remove()
+    $('main .quote').after(reminder);
+
     const token = getCookie('access_token_cookie');
     const endpointURL = `${apiDomain}/api/v1/reminders`;
-
     $.ajax({
       url: endpointURL,
       method: 'POST',
@@ -122,9 +130,13 @@ function setAddTextReminderWindow() {
         Authorization: `Bearer ${token}`,
       },
       success: function (data) {
-        const reminder = makeReminder(data);
-        $('main .welcome').remove()
-        $('main .quote').after(reminder);
+        console.log(data.id);
+        $('[data-reminder-id="temp-id"]').attr('data-reminder-id', data.id);
+        // Now show a modal or something to indicate success
+        // Wow.. There is quite abit of things to do in this front-end. 
+        // God bless my weekends. 
+        // But it's a great app for first time building an app,
+        // Especillly with now Front-end expernince at all
       },
       error: function (error) {
         if (error.status === 401) {
