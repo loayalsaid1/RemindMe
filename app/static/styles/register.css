@@ -23,6 +23,9 @@ main {
 	height: 500px;
 }
 
+.register-tagline {
+	font-family: Arial;
+}
 form {
 	margin-top: 45px;
 
