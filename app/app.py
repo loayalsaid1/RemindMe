@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """Core of the application"""
-from flask import Flask, redirect, url_for
+from flask import Flask, redirect, url_for, render_template
 from flask_jwt_extended import JWTManager
 from flask_login import LoginManager, current_user
 from markupsafe import escape
@@ -49,6 +49,10 @@ def home():
     """Home page"""
     return redirect(url_for('users.user_profile'))
 
+@app.route('/landing', strict_slashes=False)
+def landing():
+    """Redirect to landing page"""
+    return redirect('https://remindme-l.mystrikingly.com/')
 
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=5000)
