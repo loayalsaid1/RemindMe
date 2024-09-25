@@ -47,7 +47,11 @@ def cut_connection(error):
 @app.route('/')
 def home():
     """Home page"""
-    return redirect(url_for('users.user_profile'))
+    if current_user.is_authenticated:
+        return redirect(url_for('users.user_profile'))
+    else:
+        return redirect(url_for('landing'))
+
 
 @app.route('/landing', strict_slashes=False)
 def landing():
