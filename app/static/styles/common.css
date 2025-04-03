@@ -24,15 +24,30 @@
 }
 
 body {
+	position: relative;
+
+	display: flex;
+	flex-direction: column;
+	gap: var(--large-gap);
+
+	height: 100vh;
+
 	background-color: var(--color-3);
 	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-	position: relative;
 	
-	display: flex;
-	justify-content: center;
 	color: #ECF0F1  ;
 	line-height: 1.3rem;
 
+}
+
+.container {
+	display: flex;
+	gap: var(--large-gap);
+	justify-content: space-around;
+	align-items: stretch;
+	flex-grow: 1;
+
+	overflow: hidden;
 }
 
 .material-symbols-outlined {
