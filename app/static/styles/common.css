@@ -50,6 +50,31 @@ body {
 	overflow: hidden;
 }
 
+main {
+	position: relative;
+
+	display: flex;
+	justify-content: space-evenly;
+	flex-wrap: wrap;
+	align-content: flex-start;
+
+	width: calc(var(--main-width) + 20px);
+
+	background-color: var(--color-1);
+
+	overflow: scroll;
+	transition: opacity 0.3s ease-in-out;
+}
+
+main::-webkit-scrollbar {
+    display: none;
+}
+
+main {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
 .material-symbols-outlined {
 	display: inline-block;
 }
