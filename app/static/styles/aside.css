@@ -3,12 +3,18 @@ aside {
 
 	display: flex;
 	flex-direction: row-reverse;
-	gap: .5rem;
 
 	width: var(--aside-width);
 	padding: 10px;
 
 	background-color: var(--color-1);
+}
+
+@media (max-width: 767px) {
+	aside {
+		width: 2rem;
+		padding: unset;
+	}
 }
 
 aside .toggle_icon {
@@ -36,6 +42,8 @@ aside .toggle_icon:hover {
 @media (min-width: 768px) {
 	aside .toggle_icon {
 		display: none;
+
+		margin-left: 0;
 	}
 }
 
@@ -131,6 +139,19 @@ aside .toggle_icon:hover {
 	align-items: center;
 
 	width: 100%;
+}
+
+
+@media (max-width: 767px) {
+	.add_reminder {
+		--space-from-corner: 1.5rem;
+		position: fixed;
+		bottom: var(--space-from-corner);
+		left: var(--space-from-corner);
+
+		width: fit-content;
+		z-index: 100;
+	}
 }
 
 .add_reminder ul {
