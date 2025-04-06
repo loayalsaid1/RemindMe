@@ -27,6 +27,18 @@ aside .toggle_icon {
 	background-color: var(--color-3);
 }
 
+aside .toggle_icon:hover {
+	background-color: var(--color-2);
+
+	cursor: pointer;
+}
+
+@media (min-width: 768px) {
+	aside .toggle_icon {
+		display: none;
+	}
+}
+
 .aside_content {
 	display: flex;
 	flex-direction: column;
