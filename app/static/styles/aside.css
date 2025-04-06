@@ -1,10 +1,30 @@
 aside {
 	position: relative;
 
+	display: flex;
+	flex-direction: row-reverse;
+	gap: .5rem;
+
 	width: var(--aside-width);
 	padding: 10px;
 
 	background-color: var(--color-1);
+}
+
+aside .toggle_icon {
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	width: 2rem;
+	height: 100%;
+
+	box-shadow: 0 0 8px 1px #20303f, 0 0 8px 1px #20303f inset;
+
+	color: white;
+
+	background-color: var(--color-3);
 }
 
 .aside_content {
