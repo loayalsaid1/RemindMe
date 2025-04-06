@@ -63,6 +63,12 @@ aside .toggle_icon:hover {
 	display: none;
 }
 
+@media (max-width: 767px) {
+	.aside_content .top {
+		display: none;
+	}
+}
+
 .user_info {
 	position: relative;
 
