@@ -41,6 +41,8 @@ body {
 }
 
 .container {
+	position: relative;
+
 	display: flex;
 	gap: var(--large-gap);
 	justify-content: space-around;
