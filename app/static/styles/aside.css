@@ -225,6 +225,16 @@ aside .toggle_icon:hover {
 	display: flex;
 }
 
+@media (max-width: 767px) {
+	.add_reminder > button span.icon {
+		margin-right: 0;
+	}
+
+	.add_reminder > button span.text {
+		display: none;
+	}
+}
+
 .material-symbols-outlined {
 	position: relative;
 
