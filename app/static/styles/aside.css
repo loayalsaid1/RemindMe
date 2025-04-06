@@ -1,18 +1,22 @@
 aside {
 	position: relative;
 
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-	align-items: center;
-
 	width: var(--aside-width);
 	padding: 10px;
 
 	background-color: var(--color-1);
 }
 
-aside .top {
+.aside_content {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+
+	height: 100%;
+}
+
+.aside_content .top {
 	position: relative;
 
 	width: 100%;
@@ -23,7 +27,7 @@ aside .top {
 	scrollbar-width: none;
 }
 
-aside.top::-webkit-scrollbar {
+.aside_content .top::-webkit-scrollbar {
 	display: none;
 }
 
