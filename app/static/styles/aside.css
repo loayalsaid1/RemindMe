@@ -1,4 +1,6 @@
 aside {
+	position: relative;
+
 	width: var(--aside-width);
 
 	padding: 10px;
