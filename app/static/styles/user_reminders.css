@@ -248,6 +248,13 @@ I 'm just rushing abit now
 	z-index: 10;
 }
 
+@media (max-width: 767px) {
+	.quote {
+		font-size: 1.3rem;
+		line-height: 1.2;
+	}
+}
+
 .welcome .message {
     font-size: 1rem;
     font-weight: 500;
