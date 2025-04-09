@@ -226,7 +226,7 @@ aside .toggle_icon:hover {
 }
 
 .user_info button,
-.add_reminder_button {
+.aside_add_reminder_button {
 	position: relative;
 
 	display: flex;
@@ -251,11 +251,11 @@ aside .toggle_icon:hover {
 }
 
 @media (max-width: 767px) {
-	aside .add_reminder_button span.icon{
+	aside .aside_add_reminder_button span.icon{
 		margin-right: 0;
 	}
 
-	aside .add_reminder_button span.text {
+	aside .aside_add_reminder_button span.text {
 		display: none;
 	}
 }
