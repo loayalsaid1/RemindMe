@@ -32,20 +32,26 @@ header a {
 	margin-right: 10px;
 }
 
-nav ul {
+header nav ul {
 	height: var(--header-height);
 	display: flex;
 	list-style: none;
 	align-items: center;
 }
 
-nav ul li {
+header nav ul li {
 	margin-right: 10px;
 	padding: 5px;
 	height: 100%;
 	display: flex;
 	justify-content: center;
 	align-items: center;
+}
+
+@media (max-width: 767px) {
+	header nav {
+		display: none;
+	}
 }
 
 .profile_icon_section {
