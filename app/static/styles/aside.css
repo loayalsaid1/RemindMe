@@ -199,6 +199,63 @@ aside.open .add_reminder {
 	}
 }
 
+aside nav {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+	width: 100%;
+	margin-top: 20px;
+}
+
+@media (min-width: 768px) {
+	aside nav {
+		display: none;
+	}
+}
+
+aside nav ul {
+	width: 100%;
+	padding: 0;
+
+	list-style: none;
+}
+
+aside nav ul li {
+	width: 100%;
+	margin: 5px 0;
+}
+
+aside nav ul li a {
+	display: block;
+	
+	width: 100%;
+	padding: 10px;
+	border-radius: 5px;
+	
+	color: black;
+	text-decoration: none;
+	text-align: center;
+
+	background-color: var(--color-1);
+
+	box-shadow: 0 0 8px 1px #20303f, 0 0 8px 1px #20303f inset;
+
+	transition: background-color 0.3s, transform 0.2s;
+}
+
+aside nav ul li a:hover {
+	background-color: var(--color-2);
+
+	transform: scale(1.05);
+}
+
+aside nav ul li.active a {
+	background-color: var(--color-3);
+
+	color: white;
+}
+
 .add_reminder ul {
 	position: relative;
 

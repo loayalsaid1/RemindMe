@@ -58,6 +58,20 @@
 				{% endif %}
 			</div>
 
+			<nav>
+				<ul>
+					{%if public_ewall %}
+					<li class="active"><a href="{{ url_for('users.public_reminders') }}">Public reminders</a></li>
+					<li><a href="{{ url_for('users.user_profile') }}">Your reminders</a></li>
+					{% elif user_reminders %}
+					<li><a href="{{ url_for('users.public_reminders') }}">Public reminders</a></li>
+					<li class="active"><a href="{{ url_for('users.user_profile') }}">Your reminders</a></li>
+					{% else %}
+					<li><a href="{{ url_for('users.public_reminders') }}">Public reminders</a></li>
+					<li><a href="{{ url_for('users.user_profile') }}">Your reminders</a></li>
+					{% endif %}
+				</ul>
+			</nav>
 			<!-- Temporarily remove it -->
 
 			<!-- <section class="featured_ewalls">
