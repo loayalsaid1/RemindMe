@@ -199,7 +199,7 @@ aside .toggle_icon:hover {
 }
 
 .user_info button,
-.aside_button {
+.add_reminder_button {
 	position: relative;
 
 	display: flex;
