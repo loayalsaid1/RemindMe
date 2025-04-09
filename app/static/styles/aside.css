@@ -14,6 +14,8 @@ aside {
 	background-color: var(--color-1);
 	
 	z-index: 20;
+
+	transition: padding var(--open-close-duration);
 }
 
 @media (max-width: 767px) {
@@ -24,6 +26,11 @@ aside {
 		height: 100%;
 
 		padding: unset;
+	}
+
+	aside.open {
+		padding: 10px;
+		padding-right: 0;
 	}
 
 	/* aside.open {
@@ -58,15 +65,14 @@ aside .toggle_icon:hover {
 }
 
 @media (max-width: 767px) {
-	aside .toggle_icon {
+	aside.open .toggle_icon {
+		margin-left: 1rem;
 	}
 }
 
 @media (min-width: 768px) {
 	aside .toggle_icon {
 		display: none;
-
-		margin-left: 0;
 	}
 }
 
@@ -85,6 +91,10 @@ aside .toggle_icon:hover {
 	aside .aside_content {
 		width: 0;
 		overflow: hidden;	
+	}
+
+	aside.open .aside_content {
+		width: 16rem;
 	}
 }
 
@@ -168,7 +178,7 @@ aside .toggle_icon:hover {
 
 
 @media (max-width: 767px) {
-	aside .add_reminder {
+	aside:not(.open) .add_reminder {
 		--space-from-corner: 1.5rem;
 		position: fixed;
 		bottom: var(--space-from-corner);
@@ -176,6 +186,19 @@ aside .toggle_icon:hover {
 
 		width: fit-content;
 		z-index: 100;
+	}
+}
+
+aside.open .add_reminder {
+	animation: fadeInOut var(--open-close-duration);
+}
+@keyframes fadeInOut {
+	10% {
+		opacity: 0;
+	}
+
+	to {
+		opacity: 1;
 	}
 }
 
@@ -251,11 +274,11 @@ aside .toggle_icon:hover {
 }
 
 @media (max-width: 767px) {
-	aside .aside_add_reminder_button span.icon{
+	aside:not(.open) .aside_add_reminder_button span.icon {
 		margin-right: 0;
 	}
 
-	aside .aside_add_reminder_button span.text {
+	aside:not(.open) .aside_add_reminder_button span.text {
 		display: none;
 	}
 }
