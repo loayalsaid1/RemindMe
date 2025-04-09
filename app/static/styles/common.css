@@ -77,6 +77,12 @@ main {
     scrollbar-width: none;
 }
 
+@media (max-width: 767px) {
+	main {
+		margin-left: 3.5rem;
+	}
+}
+
 .material-symbols-outlined {
 	display: inline-block;
 }
