@@ -1,4 +1,19 @@
 $(document).ready(function() {
+	const searchBar = $('.search_bar');
+	const searchIcon = $('.search_icon');
+	const searchInput = $('.search_input');
+
+	searchIcon.on('click', function() {
+		searchBar.toggleClass('expanded');
+		searchInput.focus(); // Automatically focus on the input when expanded
+	});
+
+	$(document).on('click', function(event) {
+		if (!searchBar.is(event.target) && searchBar.has(event.target).length === 0) {
+			searchBar.removeClass('expanded'); // Close search bar when clicking outside
+		}
+	});
+
 	$('.search-bar input').keypress(function (event) {
 		if (event.keyCode == 13) {
 			event.preventDefault();
@@ -22,5 +37,5 @@ $(document).ready(function() {
 				}
 			})
 		}
-	})
-})
+	});
+});
