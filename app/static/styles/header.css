@@ -10,7 +10,7 @@ header {
 	padding-right: 0;
 	
 
-	z-index: 1;
+	z-index: 20;
 	
 	background-color: var(--color-1);
 }
