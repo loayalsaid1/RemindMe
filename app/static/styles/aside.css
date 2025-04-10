@@ -6,6 +6,7 @@ aside {
 	display: flex;
 	flex-direction: row-reverse;
 
+	max-width: 75vw;
 	padding: 10px;
 
 	background-color: var(--color-1);
