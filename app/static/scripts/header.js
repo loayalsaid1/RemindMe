@@ -14,7 +14,7 @@ $(document).ready(function() {
 		}
 	});
 
-	$('.search-bar input').keypress(function (event) {
+	$('.search_bar input').keypress(function (event) {
 		if (event.keyCode == 13) {
 			event.preventDefault();
 
