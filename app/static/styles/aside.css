@@ -260,7 +260,7 @@ aside nav ul li.active a {
 .add_reminder ul {
 	position: relative;
 
-	display: none;
+	display: flex;
 	flex-direction: column;
 	align-items: center;
 
@@ -274,14 +274,18 @@ aside nav ul li.active a {
 	border-radius: 10px;
 }
 
-.add_reminder ul li {
+.add_reminder .choose_reminder_type.hidden {
+	display: none;
+}
+
+.add_reminder .choose_reminder_type li {
 	position: relative;
 
 	width: 100%;
 	padding: var(--small-gap);
 }
 
-.add_reminder ul li button {
+.add_reminder .choose_reminder_type li button {
 	position: relative;
 
 	display: flex;
@@ -298,7 +302,7 @@ aside nav ul li.active a {
 	border: 0;
 }
 
-.add_reminder ul li button:hover {
+.add_reminder .choose_reminder_type li button:hover {
 	background-color: var(--color-3);
 	color: white;
 }
@@ -324,9 +328,7 @@ aside nav ul li.active a {
 	font-size: 1.1rem;
 }
 
-.add_reminder:hover ul {
-	display: flex;
-}
+
 
 @media (max-width: 767px) {
 	aside:not(.open) .aside_add_reminder_button span.icon {
