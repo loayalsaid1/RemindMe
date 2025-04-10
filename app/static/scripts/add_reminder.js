@@ -47,45 +47,47 @@ function makeReminder(data) {
 	<article data-reminder-id="${id}" data-type="${
     isText ? 'text' : 'image'
   }"  data-visibility="${public ? 'public' : 'private'}">
-		<div class="shown">
-			${
-        public
-          ? ''
-          : '<span class="material-symbols-outlined lock_icon">visibility_lock</span>'
-      }
-			${
-        isText
-          ? `<p>${text}</p>`
-          : `<img class="reminder_image" src="${imgURL}" alt="">`
-      }
-		</div>
-		<div class="hidden">
-			<p class="caption">${caption}</p>
-			<span class="material-symbols-outlined hidden_icons menu_icon">
-				menu
-			</span>
-			<ul class="reminder_options">
-				<li class="edit_reminder">
-					<span class="material-symbols-outlined">
-						edit
-					</span>
-				</li>
-				<li class="toggle_visibility">
-					<span class="material-symbols-outlined">
-						${public ? 'visibility' : 'visibility_lock'}
-					</span>
-				</li>
-				<li class="delete_reminder">
-					<span class="material-symbols-outlined">
-						delete
-					</span>
-				</li>
-			</ul>
-			<span class="material-symbols-outlined hidden_icons magnify_icon">
-				zoom_in
-			</span>
-			<button class="show_reminder" type="button">Show reflections</button>
-		</div>
+    <div class="card_container">
+      <div class="shown">
+        ${
+          public
+            ? ''
+            : '<span class="material-symbols-outlined lock_icon">visibility_lock</span>'
+        }
+        ${
+          isText
+            ? `<p>${text}</p>`
+            : `<img class="reminder_image" src="${imgURL}" alt="">`
+        }
+      </div>
+      <div class="hidden">
+        <p class="caption">${caption}</p>
+        <span class="material-symbols-outlined hidden_icons menu_icon">
+          menu
+        </span>
+        <ul class="reminder_options">
+          <li class="edit_reminder">
+            <span class="material-symbols-outlined">
+              edit
+            </span>
+          </li>
+          <li class="toggle_visibility">
+            <span class="material-symbols-outlined">
+              ${public ? 'visibility' : 'visibility_lock'}
+            </span>
+          </li>
+          <li class="delete_reminder">
+            <span class="material-symbols-outlined">
+              delete
+            </span>
+          </li>
+        </ul>
+        <span class="material-symbols-outlined hidden_icons magnify_icon">
+          zoom_in
+        </span>
+        <button class="show_reminder" type="button">Show reflections</button>
+      </div>
+    </div>
 	</article>
 	`;
 
