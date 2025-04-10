@@ -1,5 +1,7 @@
 $(document).ready(function () {
-  const aside = $('aside');
+	const smallScreensMedia = window.matchMedia('(max-width: 768px)');
+
+	const aside = $('aside');
   const addReminder = aside.find('.add_reminder');
   const chooseReminderList = aside.find('.choose_reminder_type');
 
@@ -30,5 +32,11 @@ $(document).ready(function () {
       hideChooseReminderList();
     }
   });
-});
 
+	$(document).on('click', function (event) {
+		if (smallScreensMedia.matches && !$(event.target).closest('aside').length) {
+			closeSidebar();
+			hideChooseReminderList();
+		}
+	});
+});
