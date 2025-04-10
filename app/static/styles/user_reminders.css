@@ -6,6 +6,12 @@
 	padding: 10px;
 }
 
+@media (max-width: 370px) {
+	.reminders_container {
+		grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+	}
+}
+
 .reminders_container article {
 	position: relative;
 
