@@ -66,6 +66,14 @@ aside .toggle_icon:hover {
 	aside.open .toggle_icon {
 		margin-left: 1rem;
 	}
+
+	aside:not(.open) .toggle_icon .opened_icon {
+		display: none;
+	}
+
+	aside.open .toggle_icon .closed_icon {
+		display: none;
+	}
 }
 
 @media (min-width: 768px) {
