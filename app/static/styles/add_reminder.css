@@ -6,7 +6,7 @@
 .add_text_reminder {
 	width: 300px;
 	max-width: 95%;
-	
+
 	margin: var(--small-gap) auto;
 
 	padding: var(--large-gap);
@@ -23,6 +23,8 @@
 
 	background-color: #44647a;
 	transition: .3s;
+
+	z-index: 10;
 }
 
 .cancel_icon {
@@ -143,9 +145,4 @@ section button:hover,
 
 .add_image_reminder label[for="reminder_image"]:active {
     transform: scale(0.95);
-}
-
-
-.add_reminder_window {
-	z-index: 2;
 }
