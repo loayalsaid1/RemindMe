@@ -61,7 +61,8 @@ main {
 	align-content: flex-start;
 
 	width: calc(var(--main-width) + 20px);
-
+	margin-right: 10px;
+	
 	background-color: var(--color-1);
 
 	overflow: scroll;
