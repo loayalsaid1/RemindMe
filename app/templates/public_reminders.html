@@ -32,49 +32,53 @@
 	<div class="container">
 		{% include 'aside.html' %}
 		<main allow-add-reminder>
-			{% for reminder in reminders %}
-			<article data-reminder-id="{{ reminder.id }}" data-type="{{ 'image' if not reminder.is_text else 'text' }}" data-visibility="public">
-				<div class="shown">
-					{% if reminder.is_text %}
-					<p>{{ reminder.text }}</p>
-					{% else %}
-					<img class="reminder_image" src="{{ reminder.img_url }}"
-					alt="" class="">
-					{% endif %}
-				</div>
-				<div class="hidden">
-					<p class="caption">{{ reminder.caption }}</p>
-					<!-- <span class="material-symbols-outlined hidden_icons menu_icon">
-						menu
-					</span> -->
-					<!-- <ul class="reminder_options">
-						<li class="edit_reminder">
-							<span class="material-symbols-outlined">
-								edit
+			<div class="reminders_container">
+				{% for reminder in reminders %}
+				<article data-reminder-id="{{ reminder.id }}" data-type="{{ 'image' if not reminder.is_text else 'text' }}" data-visibility="public">
+					<div class="card_container">
+						<div class="shown">
+							{% if reminder.is_text %}
+							<p>{{ reminder.text }}</p>
+							{% else %}
+							<img class="reminder_image" src="{{ reminder.img_url }}"
+							alt="" class="">
+							{% endif %}
+						</div>
+						<div class="hidden">
+							<p class="caption">{{ reminder.caption }}</p>
+							<!-- <span class="material-symbols-outlined hidden_icons menu_icon">
+								menu
+							</span> -->
+							<!-- <ul class="reminder_options">
+								<li class="edit_reminder">
+									<span class="material-symbols-outlined">
+										edit
+									</span>
+								</li>
+								<li class="toggle_visibility">
+									<span class="material-symbols-outlined">
+										{% if reminder.public %}
+										visibility
+										{% else %}
+										visibility_lock
+										{% endif %}
+									</span>
+								</li>
+								<li class="delete_reminder">
+									<span class="material-symbols-outlined">
+										delete
+									</span>
+								</li>
+							</ul> -->
+							<span class="material-symbols-outlined hidden_icons magnify_icon">
+								zoom_in
 							</span>
-						</li>
-						<li class="toggle_visibility">
-							<span class="material-symbols-outlined">
-								{% if reminder.public %}
-								visibility
-								{% else %}
-								visibility_lock
-								{% endif %}
-							</span>
-						</li>
-						<li class="delete_reminder">
-							<span class="material-symbols-outlined">
-								delete
-							</span>
-						</li>
-					</ul> -->
-					<span class="material-symbols-outlined hidden_icons magnify_icon">
-						zoom_in
-					</span>
-					<button class="show_reminder" type="button">Show reflections</button>
-				</div>
-			</article>
-			{% endfor %}
+							<button class="show_reminder" type="button">Show reflections</button>
+						</div>
+					</div>
+				</article>
+				{% endfor %}
+			</div>
 			<section class="add_image_reminder add_reminder_window">
 				<span class="material-symbols-outlined cancel_icon">
 					close
