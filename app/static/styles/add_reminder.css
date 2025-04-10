@@ -5,6 +5,8 @@
 .add_image_reminder,
 .add_text_reminder {
 	width: 300px;
+	max-width: 95%;
+	
 	margin: var(--small-gap) auto;
 
 	padding: var(--large-gap);
@@ -22,7 +24,6 @@
 	background-color: #44647a;
 	transition: .3s;
 }
-
 
 .cancel_icon {
 	position: absolute;
