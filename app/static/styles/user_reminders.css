@@ -127,7 +127,7 @@ article:hover .hidden {
     padding: 5px;
     line-height: 1.7rem;
     text-align: center;
-    font-size: 1.3rem;
+    font-size: clamp(0.8rem, 3vw, 1.3rem);
     font-weight: bold;
     /* font-family: fantasy; */
     letter-spacing: 1px;
@@ -174,13 +174,20 @@ article:hover .hidden {
     padding: 5px;
     line-height: 1.5rem;
     text-align: center;
-    font-size: 1.2rem;
+    font-size: clamp(.8rem, 2.5vw, 1.3rem);
     font-weight: 700;
     font-family: monospace;
     letter-spacing: 1px;
     opacity: 0;
     transition: opacity 0.3s ease-in-out;
 }
+
+@media (max-width: 359px) {
+	.hidden .caption {
+		line-height: 1.2;
+	}
+}
+
 .hidden:hover > * {
     opacity: 1;
 }
