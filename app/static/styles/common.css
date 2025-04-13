@@ -40,7 +40,7 @@ body {
 
 }
 
-.container {
+.main_container {
 	position: relative;
 
 	display: flex;
