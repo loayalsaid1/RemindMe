@@ -108,7 +108,7 @@ header nav ul li {
 }
 
 header .search_bar_section {
-	min-width: 1.5rem;
+	padding-right: .25rem;
 }
 
 header .search_bar_section .search_bar {
