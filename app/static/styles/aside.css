@@ -405,12 +405,14 @@ aside nav ul li.active a {
 
 	width: 100%;
 	padding: var(--medium-gap);
-
-	list-style: none;
-
+	
 	color: black;
 	box-shadow: 1px 1px 6px 1px;
 	border-radius: 10px;
+	
+	background-color: var(--color-2);
+	
+	list-style: none;
 }
 
 .add_reminder .choose_reminder_type.hidden {
@@ -434,7 +436,7 @@ aside nav ul li.active a {
 	width: 100%;
 	padding: 8px;
 
-	background-color: transparent;
+	background-color: rgb(68 100 122 / 0.9);
 	color: black;
 	box-shadow: 1px 1px 5px 1px black;
 
