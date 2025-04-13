@@ -28,6 +28,7 @@ body {
 
 	display: flex;
 	flex-direction: column;
+	justify-content: center;
 	gap: var(--large-gap);
 
 	height: 100vh;
@@ -45,9 +46,13 @@ body {
 
 	display: flex;
 	gap: var(--large-gap);
-	justify-content: space-around;
+	justify-content: space-between;
 	align-items: stretch;
 	flex-grow: 1;
+
+	max-width: 100%;
+	width: 1200px;
+	margin: auto;
 
 	overflow: hidden;
 }
