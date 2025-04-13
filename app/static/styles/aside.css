@@ -124,52 +124,178 @@ aside .toggle_icon:hover {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	align-self: center;
-
+	
 	width: 100%;
-	padding: 10px;
+	padding: 1.5rem;
+	margin-top: .25rem;
 	margin-bottom: var(--large-gap);
+	
+	border-radius: 16px;
+	background-color: rgba(255, 255, 255, 0.01);
+	backdrop-filter: blur(12px);
+	box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+	border: 1px solid rgba(255, 255, 255, 0.1);
+	
+	transition: transform 0.2s, box-shadow 0.2s;
+}
 
-	border: 1px solid #20303f;
-	border-radius: 10px;
-	box-shadow: 0 0 8px 1px #20303f, 0 0 8px 1px #20303f inset;
-
-	background-color: var(--color-1);
+.user_info:hover {
+	transform: translateY(-3px);
+	box-shadow: 0 12px 28px rgba(0, 0, 0, 0.25);
 }
 
 .user_info img {
 	position: relative;
-
-	display: block;
-
-	width: 150px;
-	height: 150px;
-	margin: 10px;
-
+	width: 110px;
+	height: 110px;
+	margin-bottom: 1.25rem;
+	
 	border-radius: 50%;
+	border: 3px solid var(--color-3);
+	object-fit: cover;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+	
+	transition: transform 0.3s ease;
 }
 
-.user_info h2,
-.user_info h3 {
-	position: relative;
+.user_info img:hover {
+	transform: scale(1.05);
+}
 
-	margin: 5px;
+.user_info h2 {
+	font-size: 1.5rem;
+	font-weight: 700;
+	margin: 0 0 0.3rem 0;
+	letter-spacing: 0.02em;
 }
 
 .user_info h3 {
-	font-size: 1.1rem;
+	font-size: 1rem;
 	font-weight: 500;
+	margin: 0 0 1rem 0;
+	color: rgba(255, 255, 255, 0.75);
 }
 
 .user_info .user_description {
 	position: relative;
-
 	text-align: center;
-	margin: 15px 0;
-	line-height: 1.5rem;
+	margin: 0.75rem 0 1.5rem;
+	line-height: 1.6;
+	
+	font-size: 0.95rem;
+	font-weight: 400;
+	color: rgba(255, 255, 255, 0.85);
+	
+	max-width: 90%;
+}
 
-	font-size: large;
+.streaks {
+	position: relative;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	
+	width: 100%;
+	padding: 0.75rem 0;
+	margin: 0.5rem 0 1.5rem;
+	
+	border-top: 1px solid rgba(255, 255, 255, 0.1);
+	border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.streaks div {
+	position: relative;
+
+	display: flex;
+	flex-direction: column-reverse;
+	
+	padding: 0 1rem;
+	text-align: center;
+}
+
+@media (max-width: 767px) {
+	.streaks div {
+		padding: 0;
+	}
+}
+
+.streaks div p.value {
+	font-size: 1.75rem;
+	font-weight: 700;
+	color: var(--color-3);
+	margin-bottom: 0.25rem;
+}
+
+.streaks div p.text {
+	font-size: 0.8rem;
+	font-weight: 500;
+	color: rgba(255, 255, 255, 0.7);
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+}
+
+.user_info button,
+.aside_add_reminder_button {
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	
+	width: 85%;
+	padding: 0.875rem;
+	margin: 0.5rem 0;
+	
+	border: none;
+	border-radius: 12px;
+	
+	background-color: var(--color-3);
+	color: white;
+	text-decoration: none;
+	
+	font-size: 1rem;
 	font-weight: 600;
+	letter-spacing: 0.02em;
+	
+	transition: all 0.2s ease;
+	cursor: pointer;
+}
+
+.user_info button:hover,
+.aside_add_reminder_button:hover {
+	background-color: var(--color-2);
+	transform: translateY(-2px);
+	box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.user_info button:active,
+.aside_add_reminder_button:active {
+	transform: translateY(0);
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.user_info button .material-symbols-outlined {
+	margin-right: 0.5rem;
+	font-size: 1.2rem;
+}
+
+/* Add responsive adjustments */
+@media (max-width: 767px) {
+	.user_info {
+			padding: 1.25rem 1rem;
+	}
+	
+	.user_info img {
+			width: 90px;
+			height: 90px;
+	}
+	
+	.user_info h2 {
+			font-size: 1.3rem;
+	}
+	
+	.streaks div p.value {
+			font-size: 1.5rem;
+	}
 }
 
 .add_reminder {
@@ -315,28 +441,6 @@ aside nav ul li.active a {
 	color: white;
 }
 
-.user_info button,
-.aside_add_reminder_button {
-	position: relative;
-
-	display: flex;
-	align-items: center;
-	justify-content: center;
-
-	width: 100%;
-	padding: 10px;
-	margin: 10px 0;
-
-	border-radius: 30px;
-
-	background-color: var(--color-3);
-	color: white;
-	text-decoration: none;
-
-	font-size: 1.1rem;
-}
-
-
 
 @media (max-width: 767px) {
 	aside:not(.open) .aside_add_reminder_button span.icon {
@@ -448,33 +552,4 @@ button .material-symbols-outlined {
 
 	transition: 0.3s;
 	z-index: 555;
-}
-
-.streaks {
-	position: relative;
-
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-
-	width: 100%;
-}
-
-.streaks div {
-	position: relative;
-
-	display: flex;
-	flex-direction: column-reverse;
-	justify-content: space-evenly;
-	align-items: center;
-}
-
-.streaks div p {
-	position: relative;
-
-	text-align: center;
-	line-height: 1.5rem;
-
-	font-size: large;
-	font-weight: 600;
 }
