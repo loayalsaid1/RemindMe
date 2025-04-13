@@ -23,7 +23,7 @@
 	box-sizing: border-box;
 }
 
-body {
+.body_container {
 	position: relative;
 
 	display: flex;
