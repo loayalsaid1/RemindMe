@@ -1,27 +1,7 @@
 main {
-	background-color: var(--color-1);
-
-	position: relative;
-
-	height: calc(100vh - var(--header-height));
-    width: calc(var(--main-width) + 20px);
+	display: unset;
+	
 	max-width: 550px;
-
-	padding: var(--medium-gap);
-	margin: calc(var(--header-height) + var(--small-gap)) auto;
-	margin-bottom: var(--small-gap);
-
-	overflow: scroll;
-	transition: opacity 0.3s ease-in-out;
-}
-
-main::-webkit-scrollbar {
-    display: none;
-}
-
-main {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
 }
 
 .reminder {
@@ -54,10 +34,11 @@ main {
 	font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
-.reminder .user_name {
+.reminder .user_name,
+.reflection .user_name {
 	display: flex;
 	align-items: center;
-	margin-bottom: var(--small-gap);
+	margin-bottom: 2px;
 }
 
 .name:hover,
@@ -78,8 +59,18 @@ main {
 	letter-spacing: 1px;
 }
 
+@media (max-width: 767px) {
+	.reminder_user_data .name {
+		font-size: 1rem;
+	}
+
+	.reminder_user_data .username{
+		font-size: .9rem;
+	}
+}
+
 .reminder_user_data .date {
-	font-size: .9em;
+	font-size: .8em;
 }
 
 .reminder_body {
@@ -218,13 +209,23 @@ main {
 	display: flex;
 	align-items: center;
 
-	margin-bottom: var(--small-gap)
+	margin-bottom: 2px
 }
 
 .reflection_user_data .name {
 	margin-right: var(--small-gap);
 	font-size: 1.2rem;
-    font-weight: 500;
+	font-weight: 500;
+}
+
+@media (max-width: 767px) {
+	.reflection .name {
+		font-size: 1rem;
+	}
+
+	.reflection .username {
+		font-size: .9rem;
+	}
 }
 
 .reflection_head .date {
@@ -282,4 +283,11 @@ main {
     font-size: 1.3rem;
     font-weight: bold;
     letter-spacing: 1px;
+}
+
+.reminder_user_data .username,
+.reflection_user_data .username,
+.reminder_user_data .date,
+.reflection_head .date {
+	color: #aaa;
 }

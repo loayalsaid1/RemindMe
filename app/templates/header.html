@@ -1,46 +1,51 @@
 <header>
-	<div>
-		<div class="logo">
-			<a href="{{ url_for('users.user_profile') }}">
-				<img src="https://via.placeholder.com/50x50" alt="">
-				<h2>RemindMe</h2>
-			</a>
-		</div>
-	</div>
-	<nav>
-		<ul>
-			{%if public_ewall %}
-			<li class="active"><a href="{{ url_for('users.public_reminders') }}">Public reminders</a></li>
-			<li><a href="{{ url_for('users.user_profile') }}">Your reminders</a></li>
-			{% elif user_reminders %}
-			<li><a href="{{ url_for('users.public_reminders') }}">Public reminders</a></li>
-			<li class="active"><a href="{{ url_for('users.user_profile') }}">Your reminders</a></li>
-			{% else %}
-			<li><a href="{{ url_for('users.public_reminders') }}">Public reminders</a></li>
-			<li><a href="{{ url_for('users.user_profile') }}">Your reminders</a></li>
-			{% endif %}
-		</ul>
-	</nav>
-	<div class="left">
-		<div class="search-bar">
-			<input type="text" placeholder="Search for username">
-			<!-- <button>Search</button> -->
-		</div>
-		<div class="profile_icon_section">
-			<img src="{{ user.img_url }}" alt="">
-			<div class="profile_dropdown">
+	<div class="header_container">
+		<div>
+			<div class="logo">
 				<a href="{{ url_for('users.user_profile') }}">
-					<span class="material-symbols-outlined">
-						person
-					</span>
-					My Profile
+					<img src="../static/images/RemindMe_logo.png" alt="RemindMe Logo">
 				</a>
-				<a href="{{ url_for('auth.logout') }}">
-					<span class="material-symbols-outlined">
-						logout
+			</div>
+		</div>
+		<nav>
+			<ul>
+				{%if public_ewall %}
+				<li class="active"><a href="{{ url_for('users.public_reminders') }}">Public reminders</a></li>
+				<li><a href="{{ url_for('users.user_profile') }}">Your reminders</a></li>
+				{% elif user_reminders %}
+				<li><a href="{{ url_for('users.public_reminders') }}">Public reminders</a></li>
+				<li class="active"><a href="{{ url_for('users.user_profile') }}">Your reminders</a></li>
+				{% else %}
+				<li><a href="{{ url_for('users.public_reminders') }}">Public reminders</a></li>
+				<li><a href="{{ url_for('users.user_profile') }}">Your reminders</a></li>
+				{% endif %}
+			</ul>
+		</nav>
+		<div class="left">
+			<div class="search_bar_section">
+				<div class="search_bar">
+					<input type="text" placeholder="Search for username" class="search_input">
+					<span class="material-symbols-outlined search_icon icon">
+						search
 					</span>
-					Log Out
-				</a>
+				</div>
+			</div>
+			<div class="profile_icon_section">
+				<img src="{{ user.img_url }}" alt="">
+				<div class="profile_dropdown">
+					<a href="{{ url_for('users.user_profile') }}">
+						<span class="material-symbols-outlined">
+							person
+						</span>
+						My Profile
+					</a>
+					<a href="{{ url_for('auth.logout') }}">
+						<span class="material-symbols-outlined">
+							logout
+						</span>
+						Log Out
+					</a>
+				</div>
 			</div>
 		</div>
 	</div>
