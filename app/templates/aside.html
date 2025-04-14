@@ -1,60 +1,83 @@
-<aside>
-	<div class="top">
-		<div class="user_info">
-			{% if profile_owner %}
-			<img src="{{ profile_owner.img_url }}" alt="">
-
-			<h2 class="user_full_name">{{ profile_owner.first_name }} {{ profile_owner.last_name }}</h2>
-			<h3 class="username">@{{ profile_owner.user_name }}</h3>
-
-			<p class="user_description">
-				{{ profile_owner.description }}
-			</p>
-			{% else %}
-			<img src="{{ user.img_url }}" alt="">
-
-			<h2 class="user_full_name">{{ user.first_name }} {{ user.last_name }}</h2>
-			<h3 class="username">@{{ user.user_name }}</h3>
-
-			<p class="user_description">
-				{{ user.description }}
-			</p>
-			{% endif %}
-			<div class="streaks">
+<aside class="closed">
+	<div class="toggle_icon">
+		<span class="material-symbols-outlined icon closed_icon">
+			chevron_right
+		</span>
+		<span class="material-symbols-outlined icon opened_icon">
+			chevron_left
+		</span>
+	</div>
+	<div class="aside_content">
+		<div class="top">
+			<div class="user_info">
 				{% if profile_owner %}
-				<div>
-					<p class="text">Current Streaks</p>
-					<p class="value">{{ profile_owner.current_streak.days or 0}}</p>
-				</div>
-				<div>
-					<p class="text">Longest Streak</p>
-					<p class="value">{{ profile_owner.longest_streak.days or 0}}</p>
-				</div>
+				<img src="{{ profile_owner.img_url }}" alt="">
+
+				<h2 class="user_full_name">{{ profile_owner.first_name }} {{ profile_owner.last_name }}</h2>
+				<h3 class="username">@{{ profile_owner.user_name }}</h3>
+
+				<p class="user_description">
+					{{ profile_owner.description }}
+				</p>
 				{% else %}
-				<div>
-					<p class="text">Current Streaks</p>
-					<p class="value">{{ user.current_streak.days}}</p>
+				<img src="{{ user.img_url }}" alt="">
+
+				<h2 class="user_full_name">{{ user.first_name }} {{ user.last_name }}</h2>
+				<h3 class="username">@{{ user.user_name }}</h3>
+
+				<p class="user_description">
+					{{ user.description }}
+				</p>
+				{% endif %}
+				<div class="streaks">
+					{% if profile_owner %}
+					<div>
+						<p class="text">Current Streaks</p>
+						<p class="value">{{ profile_owner.current_streak.days or 0}}</p>
+					</div>
+					<div>
+						<p class="text">Longest Streak</p>
+						<p class="value">{{ profile_owner.longest_streak.days or 0}}</p>
+					</div>
+					{% else %}
+					<div>
+						<p class="text">Current Streaks</p>
+						<p class="value">{{ user.current_streak.days}}</p>
+					</div>
+					<div>
+						<p class="text">Longest Streak</p>
+						<p class="value">{{ user.longest_streak.days }}</p>
+					</div>
+					{% endif %}
 				</div>
-				<div>
-					<p class="text">Longest Streak</p>
-					<p class="value">{{ user.longest_streak.days }}</p>
-				</div>
+				{% if not profile_owner %}
+				<button type="button" class="edit_profile"
+					onclick="alert('You can\'t fake your identity here...\nAt least for now.. \nBut if you insest.\n Here is an insider bug.\ngo to /finalize_profile and fill the form. \n\nHey, Keep it a secret')">
+					<span class="material-symbols-outlined">
+						edit
+					</span>
+					Edit profile
+				</button>
 				{% endif %}
 			</div>
-			{% if not profile_owner %}
-			<button type="button" class="edit_profile"
-				onclick="alert('You can\'t fake your identity here...\nAt least for now.. \nBut if you insest.\n Here is an insider bug.\ngo to /finalize_profile and fill the form. \n\nHey, Keep it a secret')">
-				<span class="material-symbols-outlined">
-					edit
-				</span>
-				Edit profile
-			</button>
-			{% endif %}
-		</div>
 
-		<!-- Temporarily remove it -->
+			<nav>
+				<ul>
+					{%if public_ewall %}
+					<li class="active"><a href="{{ url_for('users.public_reminders') }}">Public reminders</a></li>
+					<li><a href="{{ url_for('users.user_profile') }}">Your reminders</a></li>
+					{% elif user_reminders %}
+					<li><a href="{{ url_for('users.public_reminders') }}">Public reminders</a></li>
+					<li class="active"><a href="{{ url_for('users.user_profile') }}">Your reminders</a></li>
+					{% else %}
+					<li><a href="{{ url_for('users.public_reminders') }}">Public reminders</a></li>
+					<li><a href="{{ url_for('users.user_profile') }}">Your reminders</a></li>
+					{% endif %}
+				</ul>
+			</nav>
+			<!-- Temporarily remove it -->
 
-		<!-- <section class="featured_ewalls">
+			<!-- <section class="featured_ewalls">
 			<h3>Featured Elements</h3>
 			<div class="ewall">
 				<img src="../static/images/profile_placeholder.png" alt="">
@@ -81,31 +104,34 @@
 				</div>
 			</div>
 		</section> -->
-	</div>
-	<div class="add_reminder">
-		<ul class="choose_reminder_type">
-			<li>
-				<button type="button" class="add_image_reminder_button">
-					<span class="material-symbols-outlined">
-						image
-					</span>
-					Image Reminder
-				</button>
-			</li>
-			<li>
-				<button type="button" class="add_text_reminder_button">
-					<span class="material-symbols-outlined">
-						text_fields
-					</span>
-					Text Reminder
-				</button>
-			</li>
-		</ul>
-		<button type="button" class="aside_button">
-			<span class="material-symbols-outlined">
-				add
-			</span>
-			Add reminder
-		</button>
+		</div>
+		<div class="add_reminder">
+			<ul class="choose_reminder_type hidden">
+				<li>
+					<button type="button" class="add_image_reminder_button">
+						<span class="material-symbols-outlined">
+							image
+						</span>
+						Image Reminder
+					</button>
+				</li>
+				<li>
+					<button type="button" class="add_text_reminder_button">
+						<span class="material-symbols-outlined">
+							text_fields
+						</span>
+						Text Reminder
+					</button>
+				</li>
+			</ul>
+			<button type="button" class="aside_add_reminder_button">
+				<span class="material-symbols-outlined icon">
+					add
+				</span>
+				<span class="text">						
+					Add reminder
+				</span>
+			</button>
+		</div>
 	</div>
 </aside>
