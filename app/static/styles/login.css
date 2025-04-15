@@ -1,0 +1,39 @@
+/* Login-specific styles only */
+
+/* Login-specific animation for tagline underline */
+@keyframes expandLogin {
+  from { width: 15px; }
+  to { width: 50px; }
+}
+
+/* Override the default animation with login-specific one */
+.login-tagline::after {
+  animation: expandLogin 1.5s ease-out forwards;
+  width: 50px; /* Final width for login tagline underline */
+}
+
+/* Login-specific form elements */
+.login-main .side {
+  justify-content: flex-end; /* Right-align the forgot password link */
+}
+
+/* Forgot password link styling */
+.forgot-password {
+  color: var(--text-lighter);
+  font-size: 0.85rem;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  opacity: 0.9;
+  margin-left: auto;
+}
+
+.forgot-password:hover {
+  color: var(--primary-color);
+  text-decoration: underline;
+  opacity: 1;
+}
+
+/* Username field special styling */
+#username {
+  border-left: 2px solid var(--primary-color);
+}
