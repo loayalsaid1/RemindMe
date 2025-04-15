@@ -255,17 +255,20 @@ input[type="password"] {
 /* Join Us/Login Link */
 .footnote {
   margin-top: 15px;
+}
+
+.footnote .join_us {
   font-size: small;
   text-align: center;
 }
 
-.footnote a {
+.footnote .join_us a {
   color: var(--primary-color);
   text-decoration: none;
   transition: color 0.3s ease;
 }
 
-.footnote a:hover {
+.footnote .join_us a:hover {
   color: var(--primary-dark);
   text-decoration: underline;
 }
@@ -345,8 +348,11 @@ input[type="password"] {
     margin-bottom: 15px;
   }
   
-  .footnote {
-    margin-top: 1rem;
+	.footnote {
+		margin-top: 1rem;
+	}
+
+  .footnote .join_us {
     font-size: 0.8rem;
   }
 }
