@@ -28,19 +28,14 @@
 	{% block content %}
 	{% include 'header.html' %}
 
-	<div class="main_container"">		
+	<div class="main_container">		
 		{% include 'aside.html' %}
 		<main allow-add-reminder>
-			<!-- 
-				********** TODO ********
-				About quote and welcome section
-				
-				I beleive this whole naming should be changed later
-				Changed took place that affected the meaning of these names
-				+ it's not descriptive anyway.
-				
-				I 'm just rushing abit now
-			-->
+			<!-- Loading indicator -->
+			<div id="loading-spinner" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 9999;">
+				<div style="width: 50px; height: 50px; border: 5px solid #f3f3f3; border-top: 5px solid var(--color-3); border-radius: 50%; animation: spin 1s linear infinite;"></div>
+			</div>
+			
 			<p class="quote">A little reminder can make a significant change in your day</p>
 			{% if not reminders %}
 			<div class="welcome">
@@ -70,7 +65,7 @@
 							<p>{{ reminder.text }}</p>
 							{% else %}
 							<img class="reminder_image" src="{{ reminder.img_url }}"
-							alt="" class="">
+							 alt="Reminder image" class="">
 							{% endif %}
 						</div>
 						<div class="hidden">

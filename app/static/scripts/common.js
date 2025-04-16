@@ -25,4 +25,12 @@ $(document).ready(function () {
 
 		window.location.href = `/reminders/${reminderID}`;
 	})
+
+	        
+		// Add loading indicator for AJAX operations
+		$(document).ajaxStart(function() {
+			$('#loading-spinner').fadeIn(300);
+	}).ajaxStop(function() {
+			$('#loading-spinner').fadeOut(300);
+	});	
 })
