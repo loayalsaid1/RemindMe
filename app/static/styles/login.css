@@ -12,6 +12,11 @@
   width: 50px; /* Final width for login tagline underline */
 }
 
+/* Remove margin-bottom since it's now in the welcome-container */
+.login-tagline {
+  margin-bottom: 0;
+}
+
 /* Login-specific form elements */
 .login-main .side {
   justify-content: flex-end; /* Right-align the forgot password link */
@@ -19,20 +24,23 @@
 
 /* Forgot password link styling */
 .forgot-password {
+  margin-left: auto;
+  
   color: var(--text-lighter);
   font-size: 0.85rem;
   text-decoration: none;
+  
   transition: all 0.2s ease;
+  
   opacity: 0.9;
-  margin-left: auto;
 }
 
 .forgot-password:hover {
   color: var(--primary-color);
   text-decoration: underline;
+  
   opacity: 1;
 }
-
 /* Username field special styling */
 #username {
   border-left: 2px solid var(--primary-color);

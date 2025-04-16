@@ -15,7 +15,11 @@
 		<div class="logo-container">
             <img src="../static/images/RemindMe_logo.png" alt="RemindMe Logo" class="logo">
         </div>
-		<p class="auth-tagline login-tagline">Welcome back to your daily reminders</p>
+        
+		<div class="welcome-container">
+			<p class="auth-tagline login-tagline">Welcome back to your daily reminders</p>
+		</div>
+        
 		<div class="form-container">
 			<form action="{{ url_for('auth.login', next=request.args.get('next')) }}" method="POST">
 				{{ form.hidden_tag() }}

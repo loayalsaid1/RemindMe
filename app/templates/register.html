@@ -13,7 +13,11 @@
         <div class="logo-container">
             <img src="../static/images/RemindMe_logo.png" alt="RemindMe Logo" class="logo">
         </div>
-        <p class="auth-tagline register-tagline">Everyday, refresh ideas, principles, inspirations or whys you want to live with</p>
+        
+        <div class="welcome-container">
+            <p class="auth-tagline register-tagline">Everyday, refresh ideas, principles, inspirations or whys you want to live with</p>
+        </div>
+        
         <div class="form-container">
             <form action="{{ url_for('auth.register') }}" method="POST" enctype="multipart/form-data">
                 {{ form.hidden_tag() }}
