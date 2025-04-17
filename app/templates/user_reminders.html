@@ -11,6 +11,7 @@
 	<link rel="stylesheet" href="../static/styles/aside.css">
 	<link rel="stylesheet" href="../static/styles/user_reminders.css">
 	<link rel="stylesheet" href="../static/styles/add_reminder.css">	
+	<link rel="stylesheet" href="../static/styles/welcome_container.css">	
 	{% endblock %}
 
 	{% block scripts %}
@@ -36,9 +37,12 @@
 				<div style="width: 50px; height: 50px; border: 5px solid #f3f3f3; border-top: 5px solid var(--color-3); border-radius: 50%; animation: spin 1s linear infinite;"></div>
 			</div>
 			
-			<p class="quote">A little reminder can make a significant change in your day</p>
+			<div class="quote-container">
+				<p class="quote">A little reminder can make a significant change in your day</p>
+			</div>
+			
 			{% if not reminders %}
-			<div class="welcome">
+			<div class="welcome-container">
 				<p class="message">Your E-Wall seems empty. Click below to stick the first one</p>
 				<div class="buttons">
 					<button type="button" class="show-text-reminder-form">Add a text reminder</button>
