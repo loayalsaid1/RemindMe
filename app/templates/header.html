@@ -7,7 +7,7 @@
 				</a>
 			</div>
 		</div>
-		<nav>
+		<nav aria-label="Main navigation">
 			<ul>
 				{%if public_ewall %}
 				<li class="active"><a href="{{ url_for('users.public_reminders') }}">Public reminders</a></li>
@@ -21,25 +21,26 @@
 				{% endif %}
 			</ul>
 		</nav>
+
 		<div class="left">
 			<div class="search_bar_section">
-				<div class="search_bar">
-					<input type="text" placeholder="Search for username" class="search_input">
-					<span class="material-symbols-outlined search_icon icon">
+				<div class="search_bar" aria-expanded="false">
+					<input type="text" placeholder="Search for username" class="search_input" aria-label="Search for username">
+					<span class="material-symbols-outlined search_icon icon" tabindex="0" role="button" aria-label="Search">
 						search
 					</span>
 				</div>
 			</div>
 			<div class="profile_icon_section">
-				<img src="{{ user.img_url }}" alt="">
-				<div class="profile_dropdown">
-					<a href="{{ url_for('users.user_profile') }}">
+				<img src="{{ user.img_url }}" alt="User profile picture">
+				<div class="profile_dropdown" role="menu">
+					<a href="{{ url_for('users.user_profile') }}" role="menuitem">
 						<span class="material-symbols-outlined">
 							person
 						</span>
 						My Profile
 					</a>
-					<a href="{{ url_for('auth.logout') }}">
+					<a href="{{ url_for('auth.logout') }}" role="menuitem">
 						<span class="material-symbols-outlined">
 							logout
 						</span>
