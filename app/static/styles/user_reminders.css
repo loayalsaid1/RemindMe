@@ -8,6 +8,11 @@
 	padding: 15px;
 }
 
+@media (max-width: 370px) {
+	.reminders_container {
+		grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+	}
+}
 /* =============================================
    REMINDER CARD ARTICLE
    ============================================= */
@@ -33,16 +38,13 @@
 	width: 100%;
 	height: 100%;
 	overflow: hidden;
-	border-radius: 12px;
 }
 
 .reminders_container .shown,
 .reminders_container .hidden {
 	width: 100%;
 	height: 100%;
-	border-radius: 12px;
 }
-
 /* =============================================
    SHOWN FACE OF CARD
    ============================================= */
@@ -62,16 +64,9 @@ article,
 	object-fit: contain;
 }
 
-article:hover .shown,
-.shown:hover {
+article:hover .shown{
 	padding: 10px;
 	filter: blur(2px);
-}
-
-.shown:hover p {
-	font-size: small;
-	color: white;
-	font-weight: 100;
 }
 
 .shown p {
@@ -89,7 +84,20 @@ article:hover .shown,
     -webkit-line-clamp: 6;
 }
 
+.shown:hover p {
+	font-size: small;
+	color: white;
+	font-weight: 100;
+}
 
+@media (max-width: 370px) {
+    .shown p {
+        font-size: 0.85rem;
+        line-height: 1.3;
+        -webkit-line-clamp: 4;
+        padding: 5px;
+    }
+}
 /* =============================================
    HIDDEN FACE OF CARD
    ============================================= */
@@ -162,6 +170,41 @@ article:hover .hidden {
 	cursor: pointer;
 }
 
+@media (max-width: 400px) {
+    /* Icon sizing */
+    article .hidden .hidden_icons,
+    article .shown .lock_icon {
+        width: 28px;
+        height: 28px;
+        font-size: 1.2rem;
+    }
+    
+    /* Icon positioning */
+    article .hidden .menu_icon {
+        top: 8px;
+        right: 8px;
+    }
+    
+    article .hidden .magnify_icon {
+        bottom: 8px;
+        left: 8px;
+    }
+    
+    article .shown > .lock_icon {
+        top: 8px;
+        left: 8px;
+    }
+}
+
+@media (max-width: 320px) {
+    /* Icon sizing */
+    article .hidden .hidden_icons,
+    article .shown .lock_icon {
+        width: 24px;
+        height: 24px;
+        font-size: 1rem;
+    }
+}
 /* =============================================
    REMINDER OPTIONS MENU
    ============================================= */
@@ -197,6 +240,33 @@ article:hover .hidden {
     background-color: var(--color-4);
 }
 
+@media (max-width: 400px) {    
+    /* Reminder options */
+    article .hidden .reminder_options {
+        top: 40px;
+        right: 8px;
+        width: 28px;
+        height: calc(3 * 28px + 6px);
+        padding: 5px;
+    }
+    
+    article .hidden .reminder_options li span {
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 320px) {    
+    /* Reminder options */
+    article .hidden .reminder_options {
+        width: 24px;
+        height: calc(3 * 24px + 6px);
+        padding: 3px;
+    }
+    
+    article .hidden .reminder_options li span {
+        font-size: .9rem;
+    }
+}
 /* =============================================
    CAPTION AND SHOW REFLECTIONS BUTTON
    ============================================= */
@@ -235,6 +305,36 @@ article:hover .hidden {
 .hidden .show_reminder:hover {
     background-color: var(--color-4);
 }
+
+@media (max-width: 400px) {
+    .hidden .show_reminder {
+        padding: 6px 12px;
+        font-size: 0.8rem;
+        bottom: 10px;
+        max-width: 90%;
+    }
+}
+
+@media (max-width: 370px) {
+	.hidden .caption {
+		line-height: 1.2;
+		font-size: 0.75rem;
+		padding: 3px;
+		margin: 3px 0;
+		max-height: 40%;
+	}
+}
+
+@media (max-width: 320px) {    
+
+    /* Show reflections button */
+    .hidden .show_reminder {
+        padding: 4px 8px;
+        font-size: 0.7rem;
+        bottom: 8px;
+    }
+}
+
 
 /* =============================================
    FULLSCREEN CONTAINER
@@ -284,6 +384,22 @@ article:hover .hidden {
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
     max-width: 80%;
 }
+
+@media (max-width: 400px) {
+        .fullscreen_container img {
+            margin: 5px;
+            padding: 5px;
+            max-width: 95%;
+        }
+        
+        .fullscreen_container p {
+            padding: 20px;
+            font-size: 1.5em;
+            line-height: 2.5rem;
+            max-width: 90%;
+        }
+}
+
 
 /* =============================================
    WELCOME AND QUOTE SECTIONS
@@ -428,6 +544,38 @@ article:hover .hidden {
 
 
 
+@media (max-width: 767px) {
+    .quote {
+        font-size: clamp(1.1rem, 5vw, 1.4rem);
+        line-height: 1.3;
+        padding: 10px 20px;
+    }
+
+    .quote::after {
+        bottom: -3px;
+    }
+    
+    .quote::before, .quote::after {
+        width: 24px;
+    }
+    
+
+    .quote {
+		font-size: clamp(1.1rem, 5vw, 1.5rem);
+		line-height: 1.1;
+	}
+}
+
+@media (max-width: 400px) {
+    .quote {
+        font-size: 1rem;
+        padding: 8px 15px;
+    }
+    
+    .quote::before, .quote::after {
+        width: 20px;
+    }
+}
 /* =============================================
    UTILITIES
    ============================================= */
@@ -457,152 +605,4 @@ article:hover .hidden {
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
-}
-
-
-/* Responsive adjustments */
-
-
-@media (max-width: 767px) {
-    .quote {
-        font-size: clamp(1.1rem, 5vw, 1.4rem);
-        line-height: 1.3;
-        padding: 10px 20px;
-    }
-
-    .quote::after {
-        bottom: -3px;
-    }
-    
-    .quote::before, .quote::after {
-        width: 24px;
-    }
-    
-
-    .quote {
-		font-size: clamp(1.1rem, 5vw, 1.5rem);
-		line-height: 1.1;
-	}
-}
-
-
-@media (min-width: 576px) {
-
-}
-
-@media (max-width: 400px) {
-    .quote {
-        font-size: 1rem;
-        padding: 8px 15px;
-    }
-    
-    .quote::before, .quote::after {
-        width: 20px;
-    }
-
-    /* Icon sizing */
-    article .hidden .hidden_icons,
-    article .shown .lock_icon {
-        width: 28px !important;
-        height: 28px !important;
-        font-size: 1.2rem !important;
-    }
-    
-    /* Icon positioning */
-    article .hidden .menu_icon {
-        top: 8px !important;
-        right: 8px !important;
-    }
-    
-    article .hidden .magnify_icon {
-        bottom: 8px !important;
-        left: 8px !important;
-    }
-    
-    article .shown > .lock_icon {
-        top: 8px !important;
-        left: 8px !important;
-    }
-    
-    /* Reminder options */
-    article .hidden .reminder_options {
-        top: 40px !important;
-        right: 8px !important;
-        width: 28px !important;
-        height: calc(3 * 28px + 6px) !important;
-    }
-    
-    article .hidden .reminder_options li span {
-        font-size: 1.2rem !important;
-    }
-    
-    /* Show reflections button */
-    .hidden .show_reminder {
-        padding: 6px 12px;
-        font-size: 0.8rem;
-        bottom: 10px;
-        max-width: 90%;
-    }
-    
-    /* Fullscreen container */
-    .fullscreen_container img {
-        margin: 5px;
-        padding: 5px;
-        max-width: 95%;
-    }
-    
-    .fullscreen_container p {
-        padding: 20px;
-        font-size: 1.5em;
-        line-height: 2.5rem;
-        max-width: 90%;
-    }
-}
-
-@media (max-width: 370px) {
-	.reminders_container {
-		grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-	}
-
-    .shown p {
-        font-size: 0.85rem;
-        line-height: 1.3;
-        -webkit-line-clamp: 4;
-        padding: 5px;
-    }
-
-	.hidden .caption {
-		line-height: 1.2;
-		font-size: 0.75rem;
-		padding: 3px;
-		margin: 3px 0;
-		max-height: 40%;
-	}
-}
-
-@media (max-width: 320px) {
-    /* Icon sizing */
-    article .hidden .hidden_icons,
-    article .shown .lock_icon {
-        width: 24px !important;
-        height: 24px !important;
-        font-size: 1rem !important;
-    }
-    
-    /* Reminder options */
-    article .hidden .reminder_options {
-        width: 24px !important;
-        height: calc(3 * 24px + 6px) !important;
-    }
-    
-    article .hidden .reminder_options li span {
-        font-size: 1rem !important;
-    }
-    
-    /* Show reflections button */
-    .hidden .show_reminder {
-        padding: 4px 8px;
-        font-size: 0.7rem;
-        bottom: 8px;
-    }
 }
