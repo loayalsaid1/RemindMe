@@ -1710,7 +1710,7 @@
 				<label for="reminder_image">Upload Image</label>
 
 				<label for="caption">Caption:</label>
-				<textarea name="caption" id="caption" rows="2"></textarea>
+				<textarea name="caption" id="caption" maxlength="1024" rows="2"></textarea>
 
 				<label>Reminder Visibility</label>
 				<div class="visibility_section">
@@ -1734,10 +1734,10 @@
 			<h2>Add Text Reminder</h2>
 			<form class="text_reminder_form" method="POST" enctype="multipart/form-data" action="#">
 				<label for="reminder_text">Reminder Text:</label>
-				<textarea name="reminder_text" id="reminder_text" rows="2"></textarea>
+				<textarea name="reminder_text" id="reminder_text" maxlength="1024" rows="2"></textarea>
 
 				<label for="caption">Caption:</label>
-				<textarea name="caption" id="caption" rows="2"></textarea>
+				<textarea name="caption" id="caption" maxlength="1024" rows="2"></textarea>
 				<label>Reminder Visibility</label>
 				<div class="visibility_section">
 					<input type="radio" id="private" name="reminder_visibility" value="private">
