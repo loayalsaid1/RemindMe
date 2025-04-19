@@ -112,16 +112,6 @@ main {
 	}
 }
 
-@media (max-width: 767px) {
-	.reminder_user_data .name {
-		font-size: 1rem;
-	}
-
-	.reminder_user_data .username{
-		font-size: .9rem;
-	}
-}
-
 .reminder_user_data .date {
 	font-size: .8em;
     color: rgba(255, 255, 255, 0.6);
@@ -584,13 +574,6 @@ main {
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
-}
-
-.reminder_user_data .username,
-.reflection_user_data .username,
-.reminder_user_data .date,
-.reflection_head .date {
-	color: #aaa;
 }
 
 .reminder_user_data .username,
