@@ -1,19 +1,14 @@
 aside {
 	--open-close-duration: .3s;
-
 	position: relative;
-
 	display: flex;
 	flex-direction: row-reverse;
-
 	max-width: 20rem;
 	padding: 10px;
-
-	background-color: var(--color-1);
-	
+	background: linear-gradient(to bottom, var(--color-1), var(--color-3));
+	box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 	z-index: 20;
-
-	transition: padding var(--open-close-duration);
+	transition: padding var(--open-close-duration), box-shadow 0.4s ease;
 }
 
 @media (max-width: 767px) {
@@ -45,20 +40,19 @@ aside .toggle_icon {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-
 	width: 1.5rem;
 	height: 100%;
-
-	box-shadow: 0 0 8px 1px #20303f, 0 0 8px 1px #20303f inset;
-
-	color: white;
-
-	background-color: var(--color-3);
+	background: linear-gradient(to bottom, var(--color-3), var(--color-4));
+	color: rgba(255, 255, 255, 0.9);
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+	border-radius: 0 8px 8px 0;
+	transition: all 0.3s ease;
 }
 
 aside .toggle_icon:hover {
-	background-color: var(--color-2);
-
+	background: linear-gradient(to bottom, var(--color-4), var(--color-3));
+	color: #8DD6D6;
+	transform: translateX(2px);
 	cursor: pointer;
 }
 
@@ -106,13 +100,13 @@ aside .toggle_icon:hover {
 
 .aside_content .top {
 	position: relative;
-
 	margin-bottom: 40px;
-	padding: .25rem;  /* Added padding of .25rem */
-
+	padding: .5rem;
 	overflow: auto;
 	-ms-overflow-style: none;
 	scrollbar-width: none;
+	border-radius: 12px;
+	background: rgba(255, 255, 255, 0.03);
 }
 
 .aside_content .top::-webkit-scrollbar {
@@ -121,28 +115,38 @@ aside .toggle_icon:hover {
 
 .user_info {
 	position: relative;
-
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	
 	width: 100%;
 	padding: 1.5rem;
 	margin-top: .25rem;
 	margin-bottom: var(--large-gap);
-	
 	border-radius: 16px;
-	background-color: rgba(255, 255, 255, 0.01);
+	background: linear-gradient(to bottom, rgba(255, 255, 255, 0.05), rgba(0, 0, 0, 0.05));
 	backdrop-filter: blur(12px);
-	box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25), 
+				0 0 0 1px rgba(255, 255, 255, 0.05), 
+				inset 0 1px 0 rgba(255, 255, 255, 0.1);
 	border: 1px solid rgba(255, 255, 255, 0.1);
-	
-	transition: transform 0.2s, box-shadow 0.2s;
+	transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.user_info::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	border-radius: 16px;
+	background: radial-gradient(circle at top right, rgba(141, 214, 214, 0.08), transparent 70%);
+	z-index: -1;
 }
 
 .user_info:hover {
-	transform: translateY(-3px);
-	box-shadow: 0 12px 28px rgba(0, 0, 0, 0.25);
+	transform: translateY(-5px);
+	box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.07);
 }
 
 .user_info img {
@@ -150,17 +154,17 @@ aside .toggle_icon:hover {
 	width: 110px;
 	height: 110px;
 	margin-bottom: 1.25rem;
-	
 	border-radius: 50%;
-	border: 3px solid var(--color-3);
+	border: 3px solid rgba(141, 214, 214, 0.3);
 	object-fit: cover;
-	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-	
-	transition: transform 0.3s ease;
+	box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2), 0 0 0 5px rgba(141, 214, 214, 0.05);
+	transition: all 0.4s ease;
 }
 
 .user_info img:hover {
-	transform: scale(1.05);
+	transform: scale(1.05) rotate(3deg);
+	border-color: rgba(141, 214, 214, 0.5);
+	box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25), 0 0 0 5px rgba(141, 214, 214, 0.1);
 }
 
 .user_info h2 {
@@ -168,6 +172,10 @@ aside .toggle_icon:hover {
 	font-weight: 700;
 	margin: 0 0 0.3rem 0;
 	letter-spacing: 0.02em;
+	background: linear-gradient(to bottom, #ffffff, #e0e0e0);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .user_info h3 {
@@ -175,6 +183,7 @@ aside .toggle_icon:hover {
 	font-weight: 500;
 	margin: 0 0 1rem 0;
 	color: rgba(255, 255, 255, 0.75);
+	letter-spacing: 0.03em;
 }
 
 .user_info .user_description {
@@ -182,12 +191,13 @@ aside .toggle_icon:hover {
 	text-align: center;
 	margin: 0.75rem 0 1.5rem;
 	line-height: 1.6;
-	
 	font-size: 0.95rem;
 	font-weight: 400;
 	color: rgba(255, 255, 255, 0.85);
-	
 	max-width: 90%;
+	padding: 0.5rem;
+	background: linear-gradient(to bottom, rgba(255, 255, 255, 0.05), transparent);
+	border-radius: 8px;
 }
 
 .streaks {
@@ -195,21 +205,29 @@ aside .toggle_icon:hover {
 	display: flex;
 	justify-content: space-around;
 	align-items: center;
-	
 	width: 100%;
 	padding: 0.75rem 0;
 	margin: 0.5rem 0 1.5rem;
-	
 	border-top: 1px solid rgba(255, 255, 255, 0.1);
 	border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+	background: linear-gradient(to right, transparent, rgba(141, 214, 214, 0.05), transparent);
+}
+
+.streaks::after {
+	content: '';
+	position: absolute;
+	bottom: -5px;
+	left: 50%;
+	width: 80%;
+	height: 1px;
+	background: linear-gradient(90deg, transparent, rgba(141, 214, 214, 0.2), transparent);
+	transform: translateX(-50%);
 }
 
 .streaks div {
 	position: relative;
-
 	display: flex;
 	flex-direction: column-reverse;
-	
 	padding: 0 1rem;
 	text-align: center;
 }
@@ -223,8 +241,15 @@ aside .toggle_icon:hover {
 .streaks div p.value {
 	font-size: 1.75rem;
 	font-weight: 700;
-	color: var(--color-3);
+	color: #8DD6D6;
 	margin-bottom: 0.25rem;
+	text-shadow: 0 0 10px rgba(141, 214, 214, 0.4), 0 2px 4px rgba(0, 0, 0, 0.4);
+	transition: all 0.3s ease;
+}
+
+.streaks div:hover p.value {
+	transform: scale(1.1);
+	text-shadow: 0 0 15px rgba(141, 214, 214, 0.6), 0 2px 5px rgba(0, 0, 0, 0.5);
 }
 
 .streaks div p.text {
@@ -245,41 +270,62 @@ aside .toggle_icon:hover {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	
 	padding: 0.875rem;
 	margin: 0.5rem 0;
-	
 	border: none;
 	border-radius: 12px;
-	
-	background-color: var(--color-3);
+	background: linear-gradient(to bottom, var(--color-4), var(--color-3));
 	color: white;
 	text-decoration: none;
-	
 	font-size: 1rem;
 	font-weight: 600;
 	letter-spacing: 0.02em;
-	
-	transition: all 0.2s ease;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+	transition: all 0.3s ease;
 	cursor: pointer;
+	overflow: hidden;
+}
+
+.user_info button::before,
+.aside_add_reminder_button::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: -100%;
+	width: 100%;
+	height: 100%;
+	background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+	transition: all 0.5s ease;
+}
+
+.user_info button:hover::before,
+.aside_add_reminder_button:hover::before {
+	left: 100%;
 }
 
 .user_info button:hover,
 .aside_add_reminder_button:hover {
-	background-color: var(--color-2);
-	transform: translateY(-2px);
-	box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+	background: linear-gradient(to bottom, var(--color-4), var(--color-3), var(--color-3));
+	transform: translateY(-3px);
+	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.15);
 }
 
 .user_info button:active,
 .aside_add_reminder_button:active {
-	transform: translateY(0);
-	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+	transform: translateY(-1px);
+	box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
-.user_info button .material-symbols-outlined {
+.user_info button .material-symbols-outlined,
+.aside_add_reminder_button .material-symbols-outlined {
 	margin-right: 0.5rem;
 	font-size: 1.2rem;
+	transition: transform 0.3s ease;
+}
+
+.user_info button:hover .material-symbols-outlined,
+.aside_add_reminder_button:hover .material-symbols-outlined {
+	transform: scale(1.2);
 }
 
 /* Add responsive adjustments */
@@ -304,15 +350,23 @@ aside .toggle_icon:hover {
 
 .add_reminder {
 	position: relative;
-
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	padding: .25rem;  /* Added padding of .25rem */
-
+	padding: .5rem;
 	width: 100%;
 }
 
+.add_reminder::before {
+	content: '';
+	position: absolute;
+	top: -15px;
+	left: 50%;
+	width: 2px;
+	height: 15px;
+	background: linear-gradient(to bottom, #8DD6D6, transparent);
+	transform: translateX(-50%);
+}
 
 @media (max-width: 767px) {
 	aside:not(.open) .add_reminder {
@@ -324,11 +378,16 @@ aside .toggle_icon:hover {
 		width: fit-content;
 		z-index: 100;
 	}
+	aside:not(.open) .add_reminder::before {
+		display: none;
+	}
+
 }
 
 aside.open .add_reminder {
 	animation: fadeInOut var(--open-close-duration);
 }
+
 @keyframes fadeInOut {
 	10% {
 		opacity: 0;
@@ -368,51 +427,58 @@ aside nav ul li {
 
 aside nav ul li a {
 	display: block;
-	
 	width: 100%;
-	padding: 10px;
-	border-radius: 5px;
-	
-	color: black;
+	padding: 12px;
+	border-radius: 8px;
+	color: white;
 	text-decoration: none;
 	text-align: center;
-
-	background-color: var(--color-1);
-
-	box-shadow: 0 0 8px 1px #20303f, 0 0 8px 1px #20303f inset;
-
-	transition: background-color 0.3s, transform 0.2s;
+	background: linear-gradient(to bottom, var(--color-4), var(--color-3));
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+	transition: all 0.3s ease;
 }
 
 aside nav ul li a:hover {
-	background-color: var(--color-2);
-
-	transform: scale(1.05);
+	background: linear-gradient(to bottom, var(--color-4), var(--color-3), var(--color-3));
+	transform: translateY(-2px);
+	box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.15);
 }
 
 aside nav ul li.active a {
-	background-color: var(--color-3);
-
-	color: white;
+	background: linear-gradient(to bottom, #8DD6D6, #7AC5C5);
+	color: var(--color-3);
+	font-weight: 600;
+	box-shadow: 0 4px 10px rgba(141, 214, 214, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 
 .add_reminder ul {
 	position: relative;
-
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-
 	width: 100%;
 	padding: var(--medium-gap);
-	
-	color: black;
-	box-shadow: 1px 1px 6px 1px;
-	border-radius: 10px;
-	
-	background-color: var(--color-2);
-	
+	border-radius: 12px;
+	background: linear-gradient(to bottom, var(--color-1), var(--color-3));
+	box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(255, 255, 255, 0.05);
 	list-style: none;
+	transform-origin: bottom center;
+	transition: all 0.3s ease;
+}
+
+.add_reminder .choose_reminder_type {
+	animation: scaleIn 0.3s ease-out;
+}
+
+@keyframes scaleIn {
+	from {
+		transform: scale(0.8);
+		opacity: 0;
+	}
+	to {
+		transform: scale(1);
+		opacity: 1;
+	}
 }
 
 .add_reminder .choose_reminder_type.hidden {
@@ -421,35 +487,55 @@ aside nav ul li.active a {
 
 .add_reminder .choose_reminder_type li {
 	position: relative;
-
 	width: 100%;
 	padding: var(--small-gap);
 }
 
 .add_reminder .choose_reminder_type li button {
 	position: relative;
-
 	display: flex;
 	justify-content: flex-start;
 	align-items: center;
-
 	width: 100%;
-	padding: 8px;
-
-	background-color: rgb(68 100 122 / 0.9);
-	color: black;
-	box-shadow: 1px 1px 5px 1px black;
-
+	padding: 12px;
+	background: linear-gradient(to bottom, rgba(68, 100, 122, 0.9), rgba(44, 62, 80, 0.9));
+	color: white;
 	border: 0;
+	border-radius: 8px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+	transition: all 0.3s ease;
 }
 
 .add_reminder .choose_reminder_type li button:hover {
-	background-color: var(--color-3);
-	color: white;
+	background: linear-gradient(to bottom, rgba(141, 214, 214, 0.2), transparent);
+	transform: translateX(3px);
+	box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.add_reminder .choose_reminder_type li button .material-symbols-outlined {
+	margin-right: 10px;
+	transition: transform 0.3s ease;
+}
+
+.add_reminder .choose_reminder_type li button:hover .material-symbols-outlined {
+	transform: scale(1.2);
+	color: #8DD6D6;
 }
 
 .aside_add_reminder_button {
 	width: 100%;
+}
+
+@keyframes pulse {
+	0% {
+		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+	}
+	50% {
+		box-shadow: 0 4px 12px rgba(141, 214, 214, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+	}
+	100% {
+		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+	}
 }
 
 @media (max-width: 767px) {
@@ -464,102 +550,124 @@ aside nav ul li.active a {
 
 .material-symbols-outlined {
 	position: relative;
-
 	display: inline-block;
 }
 
 button .material-symbols-outlined {
 	position: relative;
-
 	margin-right: var(--small-gap);
 }
 
 /*****************************
 	Featured E-Walls
 *****************************/
-
 .featured_ewalls {
 	position: relative;
-
 	display: flex;
 	flex-direction: column;
-
 	padding: var(--medium-gap);
+	border-radius: 12px;
+	background: linear-gradient(to bottom, rgba(255, 255, 255, 0.05), rgba(0, 0, 0, 0.05));
+	box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(255, 255, 255, 0.05), 
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+	border: 1px solid rgba(255, 255, 255, 0.1);
+	transition: all 0.3s ease;
+}
 
-	border: 1px solid #20303f;
-	border-radius: 15px;
-	box-shadow: 0 0 8px 1px #20303f, 0 0 8px 1px #20303f inset;
+.featured_ewalls:hover {
+	transform: translateY(-3px);
+	box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.07);
 }
 
 .featured_ewalls h3 {
 	position: relative;
-
 	align-self: flex-start;
 	margin-bottom: var(--medium-gap);
+	font-size: 1.2rem;
+	font-weight: 600;
+	color: white;
+	padding-bottom: 8px;
+}
+
+.featured_ewalls h3::after {
+	content: '';
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 50px;
+	height: 2px;
+	background: linear-gradient(90deg, #8DD6D6, transparent);
 }
 
 .featured_ewalls h4 a {
 	position: relative;
-
 	color: white;
 	text-decoration: none;
+	transition: color 0.3s ease;
+}
+
+.featured_ewalls h4 a:hover {
+	color: #8DD6D6;
 }
 
 .featured_ewalls .ewall {
 	position: relative;
-
 	display: flex;
-
 	height: var(--featured-ewall-height);
-	padding: var(--small-gap);
+	padding: var(--medium-gap);
 	margin-top: var(--small-gap);
+	border-radius: 8px;
+	background: linear-gradient(to right, rgba(255, 255, 255, 0.03), transparent);
+	transition: all 0.3s ease;
+}
+
+.featured_ewalls .ewall:hover {
+	background: linear-gradient(to right, rgba(141, 214, 214, 0.1), transparent);
+	transform: translateX(5px);
 }
 
 .featured_ewalls .ewall img {
 	position: relative;
-
 	display: inline-block;
-
 	width: 40px;
 	height: 40px;
 	margin-right: var(--small-gap);
-
 	border-radius: 50%;
+	border: 2px solid rgba(255, 255, 255, 0.2);
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+	transition: all 0.3s ease;
+}
+
+.featured_ewalls .ewall:hover img {
+	transform: scale(1.1) rotate(5deg);
+	border-color: rgba(141, 214, 214, 0.4);
 }
 
 .featured_ewalls .ewall_info {
 	position: relative;
-
 	width: calc(100% - 45px);
 	white-space: nowrap;
 }
 
 .ewall_description {
 	position: relative;
-
 	overflow: hidden;
 	text-overflow: ellipsis;
-
 	font-size: small;
+	color: rgba(255, 255, 255, 0.7);
+	transition: all 0.3s ease;
 }
 
 .ewall_description:hover {
 	position: fixed;
-
 	display: block;
-
 	max-width: 500px;
-	padding: 7px;
-
-	background-color: var(--color-1);
-
+	padding: 15px;
+	background: linear-gradient(to bottom, var(--color-1), var(--color-3));
 	font-size: medium;
-
-	box-shadow: 1px 1px 20px 1px black;
+	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.05);
 	border-radius: 10px;
-
 	white-space: normal;
-
-	transition: 0.3s;
+	color: white;
 	z-index: 555;
 }

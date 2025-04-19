@@ -3,30 +3,39 @@
 <title>User Registration</title>
 {% endblock %}
 {% block styles %}
+<link rel="stylesheet" href="../static/styles/common.css">
 <link rel="stylesheet" href="../static/styles/authentication_form.css">
 <link rel="stylesheet" href="../static/styles/register.css">
 {% endblock %}
 
 {% block content %}
-    <main>
-        <h1>RemindMe</h1>
-        <p class="register-tagline">Everday, Refresh ideas, principles, inspirations or Whys, you wanna live with .</p>
-        <form action="{{ url_for('auth.register') }}" method="POST" enctype="multipart/form-data">
-            {{ form.hidden_tag() }}
-            <div class="names">
-                {{ form.first_name(class="input", placeholder="First name") }}
-                {{ form.last_name(class="input", placeholder="Your Last name") }}
-            </div>
-            {{ form.email(class="input", placeholder="Type your Email") }}
-            {{ form.password(class="input", placeholder="And...  a password") }}
-            <div class="side">
-                <input type="checkbox" id = "terms_check" name="terms_check" required>
-                <label for="terms_check" class="terms">
-                    Just keep it safe and productive.
-                </label>
-            </div>
-            {{ form.submit(class="submit") }}
-        </form>
+    <main class="auth-main register-main">
+        <div class="logo-container">
+            <img src="../static/images/RemindMe_logo.png" alt="RemindMe Logo" class="logo">
+        </div>
+        
+        <div class="welcome-container">
+            <p class="auth-tagline register-tagline">Everyday, refresh ideas, principles, inspirations or whys you want to live with</p>
+        </div>
+        
+        <div class="form-container">
+            <form action="{{ url_for('auth.register') }}" method="POST" enctype="multipart/form-data">
+                {{ form.hidden_tag() }}
+                <div class="names">
+                    {{ form.first_name(class="input", placeholder="First name") }}
+                    {{ form.last_name(class="input", placeholder="Last name") }}
+                </div>
+                {{ form.email(class="input", placeholder="Email address") }}
+                {{ form.password(class="input", placeholder="Create password") }}
+                <div class="side">
+                    <input type="checkbox" id="terms_check" name="terms_check" required>
+                    <label for="terms_check" class="terms">
+                        Just keep it safe and productive.
+                    </label>
+                </div>
+                {{ form.submit(class="submit") }}
+            </form>
+        </div>
         <p class="footnote">Got an account? <strong class="join_us"><a href="{{ url_for('auth.login') }}">Log In</a></strong></p>
     </main>
 {% endblock %}

@@ -15,7 +15,15 @@ function blurMain() {
 	$('main > *')
 	  .not('.add_image_reminder')
 	  .not('.add_text_reminder')
+	  .not('.fullscreen_container')
 	  .css('filter', 'blur(5px)');
+}
+
+/**
+ * unblur main section
+ */
+function unblurMain() {
+	$('main > *').css('filter', 'none');
 }
 
 $(document).ready(function () {
@@ -25,4 +33,12 @@ $(document).ready(function () {
 
 		window.location.href = `/reminders/${reminderID}`;
 	})
+
+	        
+		// Add loading indicator for AJAX operations
+		$(document).ajaxStart(function() {
+			$('#loading-spinner').fadeIn(300);
+	}).ajaxStop(function() {
+			$('#loading-spinner').fadeOut(300);
+	});	
 })

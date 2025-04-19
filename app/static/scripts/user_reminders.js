@@ -1,12 +1,4 @@
-
 $(document).ready(function () {
-  /**
-   * Blur main section
-   */
-  function blurMain () {
-    $('main > *').not('.fullscreen_container').css('filter', 'blur(5px)');
-  }
-
   /**
    * toggle the options list of a reminder
    */
@@ -14,10 +6,23 @@ $(document).ready(function () {
     event.stopPropagation(); // Prevent the event from bubbling up
     const reminderOptions = $(this).parent().find('.reminder_options');
 
+    $('.reminder_options').not(reminderOptions).hide(); // Close other open menus
+    
     if (reminderOptions.css('display') === 'none') {
       reminderOptions.css('display', 'flex');
+      // Add a subtle animation
+      reminderOptions.css('opacity', '0').animate({opacity: 1}, 100);
     } else {
-      reminderOptions.css('display', 'none');
+      reminderOptions.animate({opacity: 0}, 200, function() {
+        $(this).css('display', 'none');
+      });
+    }
+  });
+
+  // Close reminder options when clicking elsewhere
+  $(document).on('click', function(e) {
+    if(!$(e.target).closest('.menu_icon, .reminder_options').length) {
+      $('.reminder_options').hide();
     }
   });
 
@@ -50,9 +55,10 @@ $(document).ready(function () {
       top: `${scrollY + mainHeight / 2}px`,
       left: `${mainWidth / 2}px`
     });
+    
     /**
-       * Blur the main element when clicking outside the fullscreen container
-       */
+     * Unblur when closing the fullscreen container
+     */
     $('.fullscreen_container')
       .off('click')
       .click(function (event) {
@@ -62,11 +68,20 @@ $(document).ready(function () {
         $('main > *').css('filter', 'none');
       });
   });
-  $('main').on('click', '.welcome .show-text-reminder-form', function (event) {
-    $('.add_text_reminder_button').trigger('click');
-  })
+
+  // Add keyboard navigation for fullscreen mode  
+  $(document).keyup(function(e) {
+    if (e.key === "Escape" && $('.fullscreen_container').is(':visible')) {
+      unblurMain();
+    }
+  });
   
-  $('main').on('click', '.welcome .show-image-reminder-form', function (event) {
+  // Welcome section buttons
+  $('main').on('click', '.welcome-container .show-text-reminder-form', function (event) {
+    $('.add_text_reminder_button').trigger('click');
+  });
+  
+  $('main').on('click', '.welcome-container .show-image-reminder-form', function (event) {
     $('.add_image_reminder_button').trigger('click');
   })
 });
