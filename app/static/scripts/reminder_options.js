@@ -17,7 +17,7 @@ function positionAddReminderWindows() {
  * show the welcome section
  */
 function addWelcomeSection() {
-    const welcomeSection = `<div class="welcome">
+    const welcomeSection = `<div class="welcome-container">
 			<p class="message">Your E-Wall seems empty. Click below to stick the first one</p>
 			<div class="buttons">
 				<button type="button" class="show-text-reminder-form">Add a text reminder</button>
@@ -26,7 +26,10 @@ function addWelcomeSection() {
 			</div>
 		</div>`;
 
-    $('main > .quote').after(welcomeSection);
+    $('main > .quote-container').after(welcomeSection);
+    
+    // Add animation to the welcome section
+    $('.welcome-container').hide().fadeIn(500);
 }
 
 /**
@@ -35,18 +38,23 @@ function addWelcomeSection() {
  */
 function toggleVisibility(reminder, visibility) {
   reminder.data('visibility', visibility);
-  if (visibility === 'public') {
-    reminder.find('.lock_icon').remove();
-
-    reminder.find('.toggle_visibility span').text('visibility');
-  } else {
-    reminder
-      .find('.shown')
-      .prepend(
-        `<span class="material-symbols-outlined lock_icon">visibility_lock</span>`
-      );
-    reminder.find('.toggle_visibility span').text('visibility_lock');
-  }
+  
+  // Add animation
+  const shown = reminder.find('.shown');
+  shown.fadeOut(100, function() {
+    if (visibility === 'public') {
+      reminder.find('.lock_icon').remove();
+      reminder.find('.toggle_visibility span').text('visibility');
+    } else {
+      reminder
+        .find('.shown')
+        .prepend(
+          `<span class="material-symbols-outlined lock_icon">visibility_lock</span>`
+        );
+      reminder.find('.toggle_visibility span').text('visibility_lock');
+    }
+    shown.fadeIn(100);
+  });
 }
 
 function setEditTextReminderWindow() {
@@ -197,26 +205,31 @@ $(document).ready(function () {
       return;
     }
 
-    $.ajax({
-      type: 'DELETE',
-      url: url,
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      success: function () {
-        reminder.remove();
-        if ($('main > article').length === 0) {
-          addWelcomeSection();
-        }
-
-      },
-      error: function (error) {
-        if (error.status === 401) {
-          window.location.href = '/login';
-        } else {
-          alert('Failed to delete reminder, sorry for that!');
-        }
-      },
+    // Add a fade-out animation when deleting
+    reminder.animate({opacity: 0}, 300, function() {
+      $.ajax({
+        type: 'DELETE',
+        url: url,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        success: function () {
+          reminder.slideUp(300, function() {
+            reminder.remove();
+            if ($('main .reminders_container > article').length === 0) {
+              addWelcomeSection();
+            }
+          });
+        },
+        error: function (error) {
+          reminder.animate({opacity: 1}, 300); // Restore if error
+          if (error.status === 401) {
+            window.location.href = '/login';
+          } else {
+            alert('Failed to delete reminder, sorry for that!');
+          }
+        },
+      });
     });
   });
 

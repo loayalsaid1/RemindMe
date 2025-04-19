@@ -11,6 +11,7 @@
 	<link rel="stylesheet" href="../static/styles/aside.css">
 	<link rel="stylesheet" href="../static/styles/user_reminders.css">
 	<link rel="stylesheet" href="../static/styles/add_reminder.css">	
+	<link rel="stylesheet" href="../static/styles/welcome_container.css">	
 	{% endblock %}
 
 	{% block scripts %}
@@ -18,32 +19,30 @@
 	<script src="../static/scripts/common_vars.js"></script>
 	<script src="../static/scripts/common.js"></script>
 	<script src="../static/scripts/user_reminders.js"></script>
-	<script src="../../static/scripts/add_reminder.js"></script>
-	<script src="../../static/scripts/reminder_options.js"></script>
-	<script src="../../static/scripts/header.js"></script>
-	<script src="../../static/scripts/aside.js"></script>
+	<script src="../static/scripts/add_reminder.js"></script>
+	<script src="../static/scripts/reminder_options.js"></script>
+	<script src="../static/scripts/header.js"></script>
+	<script src="../static/scripts/aside.js"></script>
 
 	{% endblock %}
 
 	{% block content %}
 	{% include 'header.html' %}
 
-	<div class="main_container"">		
+	<div class="main_container">		
 		{% include 'aside.html' %}
 		<main allow-add-reminder>
-			<!-- 
-				********** TODO ********
-				About quote and welcome section
-				
-				I beleive this whole naming should be changed later
-				Changed took place that affected the meaning of these names
-				+ it's not descriptive anyway.
-				
-				I 'm just rushing abit now
-			-->
-			<p class="quote">A little reminder can make a significant change in your day</p>
+			<!-- Loading indicator -->
+			<div id="loading-spinner" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 9999;">
+				<div style="width: 50px; height: 50px; border: 5px solid #f3f3f3; border-top: 5px solid var(--color-3); border-radius: 50%; animation: spin 1s linear infinite;"></div>
+			</div>
+			
+			<div class="quote-container">
+				<p class="quote">A little reminder can make a significant change in your day</p>
+			</div>
+			
 			{% if not reminders %}
-			<div class="welcome">
+			<div class="welcome-container">
 				<p class="message">Your E-Wall seems empty. Click below to stick the first one</p>
 				<div class="buttons">
 					<button type="button" class="show-text-reminder-form">Add a text reminder</button>
@@ -70,7 +69,7 @@
 							<p>{{ reminder.text }}</p>
 							{% else %}
 							<img class="reminder_image" src="{{ reminder.img_url }}"
-							alt="" class="">
+							 alt="Reminder image" class="">
 							{% endif %}
 						</div>
 						<div class="hidden">
@@ -122,7 +121,7 @@
 					<label for="reminder_image">Upload Image</label>
 
 					<label for="caption">Caption:</label>
-					<textarea name="caption" id="caption" rows="2" ></textarea>
+					<textarea name="caption" id="caption" rows="2" maxlength="1024"></textarea>
 
 					<label>Reminder Visibility</label>
 					<div class="visibility_section">
@@ -146,10 +145,10 @@
 				<h2>Add Text Reminder</h2>
 				<form class="text_reminder_form add_reminder" method="POST" enctype="multipart/form-data">
 					<label for="reminder_text">Reminder Text:</label>
-					<textarea name="reminder_text" id="reminder_text" rows="2" required ></textarea>
+					<textarea name="reminder_text" id="reminder_text" rows="2" maxlength="1024" required ></textarea>
 
 					<label for="caption">Caption:</label>
-					<textarea name="caption" id="caption" rows="2" ></textarea>
+					<textarea name="caption" id="caption"  maxlength="1024" rows="2" ></textarea>
 					<label>Reminder Visibility</label>
 					<div class="visibility_section">
 						<input type="radio" id="private" name="reminder_visibility" value="private" required >

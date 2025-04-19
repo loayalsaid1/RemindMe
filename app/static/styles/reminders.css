@@ -1,32 +1,53 @@
 main {
 	display: unset;
-	
-	max-width: 550px;
+	max-width: 650px;
+	padding: var(--medium-gap);
 }
 
 .reminder {
 	filter: none;
-    padding: var(--medium-gap);
-    background-color: var(--color-2);
+    padding: var(--large-gap);
+    background: linear-gradient(to bottom, var(--color-2), var(--color-3));
     border-radius: 15px 15px 0 0;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    position: relative;
+    overflow: hidden;
+}
+
+.reminder::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at top right, rgba(141, 214, 214, 0.05), transparent 70%);
+    pointer-events: none;
 }
 
 .reminder .head {
 	height: 50px;
-
 	display: flex;
 	align-items: center;
-
 	margin-bottom: var(--large-gap);
 }
 
 .reminder .head img {
 	width: 50px;
 	height: 50px;
-
 	border-radius: 50%;
-
 	margin-right: var(--medium-gap);
+	border: 2px solid rgba(141, 214, 214, 0.3);
+    object-fit: cover;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 0 0 2px rgba(255, 255, 255, 0.05);
+    transition: all 0.3s ease;
+}
+
+.reminder .head img:hover {
+    transform: scale(1.05);
+    border-color: rgba(141, 214, 214, 0.5);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25), 0 0 0 2px rgba(255, 255, 255, 0.08);
 }
 
 .reflection_head,
@@ -45,18 +66,40 @@ main {
 .username:hover {
 	text-decoration: underline;
 	cursor: pointer;
-	text-shadow: 0px 0px 3px white;
+	text-shadow: 0 0 5px rgba(141, 214, 214, 0.5);
+    color: rgba(141, 214, 214, 0.9);
+    transition: all 0.3s ease;
 }
 
 .reminder_user_data .name {
 	margin-right: var(--small-gap);
-
 	font-size: 1.3rem;
+    background: linear-gradient(to bottom, #ffffff, #e0e0e0);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
 }
 
 .reflection .username,
 .reminder_user_data .username {
 	letter-spacing: 1px;
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+}
+
+.reflection .username:hover,
+.reminder_user_data .username:hover {
+    opacity: 1;
+}
+
+@media (max-width: 767px) {
+	.reminder_user_data .name {
+		font-size: 1rem;
+	}
+
+	.reminder_user_data .username {
+		font-size: .9rem;
+	}
 }
 
 @media (max-width: 767px) {
@@ -71,28 +114,43 @@ main {
 
 .reminder_user_data .date {
 	font-size: .8em;
+    color: rgba(255, 255, 255, 0.6);
 }
 
 .reminder_body {
 	width: 100%;
 	margin-bottom: var(--medium-gap);
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    padding: 5px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2), 0 1px 0 rgba(255, 255, 255, 0.05);
 }
-
 
 .reminder .caption {
 	font-family: Arial, Helvetica, sans-serif;
     margin: var(--small-gap);
     margin-bottom: var(--medium-gap);
     font-size: 1.1rem;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 10px 15px;
+    border-radius: 8px;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+    line-height: 1.5;
 }
 
 .image_reminder_content img {
 	width: 100%;
 	height: 100%;
     max-height: 550px;
-
 	object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease;
+}
 
+.image_reminder_content img:hover {
+    transform: scale(1.02);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
 .image_reminder_content,
@@ -100,122 +158,284 @@ main {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-
-	min-height: 300px;
-
-	color: black;
-	background-color: var(--color-4);
+    min-height: 255px;
+    height: 40vw;
+    max-height: 350px;
+    color: black;
+	background: linear-gradient(to bottom, var(--color-4), var(--color-3));
+    border-radius: 10px;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    overflow: hidden;
 }
 
+.text_reminder_content {
+    position: relative;
+    padding: 20px;
+    overflow: auto;
+}
+
+.text_reminder_content::before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 30px;
+    height: 30px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%238DD6D6' opacity='0.3' d='M7.17 17c.51 0 .98-.29 1.2-.74l1.42-2.84c.14-.28.21-.58.21-.89V8c0-.55-.45-1-1-1H5c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1h2l-1.03 2.06c-.45.89.2 1.94 1.2 1.94zm10 0c.51 0 .98-.29 1.2-.74l1.42-2.84c.14-.28.21-.58.21-.89V8c0-.55-.45-1-1-1h-4c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1h2l-1.03 2.06c-.45.89.2 1.94 1.2 1.94z'/%3E%3C/svg%3E");
+    background-size: contain;
+    opacity: 0.3;
+}
 
 .reminder hr {
 	margin-bottom: var(--medium-gap);
+    border: none;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.2), transparent);
+}
+
+.form_title {
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-bottom: 15px;
+    color: rgba(255, 255, 255, 0.9);
+    position: relative;
+    padding-bottom: 5px;
+    display: inline-block;
+}
+
+.form_title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 40px;
+    height: 2px;
+    background: linear-gradient(90deg, #8DD6D6, transparent);
 }
 
 .add_reflection {
-	width: 100%
-	height 70px;
+	width: 100%;
+	height: 70px;
 	padding: 5px;
-
 	display: flex;
 	justify-content: center;
 	align-items: center;
+    margin-bottom: 10px;
 }
 
 #reflection_text_input {
 	background-color: var(--color-2);
 	color: white;
-
-	padding: 5px;
+	padding: 8px;
 	margin-right: 20px;
-	font-size: large;
-
+	font-size: 1rem;
 	width: 100%;
-
 	height: 100%;
-
 	border-radius: 10px;
-	box-shadow: 0 0 1px 0px white;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+#reflection_text_input:focus {
+    outline: none;
+    border-color: #8DD6D6;
+    box-shadow: 0 0 0 3px rgba(141, 214, 214, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+}
+
+#reflection_text_input {
+    scrollbar-width: thin; /* Firefox */
+    scrollbar-color: rgba(141, 214, 214, 0.5) transparent; /* Firefox */
+}
+
+/* For Chrome, Safari and Opera */
+#reflection_text_input::-webkit-scrollbar {
+    padding: 3px 0;
+    width: 8px;
+}
+
+#reflection_text_input::-webkit-scrollbar-thumb {
+    background-color: rgba(141, 214, 214, 0.5);
+    border-radius: 10px;
+}
+
+#reflection_text_input::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(141, 214, 214, 0.7);
+}
+
+#reflection_text_input::-webkit-scrollbar-track {
+    background: transparent;
 }
 
 .add_reflection button {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-
-	padding: var(--medium-gap);
+	padding: 12px 15px;
     border-radius: 10px;
-    
 	font-size: medium;
-
 	color: white;
-    background: var(--color-2);
-    box-shadow: 0 0 7px 1px white;
+    background: linear-gradient(to bottom, var(--color-4), var(--color-3));
+    border: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.add_reflection button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: all 0.5s ease;
+}
+
+.add_reflection button:hover::before {
+    left: 100%;
+}
+
+.add_reflection button:hover {
+    background: linear-gradient(to bottom, var(--color-4), var(--color-3), var(--color-3));
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.add_reflection button:active {
+    transform: translateY(-1px);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 .add_reflection button span {
-	margin: 0;
+	margin-right: 5px;
+    transition: transform 0.3s ease;
 }
+
+.add_reflection button:hover span {
+    transform: scale(1.2);
+}
+
 .reflections {
-	background-color: var(--color-2);
+	background: linear-gradient(to bottom, var(--color-2), var(--color-3));
 	border-radius: 0 0 10px 10px;
-    padding-top: 15px;
+    padding: var(--medium-gap);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-top: none;
 }
 
 .reflection {
 	position: relative;
-
 	padding: var(--medium-gap);
-    margin: var(--medium-gap) var(--small-gap);
-
-	background: var(--color-3);
+    margin: var(--medium-gap) var(--small-gap) var(--large-gap);
+	background: linear-gradient(to bottom, rgba(255, 255, 255, 0.05), rgba(0, 0, 0, 0.05));
     border-radius: 15px;
-    box-shadow: 0.5px 0.5px 4px 0px white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.reflection:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.07);
+}
+
+.reflection::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 15px;
+    background: radial-gradient(circle at top right, rgba(141, 214, 214, 0.05), transparent 70%);
+    pointer-events: none;
 }
 
 .reflection .options {
 	position: absolute;
 	top: 20px;
 	right: 20px;
-
 	display: flex;
-	align-items: center
+	align-items: center;
+    gap: 10px;
 }
+
 .options span {
 	display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.2);
+    color: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    cursor: pointer;
 }
 
-.edit_icon {
-	margin-left: var(--medium-gap);
+.options span:hover {
+    background: rgba(141, 214, 214, 0.3);
+    color: white;
+    transform: scale(1.1);
+}
+
+@media (max-width: 400px) {
+    .reflections .options {
+        top: 10px;
+        right: 10px;
+        
+        gap: 5px;
+    }
+
+    .reflections .options span {
+        width: 27px;    
+        height: 27px;
+        
+        font-size: .95rem;
+    }
 }
 .reflection_head {
 	height: 50px;
-
 	display: flex;
 	align-items: center;
-
 	margin-bottom: var(--large-gap);
 }
 
 .reflection_head img {
 	height: 40px;
 	width: 40px;
-
 	margin-right: var(--small-gap);
 	border-radius: 50%;
+    border: 2px solid rgba(141, 214, 214, 0.2);
+    object-fit: cover;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+.reflection_head img:hover {
+    transform: scale(1.05);
+    border-color: rgba(141, 214, 214, 0.4);
 }
 
 .reflection .user_name {
 	display: flex;
 	align-items: center;
-
-	margin-bottom: 2px
+	margin-bottom: 2px;
 }
 
 .reflection_user_data .name {
 	margin-right: var(--small-gap);
 	font-size: 1.2rem;
 	font-weight: 500;
+    background: linear-gradient(to bottom, #ffffff, #e0e0e0);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 @media (max-width: 767px) {
@@ -230,59 +450,130 @@ main {
 
 .reflection_head .date {
 	font-size: .8em;
+    color: rgba(255, 255, 255, 0.6);
 }
 
 .reflection_text {
 	font-family: Arial, Helvetica, sans-serif;
     margin: var(--small-gap);
+    padding: 10px 15px;
     margin-bottom: var(--medium-gap);
 	line-height: 1.5rem;
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    position: relative;
 }
 
 .edit_reflection_input {
 	background-color: var(--color-2);
     color: white;
-
-	padding: 5px;
+	padding: 12px 15px;
 	margin-bottom: var(--medium-gap);
-
 	width: 100%;
     height: 100%;
-
-    font-size: large;
+    font-size: 1rem;
     line-height: 1.3rem;
-
 	border-radius: 10px;
-    box-shadow: 0 0 1px 0px white;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    transition: all 0.3s ease;
+}
+
+.edit_reflection_input:focus {
+    outline: none;
+    border-color: #8DD6D6;
+    box-shadow: 0 0 0 3px rgba(141, 214, 214, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
 }
 
 .edit_reflection_form button {
 	margin-right: var(--small-gap);
-    padding: 11px;
-
-	background: var(--color-2);
-
+    padding: 10px 15px;
+	background: linear-gradient(to bottom, var(--color-4), var(--color-3));
+    border: none;
 	border-radius: 10px;
-    box-shadow: 0 0 6px -2px white;
-
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.1);
 	color: white;
     font-size: .9rem;
+    transition: all 0.3s ease;
+}
+
+.edit_reflection_form button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.edit_reflection_form button:active {
+    transform: translateY(-1px);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 .edit_reflection_form button[type='submit'] {
 	font-weight: bold;
-    box-shadow: 1px 1px 7px -2px white;
+    background: linear-gradient(to bottom, #8DD6D6, #7AC5C5);
+    color: var(--color-3);
+    box-shadow: 0 4px 10px rgba(141, 214, 214, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.edit_reflection_form button[type='submit']:hover {
+    background: linear-gradient(to bottom, #95dede, #8DD6D6);
 }
 
 .text_reminder_content p {
 	margin: var(--small-gap);
-    padding: var(--small-gap);
-
+    padding: var(--medium-gap);
 	line-height: 1.7rem;
     text-align: center;
     font-size: 1.3rem;
     font-weight: bold;
     letter-spacing: 1px;
+    background: linear-gradient(to bottom, #ffffff, #e0e0e0);
+    -webkit-background-clip: text;
+    color: transparent;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+.reminder_user_data .username,
+.reflection_user_data .username,
+.reminder_user_data .date,
+	reflection_head .date {
+	color: rgba(255, 255, 255, 0.7);
+}
+
+@media (max-width: 480px) {
+    main {
+        padding: 10px;
+    }
+    
+    .reminder, 
+    .reflections {
+        padding: 15px;
+    }
+    
+    .reflection {
+        margin: 10px 2px 15px;
+    }
+    
+    .add_reflection {
+        flex-direction: column;
+        height: auto;
+        gap: 10px;
+    }
+    
+    #reflection_text_input {
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+    
+    .add_reflection button {
+        width: 100%;
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 .reminder_user_data .username,

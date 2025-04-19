@@ -1,16 +1,17 @@
 # RemindMe
-
 ![RemindMe Logo](RemindMe_logo.png)
 
-## Description
-Hi there 👋! 
 
+## Description
+Hi there 👋! You can think of [RemindMe](https://remindme-l.vercel.app/landing) as your personal E-Wall, where you can have your inspirations, ‘Why’s, favorite useful quotes, and even reminders for tough times. Refresh these in your mind every day, Finally, you can also make them public, see others’ reflections on yours, and vice versa
+
+Find the App here [RemindMe](https://remindme-l.vercel.app/landing)
+
+### Why RemindMe?
 **Did you know** that our brains have the capacity to store over 2.5 petabytes of information? That’s like having 2.5 million gigabytes of data at our disposal. However, much like computers, we have a limited working memory—our RAM, if you will. We can only hold so much information on the surface at one time. New information often overrides the old, pushing important thoughts, facts, and motivations to the background.
 
 
-Now, I have a question for you... How many times have you thought, ‘If only I remembered that quote, fact, or piece of advice, my day would have been better’? Maybe you would have handled a situation more effectively, felt more motivated, or simply lived a more productive day. We’ve all been there, wishing we had something to remind us of the wisdom or motivations we’ve encountered in life.
-
-**Simply**, Think of RemindMe as your personal E-Wall, where you can have your inspirations, ‘Why’s, favorite useful quotes, and even reminders for tough times. Refresh these in your mind every day, Finally, you can also make them public, see others’ reflections on yours, and vice versa
+Now, I have a question for you... How many times have you thought, ‘If only I remembered that quote, fact, or piece of advice, my day would have been better’? Maybe you would have handled a situation more effectively, felt more motivated, or simply lived a more productive day. We’ve all been there, wishing we had something to remind us of the wisdom or motivations we’ve encountered in life. That’s where RemindMe comes in.
 
 
 <!-- In the world of many troubles, distractions and stuff, maintaining an upbeat spirit is priceless. RemindMe is inspired by the need to have all our favourite sayings in one place, which serves as a source of inspiration and motivation to remain focused and productive throughout the day. RemindMe aims to literally remind users of all the things - WHY?s, quotes, pictures, events, memories - that mean so much to them and which elate their spirit in one place. These are called 'reminders'.

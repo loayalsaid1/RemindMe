@@ -1,9 +1,11 @@
+/* =============================================
+   REMINDER CONTAINER GRID LAYOUT
+   ============================================= */
 .reminders_container {
 	display: grid;
 	grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
-	gap: 10px;
-
-	padding: 10px;
+	gap: 20px;
+	padding: 20px; /* Increased padding for better spacing */
 }
 
 @media (max-width: 370px) {
@@ -11,21 +13,44 @@
 		grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
 	}
 }
-
+/* =============================================
+   REMINDER CARD ARTICLE
+   ============================================= */
 .reminders_container article {
 	position: relative;
-
 	max-width: 100%;
-	padding-top: 60%;
+	padding-top: 65%;
+	border-radius: 12px;
+	box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(255, 255, 255, 0.05);
+	transition: transform 0.4s ease, box-shadow 0.4s ease; /* Smoother animation */
+	overflow: hidden;
+	border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.reminders_container article::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: radial-gradient(circle at top right, rgba(141, 214, 214, 0.05), transparent 70%);
+	z-index: 1;
+	pointer-events: none;
+}
+
+.reminders_container article:hover {
+	transform: translateY(-8px) scale(1.02); /* Slight scaling for emphasis */
+	box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(255, 255, 255, 0.07);
 }
 
 .reminders_container article .card_container {
 	position: absolute;
 	top: 0;
 	left: 0;
-
 	width: 100%;
 	height: 100%;
+	overflow: hidden;
 }
 
 .reminders_container .shown,
@@ -33,11 +58,13 @@
 	width: 100%;
 	height: 100%;
 }
-
+/* =============================================
+   SHOWN FACE OF CARD
+   ============================================= */
 article,
 .shown {
 	position: relative;
-	background-color: var(--color-2);
+	background: linear-gradient(to bottom, var(--color-2), var(--color-3));
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -50,10 +77,28 @@ article,
 	object-fit: contain;
 }
 
-article:hover .shown,
-.shown:hover {
+article:hover .shown{
 	padding: 10px;
 	filter: blur(2px);
+}
+
+.shown p {
+    margin: 5px;
+    padding: 10px;
+    line-height: 1.7rem;
+    text-align: center;
+    font-size: clamp(0.8rem, 3vw, 1.3rem);
+    font-weight: bold;
+    letter-spacing: 1px;
+	transition: .3s;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 6;
+	background: linear-gradient(to bottom, #ffffff, #e0e0e0);
+    -webkit-background-clip: text;
+    color: transparent;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
 }
 
 .shown:hover p {
@@ -62,19 +107,31 @@ article:hover .shown,
 	font-weight: 100;
 }
 
+@media (max-width: 370px) {
+    .shown p {
+        font-size: 0.85rem;
+        line-height: 1.3;
+        -webkit-line-clamp: 4;
+        padding: 5px;
+    }
+}
+/* =============================================
+   HIDDEN FACE OF CARD
+   ============================================= */
 .hidden {
 	display: none;
 	justify-content: center;
 	align-items: center;
-
 	position: absolute;
 	top: 0;
 	left: 0;
-
 	color: white;
-    background-color: #354c5c69;
-    opacity: 0;
-    transition: opacity 0.3s ease-in-out;
+	background: linear-gradient(to bottom, rgba(53, 76, 92, 0.85), rgba(44, 62, 80, 0.92));
+	backdrop-filter: blur(3px);
+	box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+	opacity: 0;
+	transition: opacity 0.3s ease-in-out;
+	overflow: hidden;
 }
 
 article:hover .hidden {
@@ -82,114 +139,56 @@ article:hover .hidden {
     opacity: 1;
 }
 
+.hidden > *:not(.reminder_options) {
+		opacity: 0;
+		transition: opacity 0.4s ease-in-out;
+}
+
+.hidden:hover > *:not(.reminder_options) {
+    opacity: 1;
+}
+
+/* =============================================
+   ICON STYLING
+   ============================================= */
 .hidden_icons,
 .lock_icon {
     color: white !important;
-    background: var(--color-3);
-
-	font-size: 1.7rem;
-
-	position: absolute;
-
-	width: 30px;
-    height: 30px;
-
-	display: flex;
+    background: linear-gradient(to bottom, var(--color-4), var(--color-3));
+    font-size: 1.7rem;
+    position: absolute;
+    width: 36px;
+    height: 36px;
+    display: flex;
     align-items: center;
     justify-content: center;
-    opacity: 0;
-    transition: opacity 0.3s ease-in-out;
+    border-radius: 50%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+	transition: all 0.3s ease;
+}
+
+.hidden_icons:hover,
+.lock_icon:hover {
+    background: linear-gradient(to bottom, #8DD6D6, #7AC5C5);
+    color: var(--color-3) !important;
+    transform: scale(1.1);
 }
 
 .shown > .lock_icon {
-	top: 20px;
-    left: 20px;
+    top: 10px;
+    left: 10px;
     opacity: 1;
 }
 
 .hidden .menu_icon {
-	top: 20px;
-	right: 20px;
-	z-index: 1;
-	opacity: 0;
-    transition: opacity 0.3s ease-in-out;
+    top: 10px;
+    right: 10px;
+    z-index: 2;
 }
 
 .magnify_icon {
-	bottom: 20px;
-	left: 20px;
-    opacity: 1;
-    transition: opacity 0.3s ease-in-out;
-}
-
-.shown p {
-    margin: 5px;
-    padding: 5px;
-    line-height: 1.7rem;
-    text-align: center;
-    font-size: clamp(0.8rem, 3vw, 1.3rem);
-    font-weight: bold;
-    /* font-family: fantasy; */
-    letter-spacing: 1px;
-	transition: .3s;
-}
-
-
-.hidden .show_reminder {
-	background-color: var(--color-3);
-    padding: 8px;
-    position: absolute;
-    bottom: 16px;
-    color: white;
-    left: 60px;
-    border-radius: 15px;
-    opacity: 0;
-    transition: opacity 0.3s ease-in-out;
-}
-
-.hidden .reminder_options {
-	list-style: none;
-
-	background-color: var(--color-3);
-
-	position: absolute;
-	top: 50px;
-	right: 20px;
-
-	width: 30px;
-	height: calc((3 * 30px) + 10px);
-
-	padding: 10px 0;
-
-	display: none;
-	flex-direction: column;
-	justify-content: space-between;
-	align-items: center;
-	opacity: 0;
-    transition: opacity 0.3s ease-in-out;
-}
-
-.hidden .caption {
-    margin: 5px;
-    padding: 5px;
-    line-height: 1.5rem;
-    text-align: center;
-    font-size: clamp(.8rem, 2.5vw, 1.3rem);
-    font-weight: 700;
-    font-family: monospace;
-    letter-spacing: 1px;
-    opacity: 0;
-    transition: opacity 0.3s ease-in-out;
-}
-
-@media (max-width: 359px) {
-	.hidden .caption {
-		line-height: 1.2;
-	}
-}
-
-.hidden:hover > * {
-    opacity: 1;
+    bottom: 10px;
+    left: 10px;
 }
 
 .magnify_icon,
@@ -198,23 +197,222 @@ article:hover .hidden {
 	cursor: pointer;
 }
 
+@media (max-width: 400px) {
+    /* Icon sizing */
+    article .hidden .hidden_icons,
+    article .shown .lock_icon {
+        width: 28px;
+        height: 28px;
+        font-size: 1.2rem;
+    }
+    
+    /* Icon positioning */
+    article .hidden .menu_icon {
+        top: 8px;
+        right: 8px;
+    }
+    
+    article .hidden .magnify_icon {
+        bottom: 8px;
+        left: 8px;
+    }
+    
+    article .shown > .lock_icon {
+        top: 8px;
+        left: 8px;
+    }
+}
 
-/* MAGNIFY IMAGE */
+@media (max-width: 320px) {
+    /* Icon sizing */
+    article .hidden .hidden_icons,
+    article .shown .lock_icon {
+        width: 24px;
+        height: 24px;
+        font-size: 1rem;
+    }
+}
+/* =============================================
+   REMINDER OPTIONS MENU
+   ============================================= */
+.hidden .reminder_options {
+	list-style: none;
+	background-color: var(--color-3);
+	position: absolute;
+	top: 50px;
+	right: 10px;
+	width: 36px;
+	height: calc((3 * 36px) + 10px);
+	padding: 10px 0;
+	display: none;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+	opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    border-radius: 18px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+    z-index: 3;
+}
 
+.hidden .reminder_options li {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 5px 0;
+    transition: opacity .4s ease-in-out, background-color 0.2s;
+}
+
+.hidden .reminder_options li:hover {
+    background-color: var(--color-4);
+}
+
+@media (max-width: 400px) {    
+    /* Reminder options */
+    article .hidden .reminder_options {
+        top: 40px;
+        right: 8px;
+        width: 28px;
+        height: calc(3 * 28px + 6px);
+        padding: 5px;
+    }
+    
+    article .hidden .reminder_options li span {
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 320px) {    
+    /* Reminder options */
+    article .hidden .reminder_options {
+        width: 24px;
+        height: calc(3 * 24px + 6px);
+        padding: 3px;
+    }
+    
+    article .hidden .reminder_options li span {
+        font-size: .9rem;
+    }
+}
+/* =============================================
+   CAPTION AND SHOW REFLECTIONS BUTTON
+   ============================================= */
+.hidden .caption {
+    margin: 5px;
+    padding: 10px;
+    line-height: 1.5rem;
+    text-align: center;
+    font-size: clamp(.8rem, 2.5vw, 1.3rem);
+    font-weight: 700;
+    font-family: monospace;
+    letter-spacing: 1px;
+    max-width: 90%;
+    max-height: 50%;
+    overflow: auto;
+    word-break: break-word;
+	background: linear-gradient(to bottom, rgba(255, 255, 255, 0.05), transparent);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.hidden .show_reminder {
+	background: linear-gradient(to bottom, var(--color-4), var(--color-3));
+    padding: 12px 18px;
+    position: absolute;
+    bottom: 15px;
+    color: white;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 20px;
+    border: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    transition: background-color 0.2s ease;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 80%;
+	font-size: 1rem;
+    transition: .3s;
+
+    overflow: hidden;
+}
+
+.hidden .show_reminder::before {
+	content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: all 0.5s ease;
+}
+
+.hidden .show_reminder:hover::before {
+	left: 100%;
+}
+
+.hidden .show_reminder:hover {
+    background: linear-gradient(to bottom, #8DD6D6, #7AC5C5);
+    color: var(--color-3);
+    transform: translate(-50%, -4px); /* More pronounced hover effect */
+	box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.hidden .show_reminder:active {
+	transform: translate(-50%, -2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+@media (max-width: 400px) {
+    .hidden .show_reminder {
+        padding: 6px 12px;
+        font-size: 0.8rem;
+        bottom: 10px;
+        max-width: 90%;
+    }
+}
+
+@media (max-width: 370px) {
+	.hidden .caption {
+		line-height: 1.2;
+		font-size: 0.75rem;
+		padding: 3px;
+		margin: 3px 0;
+		max-height: 40%;
+	}
+}
+
+@media (max-width: 320px) {    
+
+    /* Show reflections button */
+    .hidden .show_reminder {
+        padding: 4px 8px;
+        font-size: 0.7rem;
+        bottom: 8px;
+    }
+}
+
+
+/* =============================================
+   FULLSCREEN CONTAINER
+   ============================================= */
 .fullscreen_container {
 	position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-
 	width: 100%;
 	max-width: 100%;
-	height: calc(100% - var(--header-height));
+	height: 100%;
 	display: none;
 	justify-content: center;
 	align-items: center;
-
 	z-index: 9999;
+	backdrop-filter: blur(12px);
+    background-color: rgba(0, 0, 0, 0.5);
+	animation: fadeIn 0.3s ease-out;
 }
 
 .fullscreen_container > * {
@@ -222,98 +420,261 @@ article:hover .hidden {
 }
 
 .fullscreen_container img {
-	margin: 20px;
-	padding: 20px;
-	max-width: 100%;
-	max-height: 100vh;
-
+	margin: 10px;
+	padding: 10px;
+	max-width: 90%;
+	max-height: 90vh;
 	object-fit: contain;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    background-color: white;
+	animation: scaleIn 0.4s ease-out;
 }
 
 .fullscreen_container p {
-	background: #2f4f4fb3;
+	background: linear-gradient(to bottom, var(--color-3), var(--color-4));
     font-size: 2em;
     font-weight: 600;
     line-height: 3.7rem;
-
 	padding: 39px;
     width: fit-content;
     height: fit-content;
-    color: #dddddd;
+    color: #ffffff;
     font-family: monospace;
     border-radius: 15px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.05), 
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+	animation: scaleIn 0.4s ease-out;
 }
-/* 
-********** TODO ********
 
-I beleive this whole naming should be changed later
-Changed took place that affected the meaning of these names
-+ it's not descriptive anyway.
+@media (max-width: 400px) {
+        .fullscreen_container img {
+            margin: 5px;
+            padding: 5px;
+            max-width: 95%;
+        }
+        
+        .fullscreen_container p {
+            padding: 20px;
+            font-size: 1.5em;
+            line-height: 2.5rem;
+            max-width: 90%;
+        }
+}
 
-I 'm just rushing abit now
- */
+
+/* =============================================
+   WELCOME AND QUOTE SECTIONS
+   ============================================= */
 .welcome {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-
-	padding: 15px;
-}
-
-.quote {
-	position: sticky;
-	top: .5rem;
-
-	text-align: center;
-    font-size: 1.7rem;
-    font-weight: 500;
-    letter-spacing: 1px;
-    line-height: 1.3;
-	text-shadow: 1px 1px 1px black;
-
-    padding: 5px;
-	margin: 15px;
-
-	color: black;
-	background: var(--color-2);
-
-
-	border-radius: 15px 2px 15px 2px;
-    box-shadow: 3px 4px 6px 1px black;
-
-	z-index: 10;
-}
-
-@media (max-width: 767px) {
-	.quote {
-		font-size: 1.3rem;
-		line-height: 1.2;
-	}
+	padding: 25px;
+	margin-top: 20px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    backdrop-filter: blur(5px);
 }
 
 .welcome .message {
-    font-size: 1rem;
+    font-size: 1.2rem;
     font-weight: 500;
     letter-spacing: 1px;
 	margin-top: 20px;
-    margin-bottom: 15px;
+    margin-bottom: 25px;
+    text-align: center;
 }
 
 .welcome .buttons {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+    flex-wrap: wrap;
 }
 
 .welcome .buttons > span {
 	font-size: 1.2rem;
     margin: 0 23px;
 }
+
 .welcome button {
-    padding: 9px 13px;
+    padding: 12px 20px;
     font-size: 1.1rem;
-    border-radius: 10px;
+    border-radius: 25px;
     background: var(--color-4);
     color: white;
+    transition: background-color 0.3s, transform 0.2s;
+    margin: 10px 5px;
+}
 
+.welcome button:hover {
+    background: var(--color-3);
+    transform: translateY(-3px);
+}
+/* =============================================
+   WELCOME AND QUOTE SECTIONS
+   ============================================= */
+/* Quote styling */
+.quote-container {
+	position: sticky;
+	top: .5rem;
+
+    margin: 15px 12px 10px;
+    padding: 0.1em 0 .75em;;
+    border-radius: 16px 5px;
+
+    background-color: var(--color-1);
+    box-shadow: 3px 4px 6px 1px rgba(0, 0, 0, 0.3);
+    
+    text-align: center;
+
+    z-index: 10;
+}
+
+.quote-container::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(141, 214, 214, 0.15) 0%, rgba(141, 214, 214, 0.05) 40%, transparent 70%);
+    transform: translate(-50%, -50%);
+    z-index: -1;
+    animation: pulse 3s infinite alternate ease-in-out;
+}
+
+
+.quote {
+    position: relative;
+
+    padding: 15px 25px;
+    margin: 0 auto;
+    max-width: 800px;
+
+
+	font-size: clamp(1.4rem, 3vw, 1.8rem); /* Slightly larger font */
+    font-weight: 500;
+    font-style: italic;
+	text-align: center;
+    letter-spacing: 1px;
+    line-height: 1.3;
+	text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Enhanced text shadow */
+    color: var(--text-lighter, #ECF0F1);
+}
+
+.quote::before, .quote::after {
+    content: "";
+
+    position: absolute;
+
+    background-size: contain;
+    background-repeat: no-repeat;
+
+    opacity: 0.7;
+}
+
+.quote::before {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%238DD6D6' d='M7.17 17c.51 0 .98-.29 1.2-.74l1.42-2.84c.14-.28.21-.58.21-.89V8c0-.55-.45-1-1-1H5c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1h2l-1.03 2.06c-.45.89.2 1.94 1.2 1.94zm10 0c.51 0 .98-.29 1.2-.74l1.42-2.84c.14-.28.21-.58.21-.89V8c0-.55-.45-1-1-1h-4c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1h2l-1.03 2.06c-.45.89.2 1.94 1.2 1.94z'/%3E%3C/svg%3E");
+    left: 4px;
+    top: 1px;
+        
+    height: 30px;
+    width: 30px;
+}
+
+.quote::after {
+    content: '';
+
+    bottom: 0px;
+    left: 50%;
+
+    display: block;
+
+    width: 70px;
+    height: 2px;
+    margin: 12px auto 0;
+    
+    background: linear-gradient(90deg, transparent, var(--primary-color, #8DD6D6), transparent);
+    box-shadow: 0 0 8px rgba(141, 214, 214, 0.3);
+    
+    animation: expand 1.5s ease-out forwards;
+    transform: translateX(-50%) rotate(180deg);
+}
+
+
+
+@media (max-width: 767px) {
+	.reminders_container {
+		/* ...existing code... */
+		gap: 15px; /* Reduced gap for smaller screens */
+	}
+
+    .quote {
+        font-size: clamp(1.2rem, 4vw, 1.5rem); /* Adjusted for smaller screens */
+        line-height: 1.3;
+        padding: 10px 20px;
+    }
+
+    .quote::after {
+        bottom: -3px;
+    }
+    
+    .quote::before, .quote::after {
+        width: 24px;
+    }
+    
+
+    .quote {
+		font-size: clamp(1.2rem, 4vw, 1.5rem); /* Adjusted for smaller screens */
+		line-height: 1.1;
+	}
+}
+
+@media (max-width: 400px) {
+    .quote {
+        font-size: 1rem;
+        padding: 8px 15px;
+    }
+    
+    .quote::before, .quote::after {
+        width: 20px;
+    }
+}
+/* =============================================
+   UTILITIES
+   ============================================= */
+   
+@keyframes expand {
+    from { width: 20px; }
+    to { width: 70px; }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 0.5;
+        transform: translate(-50%, -50%) scale(0.95);
+    }
+    100% {
+        opacity: 0.8;
+        transform: translate(-50%, -50%) scale(1.05);
+    }
+}
+
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes scaleIn {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
 }

@@ -32,7 +32,7 @@
 				<div class="streaks">
 					{% if profile_owner %}
 					<div>
-						<p class="text">Current Streaks</p>
+						<p class="text">Current Streak</p>
 						<p class="value">{{ profile_owner.current_streak.days or 0}}</p>
 					</div>
 					<div>
@@ -41,7 +41,7 @@
 					</div>
 					{% else %}
 					<div>
-						<p class="text">Current Streaks</p>
+						<p class="text">Current Streak</p>
 						<p class="value">{{ user.current_streak.days}}</p>
 					</div>
 					<div>

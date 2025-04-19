@@ -1,14 +1,4 @@
 /**
- * blur main section except for the froms
- */
-function blurMain() {
-  $('main > *')
-    .not('.add_image_reminder')
-    .not('.add_text_reminder')
-    .css('filter', 'blur(5px)');
-}
-
-/**
  * position add reminder windows
  */
 function positionAddReminderWindows() {
@@ -119,7 +109,7 @@ function setAddTextReminderWindow() {
      */
     const reminder = makeReminder({...data, id: "temp-id"})
     $('main .welcome').remove()
-    $('main .quote').after(reminder);
+    $('main .reminders_container').prepend(reminder);
 
     const token = getCookie('access_token_cookie');
     const endpointURL = `${apiDomain}/api/v1/reminders`;
@@ -181,7 +171,7 @@ function setAddImageReminderForm() {
       };
       const reminder = makeReminder({ ...reminderData, id: 'temp-img-id' })
       $('main .welcome').remove()
-      $('main .quote').after(reminder);
+      $('main .reminders_container').prepend(reminder);
 
 
       const token = getCookie('access_token_cookie');

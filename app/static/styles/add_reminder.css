@@ -4,17 +4,13 @@
 .add_text_reminder {
 	display: none;
 }
+
 .add_image_reminder,
 .add_text_reminder {
-	width: 300px;
+	width: 350px;
 	max-width: 95%;
-
 	margin: var(--small-gap) auto;
-
 	padding: var(--large-gap);
-	background-color: var(--color-2);
-	border-radius: 10px;
-
 	position: absolute;
 	top: 50%;
 	left: 50%;
@@ -22,25 +18,74 @@
 	
 	flex-direction: column;
 	align-items: center;
+	
+	background: linear-gradient(to bottom, var(--color-4), var(--color-3));
+	border-radius: 16px;
+	border: 1px solid rgba(255, 255, 255, 0.1);
+	box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.05);
+	backdrop-filter: blur(10px);
+	
+	transition: all 0.3s ease;
+	z-index: 100;
+	
+	animation: scaleIn 0.3s ease-out;
+}
 
-	background-color: #44647a;
-	transition: .3s;
-
-	z-index: 10;
+@keyframes scaleIn {
+	from {
+		transform: scale(0.9);
+		opacity: 0;
+	}
+	to {
+		transform: scale(1);
+		opacity: 1;
+	}
 }
 
 .cancel_icon {
 	position: absolute;
 	top: 10px;
 	right: 10px;
+	width: 30px;
+	height: 30px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: rgba(255, 255, 255, 0.1);
+	border-radius: 50%;
+	color: rgba(255, 255, 255, 0.8);
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+	transition: all 0.2s ease;
+}
+
+.cancel_icon:hover {
+	background: rgba(255, 255, 255, 0.15);
+	color: #FFF;
+	transform: rotate(90deg);
 }
 
 .add_image_reminder h2,
 .add_text_reminder h2 {
 	align-self: flex-start;
+	margin-top: var(--small-gap);
+	margin-bottom: 25px;
+	font-size: 1.5rem;
+	font-weight: 700;
+	color: white;
+	letter-spacing: 0.02em;
+	position: relative;
+	padding-bottom: 8px;
+}
 
-	margin-top: var(--medium-gap);
-	margin-bottom: 40px;
+.add_image_reminder h2::after,
+.add_text_reminder h2::after {
+	content: '';
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 50px;
+	height: 2px;
+	background: linear-gradient(90deg, #8DD6D6, transparent);
 }
 
 .add_image_reminder_form,
@@ -53,72 +98,157 @@
 
 .add_image_reminder_form > label,
 .text_reminder_form > label {
-	margin-bottom: var(--small-gap);
-
+	margin-bottom: 10px;
 	font-weight: 600;
-	font-size: 1.1rem;
+	font-size: 1rem;
+	color: rgba(255, 255, 255, 0.95);
+	letter-spacing: 0.02em;
+}
+
+.add_image_reminder_form textarea,
+.text_reminder_form textarea {
+	padding: 12px 15px;
+	margin-bottom: 20px;
+	border: 1px solid rgba(255, 255, 255, 0.1);
+	border-radius: 10px;
+	background: rgba(255, 255, 255, 0.95);
+	color: var(--color-3);
+	font-size: 1rem;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+	transition: all 0.3s ease;
+}
+
+.add_image_reminder_form textarea:focus,
+.text_reminder_form textarea:focus {
+	outline: none;
+	border-color: #8DD6D6;
+	background: #fff;
+	box-shadow: 0 0 0 3px rgba(141, 214, 214, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+	transform: translateY(-2px);
+}
+
+.visibility_section {
+	display: flex;
+	align-items: center;
+	margin-bottom: 20px;
+	padding: 10px;
+	background: rgba(255, 255, 255, 0.05);
+	border-radius: 10px;
+	border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.visibility_section input[type="radio"] {
+	margin-right: 8px;
+	accent-color: #8DD6D6;
+	width: 18px;
+	height: 18px;
+	cursor: pointer;
 }
 
 .add_image_reminder_form label[for="img_private"],
 .text_reminder_form label[for="private"] {
 	margin-right: var(--large-gap);
-}
-
-.add_image_reminder_form textarea,
-.text_reminder_form textarea {
-	padding: 7px;
-	margin-bottom: var(--medium-gap);
-
-	border-radius: 10px;
-
-	background: floralwhite;
+	font-weight: 500;
+	cursor: pointer;
 }
 
 .form_buttons {
 	display: flex;
 	justify-content: space-between;
-
-	margin-top: var(--large-gap);
-
+	margin-top: 20px;
 }
 
 .reset_button {
 	width: 30%;
+	background: linear-gradient(to bottom, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.05));
+	border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .add_reminder_button {
 	width: 68%;
-	font-size: medium;
-    font-weight: bold;
+	background: linear-gradient(to bottom, #8DD6D6, #7AC5C5);
+	color: var(--color-3);
+	font-weight: 700;
+	box-shadow: 0 4px 10px rgba(141, 214, 214, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 
 .form_buttons button {
-	padding: var(--medium-gap);
-	background-color: var(--color-3);
+	padding: 12px;
+	border: none;
 	border-radius: 10px;
 	color: white;
+	font-size: 1rem;
+	letter-spacing: 0.02em;
+	transition: all 0.3s ease;
+	cursor: pointer;
+	position: relative;
+	overflow: hidden;
 }
 
+.form_buttons button::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: -100%;
+	width: 100%;
+	height: 100%;
+	background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+	transition: all 0.5s ease;
+}
+
+.form_buttons button:hover::before {
+	left: 100%;
+}
+
+.form_buttons button:hover {
+	transform: translateY(-3px);
+	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.form_buttons button:active {
+	transform: translateY(-1px);
+	box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
 
 /**
  * add image reminder
 */
 .add_image_reminder {
-	width: 350px;
+	width: 380px;
 }
-
 
 .image_placeholder_container {
 	width: 100%;
 	height: 200px;
-	background-color: var(--color-2);
+	background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.05));
 	border-radius: 10px;
+	border: 1px dashed rgba(255, 255, 255, 0.2);
+	margin-bottom: 15px;
+	overflow: hidden;
+	position: relative;
+	box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+.image_placeholder_container::before {
+	content: '';
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 150px;
+	height: 150px;
+	border-radius: 50%;
+	background: radial-gradient(circle, rgba(141, 214, 214, 0.05) 0%, transparent 70%);
+	transform: translate(-50%, -50%);
+	z-index: 0;
 }
 
 .add_image_reminder img {
 	width: 100%;
 	height: 100%;
 	object-fit: contain;
+	transition: all 0.3s ease;
+	position: relative;
+	z-index: 1;
 }
 
 .add_image_reminder input[type="file"] {
@@ -126,25 +256,77 @@
 }
 
 .add_image_reminder label[for="reminder_image"] {
+	display: flex;
+	align-items: center;
+	justify-content: center;
 	text-align: center;
-    padding: 10px;
-    margin: 10px 0;
-    color: white;
-    background-color: var(--color-3);
-    border-radius: 10px;
-    cursor: pointer;
-    
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+	padding: 12px;
+	margin: 10px 0 20px;
+	color: white;
+	background: linear-gradient(to bottom, var(--color-3), var(--color-4));
+	border-radius: 10px;
+	cursor: pointer;
+	font-weight: 500;
+	letter-spacing: 0.02em;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+	transition: all 0.3s ease;
+	position: relative;
+	overflow: hidden;
+}
 
-    transition: background-color 0.1s, color 0.1s;
+.add_image_reminder label[for="reminder_image"]::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: -100%;
+	width: 100%;
+	height: 100%;
+	background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+	transition: all 0.5s ease;
+}
+
+.add_image_reminder label[for="reminder_image"]:hover::before {
+	left: 100%;
 }
 
 section button:hover,
 .add_image_reminder label[for="reminder_image"]:hover {
-    background-color:var(--color-2);
-    /* color: var(--color-3); */
+	background: linear-gradient(to bottom, var(--color-4), var(--color-3));
+	transform: translateY(-3px);
+	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.15);
 }
 
-.add_image_reminder label[for="reminder_image"]:active {
-    transform: scale(0.95);
+.add_image_reminder label[for="reminder_image"]:active,
+section button:active {
+	transform: translateY(-1px);
+	box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 480px) {
+	.add_image_reminder,
+	.add_text_reminder {
+		width: 90%;
+		padding: 15px;
+	}
+	
+	.add_image_reminder h2,
+	.add_text_reminder h2 {
+		font-size: 1.3rem;
+		margin-bottom: 15px;
+	}
+	
+	.image_placeholder_container {
+		height: 180px;
+	}
+	
+	.form_buttons {
+		flex-direction: column;
+		gap: 10px;
+	}
+	
+	.reset_button,
+	.add_reminder_button {
+		width: 100%;
+	}
 }

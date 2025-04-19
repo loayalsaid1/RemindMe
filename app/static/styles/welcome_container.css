@@ -1,0 +1,142 @@
+.welcome-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  width: min(90%, 600px);
+  margin: clamp(1.5rem, 5vw, 2.5rem) auto;
+  padding: clamp(1.3rem, 4vw, 2rem) clamp(1rem, 4vw, 1.5rem);
+
+  border: 1px solid var(--border-lighter, rgba(255, 255, 255, 0.1));
+  border-radius: 1em;
+
+  background-color: var(--color-1);
+  background-image: radial-gradient(circle at top right, rgba(141, 214, 214, 0.08), transparent 70%);
+
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25), 
+              0 0 0 1px rgba(255, 255, 255, 0.05), 
+              inset 0 1px 0 rgba(255, 255, 255, 0.1);
+
+  animation: fadeIn 1s ease-out;
+}
+
+.welcome-container::before {
+  content: '';
+  position: absolute;
+  top: -15px;
+  left: 50%;
+  width: 2px;
+  height: 15px;
+  background: linear-gradient(to bottom, var(--primary-color, #8DD6D6), transparent);
+  transform: translateX(-50%);
+}
+
+.welcome-container::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 80%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(141, 214, 214, 0.2), transparent);
+  transform: translateX(-50%);
+}
+
+.welcome-container .message {
+  position: relative;
+  font-size: clamp(0.95rem, 1.2vw + 0.5rem, 1.2rem);
+  font-weight: 300;
+  color: var(--text-lighter, rgba(255, 255, 255, 0.9));
+  text-align: center;
+  margin-bottom: clamp(1.2rem, 2vw, 1.5rem);
+  line-height: 1.6;
+  letter-spacing: 0.02em;
+
+  animation: fadeIn 1s ease-out 0.2s backwards;
+}
+
+.welcome-container .message::after {
+  content: '';
+  display: block;
+  width: 50px;
+  height: 2px;
+  margin: 0.8rem auto 0;
+  background: linear-gradient(90deg, transparent, var(--primary-color, #8DD6D6), transparent);
+  box-shadow: 0 0 8px rgba(141, 214, 214, 0.3);
+  animation: expand 1.5s ease-out forwards;
+}
+
+.welcome-container .buttons {
+  display: grid;
+	grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(0.8rem, 2vw, 1rem);
+  margin-top: 0.5rem;
+  
+
+  animation: fadeIn 1s ease-out 0.4s backwards;
+}
+
+.welcome-container .buttons span {
+  color: var(--text-lighter, rgba(255, 255, 255, 0.9));
+  font-size: 0.9rem;
+  opacity: 0.7;
+}
+
+.welcome-container button {
+  padding: clamp(0.6em, 1.5vw, 0.75em) clamp(1.2em, 3vw, 1.5em);
+  width: 100%;
+  max-width: 260px;
+
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 3px solid rgba(0, 0, 0, 0.15);
+  border-radius: 0.625em;
+
+  background: linear-gradient(to bottom, var(--primary-color, #8DD6D6), var(--primary-dark, #7AC5C5));
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+
+  color: var(--text-color, #2c3e50);
+  font-weight: 600;
+  font-size: clamp(0.9rem, 0.5vw + 0.5rem, 0.95rem);
+  letter-spacing: 0.02em;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.3);
+
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.welcome-container button:hover {
+  transform: translateY(-3px);
+
+  background: linear-gradient(to bottom, #95dede, var(--primary-color, #8DD6D6));
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.welcome-container button:active {
+  transform: translateY(-1px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+
+  background: linear-gradient(to bottom, var(--primary-dark, #7AC5C5), #6bb5b5);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Optional: For very small screens, limit button width and stack layout */
+@media (max-width: 450px) {
+  .welcome-container .buttons {
+    grid-template-columns: 1fr;
+    width: 100%;
+    gap: 0.8rem;
+  }
+
+  .welcome-container .buttons span {
+    display: none;
+  }
+
+  .welcome-container button {
+    width: 100%;
+		max-width: unset;
+  }
+}
