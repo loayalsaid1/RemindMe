@@ -378,6 +378,10 @@ aside .toggle_icon:hover {
 		width: fit-content;
 		z-index: 100;
 	}
+	aside:not(.open) .add_reminder::before {
+		display: none;
+	}
+
 }
 
 aside.open .add_reminder {
