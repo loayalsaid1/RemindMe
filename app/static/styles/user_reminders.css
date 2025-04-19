@@ -5,7 +5,7 @@
 	display: grid;
 	grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
 	gap: 20px;
-	padding: 15px;
+	padding: 20px; /* Increased padding for better spacing */
 }
 
 @media (max-width: 370px) {
@@ -21,14 +21,27 @@
 	max-width: 100%;
 	padding-top: 65%;
 	border-radius: 12px;
-	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-	transition: transform 0.3s ease, box-shadow 0.3s ease;
+	box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(255, 255, 255, 0.05);
+	transition: transform 0.4s ease, box-shadow 0.4s ease; /* Smoother animation */
 	overflow: hidden;
+	border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.reminders_container article::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: radial-gradient(circle at top right, rgba(141, 214, 214, 0.05), transparent 70%);
+	z-index: 1;
+	pointer-events: none;
 }
 
 .reminders_container article:hover {
-	transform: translateY(-5px);
-	box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+	transform: translateY(-8px) scale(1.02); /* Slight scaling for emphasis */
+	box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(255, 255, 255, 0.07);
 }
 
 .reminders_container article .card_container {
@@ -51,7 +64,7 @@
 article,
 .shown {
 	position: relative;
-	background-color: var(--color-2);
+	background: linear-gradient(to bottom, var(--color-2), var(--color-3));
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -82,6 +95,10 @@ article:hover .shown{
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 6;
+	background: linear-gradient(to bottom, #ffffff, #e0e0e0);
+    -webkit-background-clip: text;
+    color: transparent;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
 }
 
 .shown:hover p {
@@ -109,7 +126,9 @@ article:hover .shown{
 	top: 0;
 	left: 0;
 	color: white;
-	background-color: rgba(53, 76, 92, 0.75);
+	background: linear-gradient(to bottom, rgba(53, 76, 92, 0.85), rgba(44, 62, 80, 0.92));
+	backdrop-filter: blur(3px);
+	box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
 	opacity: 0;
 	transition: opacity 0.3s ease-in-out;
 	overflow: hidden;
@@ -135,7 +154,7 @@ article:hover .hidden {
 .hidden_icons,
 .lock_icon {
     color: white !important;
-    background: var(--color-3);
+    background: linear-gradient(to bottom, var(--color-4), var(--color-3));
     font-size: 1.7rem;
     position: absolute;
     width: 36px;
@@ -144,7 +163,15 @@ article:hover .hidden {
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+	transition: all 0.3s ease;
+}
+
+.hidden_icons:hover,
+.lock_icon:hover {
+    background: linear-gradient(to bottom, #8DD6D6, #7AC5C5);
+    color: var(--color-3) !important;
+    transform: scale(1.1);
 }
 
 .shown > .lock_icon {
@@ -272,7 +299,7 @@ article:hover .hidden {
    ============================================= */
 .hidden .caption {
     margin: 5px;
-    padding: 5px;
+    padding: 10px;
     line-height: 1.5rem;
     text-align: center;
     font-size: clamp(.8rem, 2.5vw, 1.3rem);
@@ -283,27 +310,58 @@ article:hover .hidden {
     max-height: 50%;
     overflow: auto;
     word-break: break-word;
+	background: linear-gradient(to bottom, rgba(255, 255, 255, 0.05), transparent);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
 .hidden .show_reminder {
-	background-color: var(--color-3);
-    padding: 10px 15px;
+	background: linear-gradient(to bottom, var(--color-4), var(--color-3));
+    padding: 12px 18px;
     position: absolute;
     bottom: 15px;
     color: white;
     left: 50%;
     transform: translateX(-50%);
     border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.1);
     transition: background-color 0.2s ease;
-    font-weight: 500;
+    font-weight: 600;
+    letter-spacing: 0.02em;
     white-space: nowrap;
     text-overflow: ellipsis;
-    overflow: hidden;
     max-width: 80%;
+	font-size: 1rem;
+    transition: .3s;
+
+    overflow: hidden;
+}
+
+.hidden .show_reminder::before {
+	content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: all 0.5s ease;
+}
+
+.hidden .show_reminder:hover::before {
+	left: 100%;
 }
 
 .hidden .show_reminder:hover {
-    background-color: var(--color-4);
+    background: linear-gradient(to bottom, #8DD6D6, #7AC5C5);
+    color: var(--color-3);
+    transform: translate(-50%, -4px); /* More pronounced hover effect */
+	box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.hidden .show_reminder:active {
+	transform: translate(-50%, -2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 @media (max-width: 400px) {
@@ -351,8 +409,9 @@ article:hover .hidden {
 	justify-content: center;
 	align-items: center;
 	z-index: 9999;
-	backdrop-filter: blur(8px);
+	backdrop-filter: blur(12px);
     background-color: rgba(0, 0, 0, 0.5);
+	animation: fadeIn 0.3s ease-out;
 }
 
 .fullscreen_container > * {
@@ -365,13 +424,14 @@ article:hover .hidden {
 	max-width: 90%;
 	max-height: 90vh;
 	object-fit: contain;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.05);
     border-radius: 8px;
     background-color: white;
+	animation: scaleIn 0.4s ease-out;
 }
 
 .fullscreen_container p {
-	background: var(--color-4);
+	background: linear-gradient(to bottom, var(--color-3), var(--color-4));
     font-size: 2em;
     font-weight: 600;
     line-height: 3.7rem;
@@ -381,8 +441,9 @@ article:hover .hidden {
     color: #ffffff;
     font-family: monospace;
     border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-    max-width: 80%;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.05), 
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+	animation: scaleIn 0.4s ease-out;
 }
 
 @media (max-width: 400px) {
@@ -493,13 +554,13 @@ article:hover .hidden {
     max-width: 800px;
 
 
-	font-size: clamp(1.3rem, 2.5vw, 1.7rem);;
+	font-size: clamp(1.4rem, 3vw, 1.8rem); /* Slightly larger font */
     font-weight: 500;
     font-style: italic;
 	text-align: center;
     letter-spacing: 1px;
     line-height: 1.3;
-	text-shadow: 1px 1px 1px black;
+	text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Enhanced text shadow */
     color: var(--text-lighter, #ECF0F1);
 }
 
@@ -545,8 +606,13 @@ article:hover .hidden {
 
 
 @media (max-width: 767px) {
+	.reminders_container {
+		/* ...existing code... */
+		gap: 15px; /* Reduced gap for smaller screens */
+	}
+
     .quote {
-        font-size: clamp(1.1rem, 5vw, 1.4rem);
+        font-size: clamp(1.2rem, 4vw, 1.5rem); /* Adjusted for smaller screens */
         line-height: 1.3;
         padding: 10px 20px;
     }
@@ -561,7 +627,7 @@ article:hover .hidden {
     
 
     .quote {
-		font-size: clamp(1.1rem, 5vw, 1.5rem);
+		font-size: clamp(1.2rem, 4vw, 1.5rem); /* Adjusted for smaller screens */
 		line-height: 1.1;
 	}
 }
@@ -605,4 +671,9 @@ article:hover .hidden {
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+}
+
+@keyframes scaleIn {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
 }
