@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { use } from "react";
-import { checkUsername, getUser, getUserReminders, type User, type Reminder } from "@/lib/api";
+import { getUserByUsername, getUserReminders, getPublicReminders, type User, type Reminder } from "@/lib/api";
 import { useAuth } from "@/hooks/use-auth";
 import { useToast } from "@/hooks/use-toast";
 import { Header } from "@/components/layout/header";
@@ -29,35 +29,33 @@ export default function UserProfilePage({
 
   const loadUser = useCallback(async () => {
     try {
-      // First get the user id from username check
-      const check = await checkUsername(username);
-      if (!check.exists) {
+      const found = await getUserByUsername(username);
+      if (!found) {
         setNotFound(true);
         return;
       }
-      // The check endpoint doesn't return id directly, fall back to authUser or search
-      // If viewing own profile, use authUser
-      if (isOwn && authUser) {
-        setProfileUser(authUser);
-        return;
-      }
-      // For other users, we try to find via public reminders approach
-      // Since there's no search-by-username endpoint, we use what we can
-      setNotFound(false);
+      setProfileUser(found);
     } catch {
       setNotFound(true);
     }
-  }, [username, isOwn, authUser]);
+  }, [username]);
 
   const loadReminders = useCallback(async () => {
     if (!profileUser) return;
     try {
-      const data = await getUserReminders(profileUser.id);
-      setReminders(data);
+      if (isOwn) {
+        // Fetch all reminders (public + private) for own profile
+        const data = await getUserReminders(profileUser.id);
+        setReminders(data);
+      } else {
+        // For other users, show only their public reminders filtered from the public feed
+        const all = await getPublicReminders();
+        setReminders(all.filter((r) => r.user_id === profileUser.id));
+      }
     } catch {
       toast({ title: "Failed to load reminders", variant: "destructive" });
     }
-  }, [profileUser, toast]);
+  }, [profileUser, isOwn, toast]);
 
   useEffect(() => {
     if (isOwn && authUser) {

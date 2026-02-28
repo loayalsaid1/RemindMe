@@ -92,6 +92,12 @@ export async function checkUsername(username: string): Promise<{ exists: boolean
   return request<{ exists: boolean }>(`/api/v1/check_user/${username}`);
 }
 
+/** Find a user by their username using the public users list endpoint. */
+export async function getUserByUsername(username: string): Promise<User | null> {
+  const users = await request<User[]>("/api/v1/users");
+  return users.find((u) => u.user_name === username) ?? null;
+}
+
 // ---------- Reminders ----------
 
 export interface Reminder {
