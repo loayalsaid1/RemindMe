@@ -2,9 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
 import "./globals.css";
-import { AuthProvider } from "@/hooks/use-auth";
-import { ToastProvider } from "@/hooks/use-toast";
-import { Toaster } from "@/components/ui/toaster";
+import { AppProviders } from "@/components/providers/app-providers";
 
 export const metadata: Metadata = {
   title: "RemindMe",
@@ -31,13 +29,8 @@ export default function RootLayout({
       <head>
         <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
       </head>
-      <body className={`${GeistSans.variable} ${GeistMono.variable} antialiased`}>
-        <ToastProvider>
-          <AuthProvider>
-            {children}
-            <Toaster />
-          </AuthProvider>
-        </ToastProvider>
+      <body className={`${GeistSans.variable} ${GeistMono.variable} surface-app antialiased`}>
+        <AppProviders>{children}</AppProviders>
       </body>
     </html>
   );

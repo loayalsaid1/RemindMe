@@ -1,28 +1,16 @@
-"use client";
+import { redirect } from "next/navigation";
+import { getServerSession } from "@/lib/session";
 
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { useAuth } from "@/hooks/use-auth";
+export const dynamic = "force-dynamic";
 
-export default function DashboardLayout({ children }: { children: React.ReactNode }) {
-  const { user, isLoading } = useAuth();
-  const router = useRouter();
-
-  useEffect(() => {
-    if (!isLoading && !user) {
-      router.push("/login");
-    }
-  }, [user, isLoading, router]);
-
-  if (isLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-[hsl(var(--background))]">
-        <div className="text-[hsl(var(--muted-foreground))] text-sm">Loading...</div>
-      </div>
-    );
+export default async function DashboardLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const session = await getServerSession();
+  if (!session) {
+    redirect("/login");
   }
-
-  if (!user) return null;
-
   return <>{children}</>;
 }
