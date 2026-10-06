@@ -1,0 +1,20 @@
+:root {
+  --brand: #8dd6d6;
+  --brand-dark: #7ac5c5;
+  --brand-soft: rgb(141 214 214 / 0.2);
+  --ink-900: #2c3e50;
+  --ink-800: #34495e;
+  --ink-700: #44647a;
+  --ink-700-soft: #44647a69;
+  --paper: #ecf0f1;
+  --header-height: 3.5rem;
+  --aside-width: 16rem;
+  --radius: 0.5rem;
+  --shadow-card: 0 8px 20px rgb(0 0 0 / 0.1), 0 0 0 1px rgb(255 255 255 / 0.05);
+  --shadow-hover: 0 15px 30px rgb(0 0 0 / 0.2), 0 0 0 1px rgb(255 255 255 / 0.07);
+  --shadow-auth: 0 10px 30px rgb(0 0 0 / 0.25), 0 0 0 1px rgb(255 255 255 / 0.05),
+    inset 0 1px 0 rgb(255 255 255 / 0.1);
+  --shadow-button: 0 4px 6px rgb(0 0 0 / 0.1), inset 0 1px 0 rgb(255 255 255 / 0.2);
+  --motion-fast: 150ms;
+  --motion-base: 250ms;
+}

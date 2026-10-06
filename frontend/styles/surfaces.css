@@ -1,0 +1,93 @@
+.surface-app {
+  background-color: var(--ink-900);
+  min-height: 100dvh;
+}
+
+.surface-app::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    radial-gradient(circle at 25% 25%, rgb(141 214 214 / 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 75% 75%, rgb(141 214 214 / 0.04) 0%, transparent 50%);
+}
+
+.surface-header {
+  background: linear-gradient(to right, var(--ink-800), var(--ink-900));
+  box-shadow: inset 0 -1px 0 rgb(255 255 255 / 0.06);
+}
+
+.surface-header::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  height: 1px;
+  background: linear-gradient(to right, var(--brand), transparent);
+}
+
+.surface-sidebar {
+  background: linear-gradient(to bottom, var(--ink-800), var(--ink-900));
+  box-shadow: inset -1px 0 0 rgb(255 255 255 / 0.05);
+}
+
+.surface-sidebar-glow {
+  background: radial-gradient(circle at top right, rgb(141 214 214 / 0.08), transparent 70%);
+}
+
+.surface-auth {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(to bottom, var(--ink-800), var(--ink-900));
+  box-shadow: var(--shadow-auth);
+}
+
+.surface-auth::before {
+  content: "";
+  position: absolute;
+  top: -4rem;
+  left: 50%;
+  width: 11rem;
+  height: 11rem;
+  transform: translateX(-50%);
+  border-radius: 9999px;
+  background: radial-gradient(circle, rgb(141 214 214 / 0.18) 0%, rgb(141 214 214 / 0.05) 40%, transparent 70%);
+  pointer-events: none;
+}
+
+.surface-card {
+  background: linear-gradient(to bottom, var(--ink-700), var(--ink-800));
+  box-shadow: var(--shadow-card);
+  transition: transform var(--motion-base) ease, box-shadow var(--motion-base) ease;
+}
+
+.surface-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
+}
+
+.surface-overlay {
+  background: linear-gradient(to bottom, rgb(44 62 80 / 0.2), rgb(0 0 0 / 0.72));
+  transition: opacity var(--motion-fast) ease;
+}
+
+.surface-cta {
+  background: linear-gradient(to bottom, var(--brand), var(--brand-dark));
+  color: var(--ink-900);
+  box-shadow: var(--shadow-button);
+}
+
+.surface-cta:hover {
+  background: linear-gradient(to bottom, #95dede, var(--brand));
+}
+
+.surface-panel {
+  background: linear-gradient(to bottom, var(--ink-800), var(--ink-900));
+  box-shadow: inset 1px 0 0 rgb(255 255 255 / 0.05);
+}
+
+.surface-shine {
+  background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.12), transparent);
+}

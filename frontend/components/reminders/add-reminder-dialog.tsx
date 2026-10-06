@@ -1,10 +1,12 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState } from "react";
 import Image from "next/image";
-import { ImageIcon, Type, Upload } from "lucide-react";
-import { createReminder, type Reminder } from "@/lib/api";
-import { useToast } from "@/hooks/use-toast";
+import { useForm, useWatch } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { ImageIcon, Type, Upload, X } from "lucide-react";
+import { reminderDraftSchema, type ReminderDraft } from "@/schemas/reminder";
+import { useCreateReminder } from "@/hooks/use-reminders";
 import {
   Dialog,
   DialogContent,
@@ -15,195 +17,194 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { cn } from "@/lib/utils";
 
 interface AddReminderDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onCreated?: (reminder: Reminder) => void;
 }
 
-type Tab = "text" | "image";
+const emptyDraft: ReminderDraft = {
+  tab: "text",
+  text: "",
+  caption: "",
+  visibility: "private",
+  image: null,
+};
 
-export function AddReminderDialog({ open, onOpenChange, onCreated }: AddReminderDialogProps) {
-  const [tab, setTab] = useState<Tab>("text");
-  const [text, setText] = useState("");
-  const [caption, setCaption] = useState("");
-  const [visibility, setVisibility] = useState<"public" | "private">("private");
-  const [imageFile, setImageFile] = useState<File | null>(null);
-  const [imagePreview, setImagePreview] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const fileRef = useRef<HTMLInputElement>(null);
-  const { toast } = useToast();
+export function AddReminderDialog({ open, onOpenChange }: AddReminderDialogProps) {
+  const [fileKey, setFileKey] = useState(0);
+  const createReminder = useCreateReminder();
+  const form = useForm<ReminderDraft>({
+    resolver: zodResolver(reminderDraftSchema),
+    defaultValues: emptyDraft,
+  });
+
+  const tab = useWatch({ control: form.control, name: "tab" });
+  const image = useWatch({ control: form.control, name: "image" });
+  const preview = image ? URL.createObjectURL(image) : null;
 
   const reset = () => {
-    setText("");
-    setCaption("");
-    setVisibility("private");
-    setImageFile(null);
-    setImagePreview(null);
+    form.reset(emptyDraft);
+    setFileKey((value) => value + 1);
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    setImageFile(file);
-    const reader = new FileReader();
-    reader.onload = (ev) => setImagePreview(ev.target?.result as string);
-    reader.readAsDataURL(file);
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-    try {
-      let reminder: Reminder;
-      if (tab === "text") {
-        reminder = await createReminder({
-          text,
-          caption: caption || undefined,
-          is_text: true,
-          public: visibility === "public",
-        });
-      } else {
-        if (!imageFile) {
-          toast({ title: "Please select an image", variant: "destructive" });
-          return;
-        }
-        const formData = new FormData();
-        formData.append("image", imageFile);
-        if (caption) formData.append("caption", caption);
-        formData.append("is_text", "false");
-        formData.append("public", String(visibility === "public"));
-        reminder = await createReminder(formData);
-      }
-      toast({ title: "Reminder created!" });
-      onCreated?.(reminder);
-      reset();
-      onOpenChange(false);
-    } catch (err) {
-      toast({
-        title: "Failed to create reminder",
-        description: err instanceof Error ? err.message : "Unknown error",
-        variant: "destructive",
-      });
-    } finally {
-      setIsLoading(false);
+  async function submitDraft(values: ReminderDraft) {
+    if (values.tab === "text" && !values.text?.trim()) {
+      form.setError("text", { message: "Text is required" });
+      return;
     }
-  };
+    if (values.tab === "image" && !values.image) {
+      form.setError("image", { message: "Please select an image" });
+      return;
+    }
+    await createReminder.mutateAsync(values);
+    reset();
+    onOpenChange(false);
+  }
 
   return (
-    <Dialog open={open} onOpenChange={(v) => { onOpenChange(v); if (!v) reset(); }}>
-      <DialogContent className="max-w-md">
+    <Dialog
+      open={open}
+      onOpenChange={(next) => {
+        onOpenChange(next);
+        if (!next) reset();
+      }}
+    >
+      <DialogContent className="surface-card max-w-md border-white/10">
         <DialogHeader>
           <DialogTitle>Add Reminder</DialogTitle>
         </DialogHeader>
 
-        {/* Tab switcher */}
-        <div className="flex gap-2 p-1 rounded-md bg-[hsl(var(--muted))]">
-          <button
-            type="button"
-            onClick={() => setTab("text")}
-            className={`flex-1 flex items-center justify-center gap-1.5 rounded px-3 py-1.5 text-sm font-medium transition-colors ${
-              tab === "text"
-                ? "bg-[hsl(var(--card))] text-[hsl(var(--foreground))] shadow-sm"
-                : "text-[hsl(var(--muted-foreground))]"
-            }`}
-          >
-            <Type className="h-4 w-4" /> Text
-          </button>
-          <button
-            type="button"
-            onClick={() => setTab("image")}
-            className={`flex-1 flex items-center justify-center gap-1.5 rounded px-3 py-1.5 text-sm font-medium transition-colors ${
-              tab === "image"
-                ? "bg-[hsl(var(--card))] text-[hsl(var(--foreground))] shadow-sm"
-                : "text-[hsl(var(--muted-foreground))]"
-            }`}
-          >
-            <ImageIcon className="h-4 w-4" /> Image
-          </button>
+        <div className="flex gap-2 rounded-md bg-muted p-1">
+          {(["text", "image"] as const).map((value) => (
+            <button
+              key={value}
+              type="button"
+              onClick={() => form.setValue("tab", value)}
+              className={cn(
+                "flex flex-1 items-center justify-center gap-1.5 rounded px-3 py-1.5 text-sm font-medium transition-colors",
+                tab === value
+                  ? "bg-card text-foreground shadow-sm"
+                  : "text-muted-foreground"
+              )}
+            >
+              {value === "text" ? <Type className="h-4 w-4" /> : <ImageIcon className="h-4 w-4" />}
+              {value === "text" ? "Text" : "Image"}
+            </button>
+          ))}
         </div>
 
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-          {tab === "text" ? (
-            <div className="flex flex-col gap-2">
-              <Label htmlFor="reminder-text">Text</Label>
-              <Textarea
-                id="reminder-text"
-                placeholder="Your reminder text..."
-                value={text}
-                onChange={(e) => setText(e.target.value)}
-                rows={5}
-                required
+        <Form {...form}>
+          <form
+            onSubmit={(event) => {
+              void form.handleSubmit(submitDraft)(event);
+            }}
+            className="flex flex-col gap-4"
+          >
+            {tab === "text" ? (
+              <FormField
+                control={form.control}
+                name="text"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Text</FormLabel>
+                    <FormControl>
+                      <Textarea placeholder="Your reminder text..." rows={5} {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
-            </div>
-          ) : (
-            <div className="flex flex-col gap-2">
-              <Label>Image</Label>
-              <input
-                ref={fileRef}
-                type="file"
-                accept="image/*"
-                className="hidden"
-                onChange={handleFileChange}
+            ) : (
+              <FormField
+                control={form.control}
+                name="image"
+                render={() => (
+                  <FormItem>
+                    <FormLabel>Image</FormLabel>
+                    <input
+                      key={fileKey}
+                      id="reminder-image"
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      onChange={(event) => {
+                        const file = event.target.files?.[0] ?? null;
+                        form.setValue("image", file, { shouldValidate: true });
+                      }}
+                    />
+                    {preview ? (
+                      <div className="relative aspect-video overflow-hidden rounded-md">
+                        <Image src={preview} alt="Preview" fill className="object-cover" sizes="400px" />
+                        <button
+                          type="button"
+                          aria-label="Remove image"
+                          onClick={() => {
+                            form.setValue("image", null);
+                            setFileKey((value) => value + 1);
+                          }}
+                          className="absolute right-2 top-2 rounded-full bg-black/60 p-1 text-white"
+                        >
+                          <X className="h-3.5 w-3.5" />
+                        </button>
+                      </div>
+                    ) : (
+                      <label
+                        htmlFor="reminder-image"
+                        className="flex cursor-pointer flex-col items-center justify-center gap-2 rounded-md border-2 border-dashed border-border py-8 text-muted-foreground transition-colors hover:border-primary"
+                      >
+                        <Upload className="h-8 w-8" />
+                        <span className="text-sm">Click to upload image</span>
+                      </label>
+                    )}
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
-              {imagePreview ? (
-                <div className="relative rounded-md overflow-hidden aspect-video">
-                  <Image src={imagePreview} alt="Preview" fill className="object-cover" sizes="400px" />
-                  <button
-                    type="button"
-                    onClick={() => { setImageFile(null); setImagePreview(null); }}
-                    className="absolute top-2 right-2 bg-black/60 text-white rounded-full p-1 text-xs"
-                  >
-                    ✕
-                  </button>
-                </div>
-              ) : (
-                <button
-                  type="button"
-                  onClick={() => fileRef.current?.click()}
-                  className="flex flex-col items-center justify-center gap-2 border-2 border-dashed border-[hsl(var(--border))] rounded-md py-8 text-[hsl(var(--muted-foreground))] hover:border-[hsl(var(--primary))] transition-colors"
-                >
-                  <Upload className="h-8 w-8" />
-                  <span className="text-sm">Click to upload image</span>
-                </button>
+            )}
+
+            <FormField
+              control={form.control}
+              name="caption"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Caption (optional)</FormLabel>
+                  <FormControl>
+                    <Textarea placeholder="Add a caption..." rows={2} {...field} />
+                  </FormControl>
+                </FormItem>
               )}
-            </div>
-          )}
-
-          <div className="flex flex-col gap-2">
-            <Label htmlFor="caption">Caption (optional)</Label>
-            <Textarea
-              id="caption"
-              placeholder="Add a caption..."
-              value={caption}
-              onChange={(e) => setCaption(e.target.value)}
-              rows={2}
             />
-          </div>
 
-          <div className="flex flex-col gap-2">
-            <Label>Visibility</Label>
-            <RadioGroup
-              value={visibility}
-              onValueChange={(v) => setVisibility(v as "public" | "private")}
-              className="flex gap-4"
-            >
-              <div className="flex items-center gap-2">
-                <RadioGroupItem value="private" id="vis-private" />
-                <Label htmlFor="vis-private">Private</Label>
-              </div>
-              <div className="flex items-center gap-2">
-                <RadioGroupItem value="public" id="vis-public" />
-                <Label htmlFor="vis-public">Public</Label>
-              </div>
-            </RadioGroup>
-          </div>
+            <FormField
+              control={form.control}
+              name="visibility"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Visibility</FormLabel>
+                  <FormControl>
+                    <RadioGroup value={field.value} onValueChange={field.onChange} className="flex gap-4">
+                      <div className="flex items-center gap-2">
+                        <RadioGroupItem value="private" id="vis-private" />
+                        <Label htmlFor="vis-private">Private</Label>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <RadioGroupItem value="public" id="vis-public" />
+                        <Label htmlFor="vis-public">Public</Label>
+                      </div>
+                    </RadioGroup>
+                  </FormControl>
+                </FormItem>
+              )}
+            />
 
-          <Button type="submit" disabled={isLoading}>
-            {isLoading ? "Creating..." : "Create Reminder"}
-          </Button>
-        </form>
+            <Button type="submit" className="surface-cta border-0" disabled={createReminder.isPending}>
+              {createReminder.isPending ? "Creating..." : "Create Reminder"}
+            </Button>
+          </form>
+        </Form>
       </DialogContent>
     </Dialog>
   );

@@ -1,40 +1,14 @@
 @import "tailwindcss";
-
-@theme {
-  --color-brand: #8DD6D6;
-  --color-brand-foreground: #2C3E50;
-  --color-surface: #34495E;
-  --color-surface-muted: #3d566e;
-  --color-app-bg: #2C3E50;
-  --font-sans: var(--font-geist-sans), Arial, Helvetica, sans-serif;
-  --font-mono: var(--font-geist-mono), monospace;
-}
-
-:root {
-  --background: 210 29% 24%;
-  --foreground: 210 20% 90%;
-  --card: 210 26% 29%;
-  --card-foreground: 210 20% 90%;
-  --popover: 210 26% 29%;
-  --popover-foreground: 210 20% 90%;
-  --primary: 180 42% 70%;
-  --primary-foreground: 210 29% 24%;
-  --secondary: 210 26% 35%;
-  --secondary-foreground: 210 20% 90%;
-  --muted: 210 26% 32%;
-  --muted-foreground: 210 20% 65%;
-  --accent: 180 42% 70%;
-  --accent-foreground: 210 29% 24%;
-  --destructive: 0 72% 51%;
-  --destructive-foreground: 0 0% 100%;
-  --border: 210 26% 35%;
-  --input: 210 26% 32%;
-  --ring: 180 42% 70%;
-  --radius: 0.5rem;
-}
+@import "../styles/tokens.css";
+@import "../styles/theme.css";
+@import "../styles/surfaces.css";
 
 body {
-  background-color: hsl(var(--background));
-  color: hsl(var(--foreground));
-  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-sans);
+}
+
+* {
+  border-color: var(--color-border);
 }
