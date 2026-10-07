@@ -30,20 +30,66 @@ ik = ImageKit(
 REMEMBER_EXPIRES = timedelta(days=356)
 
 
+def _find_login_user(identifier):
+    """Find a user by email, username, or custom ID.
+
+    Strips surrounding whitespace. Tries email first (exact match),
+    then username, then numeric custom ID — mirroring the server-rendered
+    form in app/blueprints/auth.py which accepts username/custom ID.
+    """
+    if identifier is None:
+        return None
+    identifier = str(identifier).strip()
+    if not identifier:
+        return None
+
+    # 1. Email exact match.
+    user = storage.get_user_by_email(identifier)
+    if user:
+        return user
+
+    # 2. Username exact match.
+    users = storage.filter_objects(User, "user_name", identifier)
+    if users:
+        return users[0]
+
+    # 3. Numeric custom ID (app form accepts username *or* custom ID).
+    try:
+        custom_id = int(identifier)
+    except (ValueError, TypeError):
+        return None
+    users = storage.filter_objects(User, "user_custom_id", custom_id)
+    if users:
+        return users[0]
+    return None
+
+
 @auth.route("/auth/login", methods=["POST"], strict_slashes=False)
 def login():
-    """Issue an HttpOnly access cookie. remember=true → 356d, else session."""
+    """Issue an HttpOnly access cookie. remember=true → 356d, else session.
+
+    Accepts an ``identifier`` that may be an email, a username, or a numeric
+    custom ID. Legacy ``email`` / ``username`` / ``username_or_id`` keys are
+    still honored for backwards compatibility.
+    """
     body = request.get_json(silent=True) or {}
-    email = body.get("email")
+    identifier = (
+        body.get("identifier")
+        or body.get("username")
+        or body.get("username_or_id")
+        or body.get("email")
+    )
+    if isinstance(identifier, str):
+        identifier = identifier.strip()
     password = body.get("password")
     remember = bool(body.get("remember"))
 
-    if not email or not password:
-        return jsonify({"msg": "Missing email or password"}), 400
+    if not identifier or not password:
+        return jsonify({"msg": "Missing identifier or password"}), 400
 
-    user = storage.get_user_by_email(email)
+    user = _find_login_user(identifier)
     if not user or not user.verify_password(password):
-        return jsonify({"msg": "Bad email or password"}), 401
+        return jsonify({"msg": "Bad identifier or password"}), 401
 
     expires = REMEMBER_EXPIRES if remember else timedelta(hours=12)
     access_token = create_access_token(identity=user.id, expires_delta=expires)

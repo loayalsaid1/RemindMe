@@ -1,5 +1,7 @@
 #!/usr/bin/python3
 """Module for the Flask API v1 app"""
+from dotenv import load_dotenv
+load_dotenv()
 
 from flask import Flask, jsonify, request
 from models import storage
@@ -9,6 +11,7 @@ from api.v1.views.auth import auth
 from api.v1.views import app_views
 from datetime import timedelta
 from os import getenv
+
 
 app = Flask(__name__, template_folder="templates")
 

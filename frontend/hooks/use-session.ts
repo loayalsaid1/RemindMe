@@ -34,7 +34,7 @@ export function useRegister() {
     mutationFn: async (draft: RegisterDraft) => {
       await registerUser(draft);
       return loginMutation.mutateAsync({
-        email: draft.email,
+        identifier: draft.email,
         password: draft.password,
         remember: true,
       });

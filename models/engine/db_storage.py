@@ -95,7 +95,7 @@ class DBStorage:
         Base.metadata.create_all(self.__engine)
         session = sessionmaker(bind=self.__engine, expire_on_commit=False)
         Session = scoped_session(session)
-        self.__session = Session()
+        self.__session = Session
 
     def filter_objects(self, cls, name, value):
         """Search for a property in a class"""
@@ -117,7 +117,7 @@ class DBStorage:
 
     def close(self):
         """This method closes the DB session"""
-        self.__session.close()
+        self.__session.remove()
 
     def get_user_by_email(self, email):
         """Get specific user by their email"""
