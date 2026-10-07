@@ -8,6 +8,7 @@ from models.reminder import Reminder
 from models.user import User
 from api.v1.views import app_views
 from flask_jwt_extended import jwt_required, get_jwt_identity
+from api.v1.serializers import reflection_public_dict
 
 
 # TODO Make sure to put some safegaurds in the requests!
@@ -23,7 +24,7 @@ def get_reflections_by_reminder(reminder_id):
     if not reminder:
         abort(404, description="Reminder not found")
     reflections = [
-        reflection.to_dict() for reflection in reminder.reflections]
+        reflection_public_dict(reflection) for reflection in reminder.reflections]
     return jsonify(reflections)
 
 
@@ -78,23 +79,7 @@ def create_reflection(reminder_id):
     reflection.content = data['content']
     
     reflection.save()
-    
-    response = reflection.to_dict()
-    response['updated_at'] = reflection.updated_at.strftime('%Y-%m-%d %H:%M GMT')
-
-    # I think this is kinda breaking the rules.. But I'm gonna do it anyways now. 😁😎😁
-    # 😉
-    # I'm going to send user name and username with the response to save myself an api call!
-    # and.....
-    # time 😅😇
-    # I think I could have done it in the time iam seaching for these emojies and writing this.
-    # ha ha ha
-
-    response['user_full_name'] = f"{reflection.user.first_name} {reminder.user.last_name}"
-    response['username'] = reflection.user.user_name
-    response['user_img_url'] = reflection.user.img_url
-
-    return jsonify(response), 201
+    return jsonify(reflection_public_dict(reflection)), 201
 
 
 @app_views.route('/reflections/<reflection_id>', methods=[

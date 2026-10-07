@@ -19,12 +19,13 @@ class Reflection(BaseModel, Base):
         reminder_id = ""
         content = ""
 
-    @property
-    def reminder(self):
-        from models.reminder import Reminder
-        return models.storage.get(Reminder, self.reminder_id)
+    if models.storage_t != "db":
+        @property
+        def reminder(self):
+            from models.reminder import Reminder
+            return models.storage.get(Reminder, self.reminder_id)
 
-    @property
-    def user(self):
-        from models.user import User
-        return models.storage.get(User, self.user_id)
+        @property
+        def user(self):
+            from models.user import User
+            return models.storage.get(User, self.user_id)
