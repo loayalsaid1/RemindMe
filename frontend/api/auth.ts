@@ -13,7 +13,9 @@ export async function login(draft: LoginDraft): Promise<UserFull> {
   const data = await http<unknown>("/api/v1/auth/login", {
     method: "POST",
     body: JSON.stringify({
-      email: payload.email,
+      identifier: payload.identifier,
+      // Keep legacy key for older backends.
+      email: payload.identifier,
       password: payload.password,
       remember: payload.remember,
     }),

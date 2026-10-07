@@ -25,7 +25,7 @@ export function LoginForm() {
   const loginMutation = useLogin();
   const form = useForm<LoginDraft>({
     resolver: zodResolver(loginDraftSchema),
-    defaultValues: { email: "", password: "", remember: false },
+    defaultValues: { identifier: "", password: "", remember: false },
   });
 
   const onSubmit = form.handleSubmit(async (values) => {
@@ -57,12 +57,12 @@ export function LoginForm() {
           <form onSubmit={onSubmit} className="flex flex-col gap-4">
             <FormField
               control={form.control}
-              name="email"
+              name="identifier"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel>Email or username</FormLabel>
                   <FormControl>
-                    <Input type="email" autoComplete="email" placeholder="you@example.com" {...field} />
+                    <Input  autoComplete="username" placeholder="you@example.com or username" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

@@ -23,7 +23,10 @@ export const userFullSchema = z
 export const userListSchema = z.array(userFullSchema);
 
 export const loginDraftSchema = z.object({
-  email: z.string().email("Enter a valid email"),
+  identifier: z
+    .string()
+    .trim()
+    .min(1, "Enter your email or username"),
   password: z.string().min(1, "Password is required"),
   remember: z.boolean(),
 });
