@@ -14,6 +14,7 @@ const backend = process.env.API_PROXY_TARGET ?? "http://localhost:5001";
 const nextConfig: NextConfig = {
   turbopack: {},
   images: {
+    localPatterns: [{ pathname: "/**" }],
     remotePatterns: [
       { protocol: "https", hostname: "**" },
       { protocol: "http", hostname: "localhost" },
@@ -27,7 +28,7 @@ const nextConfig: NextConfig = {
       },
     ];
   },
-  allowedDevOrigins: [".monkeycode-ai.live"],
+  allowedDevOrigins: [".monkeycode-ai.live", "*.monkeycode-ai.live"],
 };
 
 export default withPWA(nextConfig);

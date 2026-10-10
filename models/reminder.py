@@ -38,7 +38,7 @@ class Reminder(BaseModel, Base):
             all_reflections = models.storage.all(Reflection).values()
             for reflection in all_reflections:
                 if reflection.reminder_id == self.id:
-                    reflections.append(reflection.id)
+                    reflections.append(reflection)
 
             return reflections
 

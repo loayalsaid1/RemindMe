@@ -3,10 +3,10 @@
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Bell } from "lucide-react";
 import { loginDraftSchema, type LoginDraft } from "@/schemas/user";
 import { useLogin } from "@/hooks/use-auth";
 import { useToast } from "@/hooks/use-toast";
+import { RemindMeLogo } from "@/components/brand/remindme-logo";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -41,12 +41,9 @@ export function LoginForm() {
   });
 
   return (
-    <Card className="surface-auth w-full max-w-sm border-white/10">
+    <Card className="surface-auth surface-enter-auth w-full max-w-sm border-white/10">
       <CardHeader className="relative z-10 flex flex-col items-center gap-2">
-        <div className="flex items-center gap-2 text-primary">
-          <Bell className="h-8 w-8" aria-hidden="true" />
-          <span className="text-2xl font-bold">RemindMe</span>
-        </div>
+        <RemindMeLogo href="/" size="lg" auth />
         <CardTitle className="text-xl">Welcome back</CardTitle>
         <CardDescription className="text-center">
           Welcome back to your daily reminders
@@ -99,7 +96,7 @@ export function LoginForm() {
                 </FormItem>
               )}
             />
-            <Button type="submit" className="surface-cta w-full border-0" disabled={loginMutation.isPending}>
+            <Button type="submit" className="surface-cta surface-shine w-full border-0" disabled={loginMutation.isPending}>
               {loginMutation.isPending ? "Signing in..." : "Sign In"}
             </Button>
           </form>

@@ -58,5 +58,6 @@
   :root {
     --motion-fast: 0ms;
     --motion-base: 0ms;
+    --motion-enter: 0ms;
   }
 }

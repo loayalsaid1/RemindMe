@@ -1,12 +1,11 @@
 "use client";
 
-import { useState } from "react";
 import Image from "next/image";
 import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ImageIcon, Type, Upload, X } from "lucide-react";
-import { reminderDraftSchema, type ReminderDraft } from "@/schemas/reminder";
-import { useCreateReminder } from "@/hooks/use-reminders";
+import { Upload } from "lucide-react";
+import { reminderDraftSchema, type ReminderDraft, type ReminderFull } from "@/schemas/reminder";
+import { useUpdateReminder } from "@/hooks/use-reminders";
 import {
   Dialog,
   DialogContent,
@@ -18,84 +17,75 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { cn } from "@/lib/utils";
 
-interface AddReminderDialogProps {
+interface EditReminderDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  reminder: ReminderFull;
 }
 
-const emptyDraft: ReminderDraft = {
-  tab: "text",
-  text: "",
-  caption: "",
-  visibility: "private",
-  image: null,
-};
+export function EditReminderDialog({ open, onOpenChange, reminder }: EditReminderDialogProps) {
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="surface-card max-h-[90dvh] max-w-md overflow-y-auto border-white/10">
+        <DialogHeader>
+          <DialogTitle>Edit reminder</DialogTitle>
+        </DialogHeader>
+        {open ? (
+          <EditReminderForm reminder={reminder} onDone={() => onOpenChange(false)} />
+        ) : null}
+      </DialogContent>
+    </Dialog>
+  );
+}
 
-export function AddReminderDialog({ open, onOpenChange }: AddReminderDialogProps) {
-  const [fileKey, setFileKey] = useState(0);
-  const createReminder = useCreateReminder();
+function EditReminderForm({
+  reminder,
+  onDone,
+}: {
+  reminder: ReminderFull;
+  onDone: () => void;
+}) {
+  const updateReminder = useUpdateReminder();
   const form = useForm<ReminderDraft>({
     resolver: zodResolver(reminderDraftSchema),
-    defaultValues: emptyDraft,
+    defaultValues: {
+      tab: reminder.is_text ? "text" : "image",
+      text: reminder.text ?? "",
+      caption: reminder.caption ?? "",
+      visibility: reminder.public ? "public" : "private",
+      image: null,
+    },
   });
 
-  const tab = useWatch({ control: form.control, name: "tab" });
   const image = useWatch({ control: form.control, name: "image" });
-  const preview = image ? URL.createObjectURL(image) : null;
-
-  const reset = () => {
-    form.reset(emptyDraft);
-    setFileKey((value) => value + 1);
-  };
+  const preview = image ? URL.createObjectURL(image) : reminder.img_url;
 
   async function submitDraft(values: ReminderDraft) {
     if (values.tab === "text" && !values.text?.trim()) {
       form.setError("text", { message: "Text is required" });
       return;
     }
-    if (values.tab === "image" && !values.image) {
-      form.setError("image", { message: "Please select an image" });
-      return;
-    }
-    await createReminder.mutateAsync(values);
-    reset();
-    onOpenChange(false);
+    await updateReminder.mutateAsync({
+      id: reminder.id,
+      patch: values.tab === "text"
+        ? {
+            is_text: true,
+            text: values.text,
+            caption: values.caption || null,
+            public: values.visibility === "public",
+          }
+        : {
+            is_text: false,
+            caption: values.caption || null,
+            public: values.visibility === "public",
+            image: values.image ?? undefined,
+          },
+    });
+    onDone();
   }
 
   return (
-    <Dialog
-      open={open}
-      onOpenChange={(next) => {
-        onOpenChange(next);
-        if (!next) reset();
-      }}
-    >
-      <DialogContent className="surface-card max-h-[90dvh] max-w-md overflow-y-auto border-white/10">
-        <DialogHeader>
-          <DialogTitle>Add Reminder</DialogTitle>
-        </DialogHeader>
-
-        <div className="flex gap-2 rounded-md bg-muted p-1">
-          {(["text", "image"] as const).map((value) => (
-            <button
-              key={value}
-              type="button"
-              onClick={() => form.setValue("tab", value)}
-              className={cn(
-                "flex flex-1 items-center justify-center gap-1.5 rounded px-3 py-1.5 text-sm font-medium transition-colors",
-                tab === value
-                  ? "bg-card text-foreground shadow-sm"
-                  : "text-muted-foreground"
-              )}
-            >
-              {value === "text" ? <Type className="h-4 w-4" /> : <ImageIcon className="h-4 w-4" />}
-              {value === "text" ? "Text" : "Image"}
-            </button>
-          ))}
-        </div>
-
         <Form {...form}>
           <form
             onSubmit={(event) => {
@@ -103,7 +93,7 @@ export function AddReminderDialog({ open, onOpenChange }: AddReminderDialogProps
             }}
             className="flex flex-col gap-4"
           >
-            {tab === "text" ? (
+            {reminder.is_text ? (
               <FormField
                 control={form.control}
                 name="text"
@@ -125,8 +115,7 @@ export function AddReminderDialog({ open, onOpenChange }: AddReminderDialogProps
                   <FormItem>
                     <FormLabel>Image</FormLabel>
                     <input
-                      key={fileKey}
-                      id="reminder-image"
+                      id="edit-reminder-image"
                       type="file"
                       accept="image/*"
                       className="hidden"
@@ -137,23 +126,25 @@ export function AddReminderDialog({ open, onOpenChange }: AddReminderDialogProps
                     />
                     {preview ? (
                       <div className="surface-media relative aspect-[16/10] overflow-hidden rounded-md">
-                        <Image src={preview} alt="Preview" fill className="object-contain" sizes="400px" unoptimized />
-                        <button
-                          type="button"
-                          aria-label="Remove image"
-                          onClick={() => {
-                            form.setValue("image", null);
-                            setFileKey((value) => value + 1);
-                          }}
-                          className="absolute right-2 top-2 rounded-full bg-black/60 p-1 text-white"
+                        <Image
+                          src={preview}
+                          alt="Preview"
+                          fill
+                          className="object-contain"
+                          sizes="400px"
+                          unoptimized={preview.startsWith("blob:")}
+                        />
+                        <label
+                          htmlFor="edit-reminder-image"
+                          className="absolute bottom-2 right-2 cursor-pointer rounded-full bg-black/60 p-2 text-white"
                         >
-                          <X className="h-3.5 w-3.5" />
-                        </button>
+                          <Upload className="h-3.5 w-3.5" />
+                        </label>
                       </div>
                     ) : (
                       <label
-                        htmlFor="reminder-image"
-                        className="flex cursor-pointer flex-col items-center justify-center gap-2 rounded-md border-2 border-dashed border-border py-8 text-muted-foreground transition-colors hover:border-primary"
+                        htmlFor="edit-reminder-image"
+                        className="flex cursor-pointer flex-col items-center justify-center gap-2 rounded-md border-2 border-dashed border-border py-8 text-muted-foreground"
                       >
                         <Upload className="h-8 w-8" />
                         <span className="text-sm">Click to upload image</span>
@@ -187,12 +178,12 @@ export function AddReminderDialog({ open, onOpenChange }: AddReminderDialogProps
                   <FormControl>
                     <RadioGroup value={field.value} onValueChange={field.onChange} className="flex gap-4">
                       <div className="flex items-center gap-2">
-                        <RadioGroupItem value="private" id="vis-private" />
-                        <Label htmlFor="vis-private">Private</Label>
+                        <RadioGroupItem value="private" id="edit-vis-private" />
+                        <Label htmlFor="edit-vis-private">Private</Label>
                       </div>
                       <div className="flex items-center gap-2">
-                        <RadioGroupItem value="public" id="vis-public" />
-                        <Label htmlFor="vis-public">Public</Label>
+                        <RadioGroupItem value="public" id="edit-vis-public" />
+                        <Label htmlFor="edit-vis-public">Public</Label>
                       </div>
                     </RadioGroup>
                   </FormControl>
@@ -200,12 +191,10 @@ export function AddReminderDialog({ open, onOpenChange }: AddReminderDialogProps
               )}
             />
 
-            <Button type="submit" className="surface-cta surface-shine border-0" disabled={createReminder.isPending}>
-              {createReminder.isPending ? "Creating..." : "Create Reminder"}
+            <Button type="submit" className="surface-cta surface-shine border-0" disabled={updateReminder.isPending}>
+              {updateReminder.isPending ? "Saving..." : "Save reminder"}
             </Button>
           </form>
         </Form>
-      </DialogContent>
-    </Dialog>
   );
 }

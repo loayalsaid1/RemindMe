@@ -4,7 +4,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createReminder, deleteReminder, getPublicReminders, getUserReminders, updateReminder } from "@/api/reminders";
 import { queryKeys } from "@/lib/query-keys";
 import { useToast } from "@/hooks/use-toast";
-import type { ReminderDraft, ReminderFull } from "@/schemas/reminder";
+import type { ReminderDraft } from "@/schemas/reminder";
 
 export function useMyReminders(userId: string | undefined) {
   return useQuery({
@@ -62,11 +62,28 @@ export function useUpdateReminder() {
       patch,
     }: {
       id: string;
-      patch: Partial<Pick<ReminderFull, "text" | "caption" | "public">>;
+      patch: {
+        text?: string | null;
+        caption?: string | null;
+        public?: boolean;
+        is_text?: boolean;
+        image?: File | null;
+      };
     }) => updateReminder(id, patch),
-    onSuccess: (updated) => {
+    onSuccess: (_updated, variables) => {
       queryClient.invalidateQueries({ queryKey: queryKeys.reminders.all });
-      toast({ title: updated.public ? "Set to public" : "Set to private" });
+      const onlyVisibility =
+        variables.patch.public !== undefined &&
+        variables.patch.text === undefined &&
+        variables.patch.caption === undefined &&
+        !variables.patch.image;
+      toast({
+        title: onlyVisibility
+          ? variables.patch.public
+            ? "Set to public"
+            : "Set to private"
+          : "Reminder updated",
+      });
     },
     onError: () => {
       toast({ title: "Failed to update", variant: "destructive" });

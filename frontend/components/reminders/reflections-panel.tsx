@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+import Image from "next/image";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { formatDistanceToNow } from "date-fns";
@@ -39,21 +41,26 @@ export function ReflectionsPanel({ reminder, onClose }: ReflectionsPanelProps) {
   });
 
   return (
-    <aside className="surface-panel flex h-full w-80 flex-col border-l border-white/10">
+    <aside className="surface-panel surface-enter-panel fixed inset-x-0 bottom-0 z-40 flex h-[70dvh] flex-col border-t border-white/10 md:static md:h-full md:w-80 md:border-l md:border-t-0">
       <div className="flex items-center justify-between border-b border-white/10 px-4 py-3">
         <h3 className="text-sm font-semibold">Reflections</h3>
-        <Button variant="ghost" size="icon" className="h-7 w-7" onClick={onClose} aria-label="Close reflections">
+        <Button variant="ghost" size="icon" className="h-11 w-11 md:h-7 md:w-7" onClick={onClose} aria-label="Close reflections">
           <X className="h-4 w-4" />
         </Button>
       </div>
 
       <div className="border-b border-white/10 px-4 py-3">
         {reminder.is_text ? (
-          <p className="line-clamp-3 text-xs text-muted-foreground">{reminder.text}</p>
+          <p className="line-clamp-4 text-sm text-foreground">{reminder.text}</p>
+        ) : reminder.img_url ? (
+          <div className="surface-media relative mx-auto h-28 w-full overflow-hidden rounded-md">
+            <Image src={reminder.img_url} alt={reminder.caption ?? "Reminder"} fill className="object-contain" sizes="320px" />
+          </div>
         ) : (
-          <p className="text-xs italic text-muted-foreground">
-            Image reminder {reminder.caption ? `— ${reminder.caption}` : ""}
-          </p>
+          <p className="text-xs italic text-muted-foreground">Image reminder</p>
+        )}
+        {reminder.caption && (
+          <p className="mt-2 text-xs italic text-muted-foreground">{reminder.caption}</p>
         )}
       </div>
 
@@ -75,22 +82,38 @@ export function ReflectionsPanel({ reminder, onClose }: ReflectionsPanelProps) {
                   .toUpperCase() ?? "?";
               const isOwn = user?.id === reflection.user_id;
               const stamp = Date.parse(reflection.updated_at);
+              const profileHref = reflection.username ? `/user/${reflection.username}` : undefined;
 
               return (
                 <div key={reflection.id} className="flex flex-col gap-1.5">
                   <div className="flex items-start gap-2">
-                    <Avatar className="h-7 w-7 shrink-0">
-                      <AvatarImage src={reflection.user_img_url ?? ""} alt={reflection.user_full_name} />
-                      <AvatarFallback className="text-xs">{initials}</AvatarFallback>
-                    </Avatar>
+                    {profileHref ? (
+                      <Link href={profileHref} className="shrink-0" aria-label={`${reflection.user_full_name} profile`}>
+                        <Avatar className="h-7 w-7">
+                          <AvatarImage src={reflection.user_img_url ?? ""} alt={reflection.user_full_name} />
+                          <AvatarFallback className="text-xs">{initials}</AvatarFallback>
+                        </Avatar>
+                      </Link>
+                    ) : (
+                      <Avatar className="h-7 w-7 shrink-0">
+                        <AvatarImage src={reflection.user_img_url ?? ""} alt={reflection.user_full_name} />
+                        <AvatarFallback className="text-xs">{initials}</AvatarFallback>
+                      </Avatar>
+                    )}
                     <div className="min-w-0 flex-1">
                       <div className="flex items-center justify-between gap-1">
-                        <span className="truncate text-xs font-medium">{reflection.user_full_name}</span>
+                        {profileHref ? (
+                          <Link href={profileHref} className="truncate text-xs font-medium hover:text-brand hover:underline">
+                            {reflection.user_full_name}
+                          </Link>
+                        ) : (
+                          <span className="truncate text-xs font-medium">{reflection.user_full_name}</span>
+                        )}
                         {isOwn && (
                           <Button
                             variant="ghost"
                             size="icon"
-                            className="h-5 w-5 shrink-0 text-muted-foreground hover:text-destructive"
+                            className="h-8 w-8 shrink-0 text-muted-foreground hover:text-destructive"
                             aria-label="Delete reflection"
                             onClick={() => deleteReflection.mutate(reflection.id)}
                           >
@@ -98,7 +121,13 @@ export function ReflectionsPanel({ reminder, onClose }: ReflectionsPanelProps) {
                           </Button>
                         )}
                       </div>
-                      <p className="text-xs text-muted-foreground">@{reflection.username}</p>
+                      {profileHref ? (
+                        <Link href={profileHref} className="text-xs text-muted-foreground hover:text-brand hover:underline">
+                          @{reflection.username}
+                        </Link>
+                      ) : (
+                        <p className="text-xs text-muted-foreground">@{reflection.username}</p>
+                      )}
                     </div>
                   </div>
                   <p className="pl-9 text-sm leading-snug">{reflection.content}</p>
@@ -132,7 +161,7 @@ export function ReflectionsPanel({ reminder, onClose }: ReflectionsPanelProps) {
           <Button
             type="submit"
             size="icon"
-            className="surface-cta border-0"
+            className="surface-cta surface-shine h-11 w-11 border-0"
             disabled={createReflection.isPending}
             aria-label="Send reflection"
           >

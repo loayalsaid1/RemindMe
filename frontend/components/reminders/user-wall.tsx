@@ -8,6 +8,7 @@ import { AppShell, PageHeading } from "@/components/layout/app-shell";
 import { Header } from "@/components/layout/header";
 import { ReminderGrid } from "@/components/reminders/reminder-grid";
 import { AddReminderDialog } from "@/components/reminders/add-reminder-dialog";
+import { EditProfileDialog } from "@/components/profile/edit-profile-dialog";
 import { ApiError } from "@/lib/api-error";
 import type { ReminderFull } from "@/schemas/reminder";
 
@@ -19,6 +20,7 @@ export function UserWall({ username }: { username: string }) {
   const { data: reminders = [], isLoading } = useUserReminders(profileUser?.id, isOwn);
   const [selectedReminder, setSelectedReminder] = useState<ReminderFull | null>(null);
   const [addOpen, setAddOpen] = useState(false);
+  const [editProfileOpen, setEditProfileOpen] = useState(false);
 
   const notFound = !isOwn && profileQuery.isError && profileQuery.error instanceof ApiError
     ? profileQuery.error.status === 404
@@ -41,6 +43,7 @@ export function UserWall({ username }: { username: string }) {
         profileUser={profileUser}
         isOwnProfile={isOwn}
         onAddReminder={() => setAddOpen(true)}
+        onEditProfile={isOwn ? () => setEditProfileOpen(true) : undefined}
         selectedReminder={selectedReminder}
         onCloseReflections={() => setSelectedReminder(null)}
       >
@@ -55,6 +58,9 @@ export function UserWall({ username }: { username: string }) {
         />
       </AppShell>
       {isOwn && <AddReminderDialog open={addOpen} onOpenChange={setAddOpen} />}
+      {isOwn && authUser && (
+        <EditProfileDialog open={editProfileOpen} onOpenChange={setEditProfileOpen} user={authUser} />
+      )}
     </>
   );
 }

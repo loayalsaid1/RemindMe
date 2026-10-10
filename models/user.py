@@ -46,6 +46,8 @@ class User(UserMixin, BaseModel, Base):
         gender = ""
         description = ""
         img_url = None
+        longest_streak_id = None
+        current_streak_id = None
 
         @property
         def reminders(self):

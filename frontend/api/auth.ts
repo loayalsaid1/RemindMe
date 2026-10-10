@@ -1,3 +1,4 @@
+import { z } from "zod";
 import { http } from "@/lib/http";
 import {
   loginDraftSchema,
@@ -30,6 +31,16 @@ export async function logout(): Promise<void> {
 export async function getMe(): Promise<UserFull> {
   const data = await http<unknown>("/api/v1/auth/me");
   return userFullSchema.parse(data);
+}
+
+export async function uploadImage(file: File): Promise<string> {
+  const formData = new FormData();
+  formData.append("image", file);
+  const data = await http<unknown>("/api/v1/auth/upload", {
+    method: "POST",
+    body: formData,
+  });
+  return z.object({ url: z.string() }).parse(data).url;
 }
 
 export async function registerUser(draft: RegisterDraft): Promise<UserFull> {

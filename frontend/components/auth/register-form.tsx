@@ -3,10 +3,10 @@
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Bell } from "lucide-react";
 import { registerDraftSchema, type RegisterDraft } from "@/schemas/user";
 import { useRegister } from "@/hooks/use-auth";
 import { useToast } from "@/hooks/use-toast";
+import { RemindMeLogo } from "@/components/brand/remindme-logo";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -47,12 +47,9 @@ export function RegisterForm() {
   });
 
   return (
-    <Card className="surface-auth w-full max-w-sm border-white/10">
+    <Card className="surface-auth surface-enter-auth w-full max-w-sm border-white/10">
       <CardHeader className="relative z-10 flex flex-col items-center gap-2">
-        <div className="flex items-center gap-2 text-primary">
-          <Bell className="h-8 w-8" aria-hidden="true" />
-          <span className="text-2xl font-bold">RemindMe</span>
-        </div>
+        <RemindMeLogo href="/" size="lg" auth />
         <CardTitle className="text-xl">Create an account</CardTitle>
         <CardDescription className="text-center text-xs">
           Everyday, refresh ideas, principles, inspirations or whys you want to live with
@@ -133,7 +130,7 @@ export function RegisterForm() {
                 </FormItem>
               )}
             />
-            <Button type="submit" className="surface-cta mt-1 w-full border-0" disabled={registerMutation.isPending}>
+            <Button type="submit" className="surface-cta surface-shine mt-1 w-full border-0" disabled={registerMutation.isPending}>
               {registerMutation.isPending ? "Creating account..." : "Create Account"}
             </Button>
           </form>

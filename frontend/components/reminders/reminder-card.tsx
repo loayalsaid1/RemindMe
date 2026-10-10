@@ -13,6 +13,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
+import { EditReminderDialog } from "@/components/reminders/edit-reminder-dialog";
 import { useDeleteReminder, useUpdateReminder } from "@/hooks/use-reminders";
 
 interface ReminderCardProps {
@@ -27,46 +28,57 @@ export function ReminderCard({
   onShowReflections,
 }: ReminderCardProps) {
   const [zoomed, setZoomed] = useState(false);
+  const [editing, setEditing] = useState(false);
+  const [captionOpen, setCaptionOpen] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
   const deleteReminder = useDeleteReminder();
   const updateReminder = useUpdateReminder();
+  const longCaption = Boolean(reminder.caption && reminder.caption.length > 70);
 
   return (
     <>
       <article
         className={cn(
-          "surface-card group relative flex aspect-square cursor-pointer items-center justify-center overflow-hidden rounded-lg border border-white/10"
+          "surface-card surface-enter-stagger group relative aspect-[16/10] overflow-hidden rounded-xl border border-white/10"
         )}
+        onClick={() => setMobileOpen((value) => !value)}
       >
-        {reminder.is_text ? (
-          <div className="p-4 text-center">
-            <p className="line-clamp-6 text-sm leading-relaxed text-foreground">
+        <div className="surface-media absolute inset-0 flex items-center justify-center overflow-hidden">
+          {reminder.is_text ? (
+            <p className="line-clamp-6 px-4 text-center text-sm font-bold leading-relaxed tracking-wide text-transparent [background-image:linear-gradient(to_bottom,#fff,#e0e0e0)] bg-clip-text group-hover:text-white group-hover:[background-image:none] sm:text-base">
               {reminder.text}
             </p>
-          </div>
-        ) : reminder.img_url ? (
-          <Image
-            src={reminder.img_url}
-            alt={reminder.caption ?? "Reminder image"}
-            fill
-            className="object-cover"
-            sizes="(max-width: 768px) 50vw, 33vw"
-          />
-        ) : (
-          <div className="p-4 text-center text-xs text-muted-foreground">No content</div>
-        )}
+          ) : reminder.img_url ? (
+            <Image
+              src={reminder.img_url}
+              alt={reminder.caption ?? "Reminder image"}
+              fill
+              className="object-contain p-1"
+              sizes="(max-width: 768px) 50vw, 33vw"
+            />
+          ) : (
+            <div className="p-4 text-center text-xs text-muted-foreground">No content</div>
+          )}
+        </div>
 
         {!reminder.public && (
-          <div className="absolute left-2 top-2 text-muted-foreground">
-            <Lock className="h-3.5 w-3.5" aria-label="Private reminder" />
+          <div className="surface-icon absolute left-2 top-2 z-10 flex h-9 w-9 items-center justify-center rounded-full">
+            <Lock className="h-4 w-4" aria-label="Private reminder" />
           </div>
         )}
 
-        <div className="surface-overlay absolute inset-0 flex flex-col justify-between p-3 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100">
+        <div
+          className={cn(
+            "surface-overlay pointer-events-none absolute inset-0 z-20 flex flex-col justify-between p-3 opacity-0 transition-opacity",
+            "md:group-hover:pointer-events-auto md:group-hover:opacity-100 md:group-focus-within:pointer-events-auto md:group-focus-within:opacity-100",
+            mobileOpen && "pointer-events-auto opacity-100"
+          )}
+        >
           <div className="flex items-start justify-end gap-1">
             <Button
               variant="ghost"
               size="icon"
-              className="h-7 w-7 text-white hover:bg-white/20"
+              className="surface-icon h-11 w-11 rounded-full hover:bg-transparent md:h-9 md:w-9"
               aria-label="Zoom reminder"
               onClick={(event) => {
                 event.stopPropagation();
@@ -81,7 +93,7 @@ export function ReminderCard({
                   <Button
                     variant="ghost"
                     size="icon"
-                    className="h-7 w-7 text-white hover:bg-white/20"
+                    className="surface-icon h-11 w-11 rounded-full hover:bg-transparent md:h-9 md:w-9"
                     aria-label="Reminder actions"
                     onClick={(event) => event.stopPropagation()}
                   >
@@ -89,6 +101,9 @@ export function ReminderCard({
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
+                  <DropdownMenuItem onClick={() => setEditing(true)}>
+                    <Edit className="mr-2 h-4 w-4" /> Edit
+                  </DropdownMenuItem>
                   <DropdownMenuItem
                     onClick={() =>
                       updateReminder.mutate({
@@ -108,7 +123,11 @@ export function ReminderCard({
                     )}
                   </DropdownMenuItem>
                   <DropdownMenuItem
-                    onClick={() => deleteReminder.mutate(reminder.id)}
+                    onClick={() => {
+                      if (window.confirm("You are deleting one of your reminders now!")) {
+                        deleteReminder.mutate(reminder.id);
+                      }
+                    }}
                     className="text-destructive"
                   >
                     <Trash2 className="mr-2 h-4 w-4" />
@@ -119,14 +138,27 @@ export function ReminderCard({
             )}
           </div>
 
-          <div className="flex flex-col gap-1">
+          <div className="flex flex-col items-center gap-2">
             {reminder.caption && (
-              <p className="line-clamp-2 text-xs text-white/90">{reminder.caption}</p>
+              <button
+                type="button"
+                className="max-h-[40%] max-w-[90%] overflow-auto rounded-lg bg-white/5 px-3 py-2 text-center text-xs font-semibold tracking-wide text-white"
+                onClick={(event) => {
+                  event.stopPropagation();
+                  if (longCaption) setCaptionOpen((value) => !value);
+                }}
+              >
+                {captionOpen || !longCaption ? reminder.caption : `${reminder.caption.slice(0, 70)}...`}
+                {longCaption && (
+                  <span className="mt-1 block text-[10px] font-normal text-brand">
+                    {captionOpen ? "Show less" : "Show more"}
+                  </span>
+                )}
+              </button>
             )}
             <Button
-              variant="ghost"
               size="sm"
-              className="h-7 justify-start px-1 text-xs text-white hover:bg-white/20"
+              className="surface-cta surface-shine h-11 border-0 px-4 text-xs md:h-8"
               onClick={(event) => {
                 event.stopPropagation();
                 onShowReflections?.(reminder);
@@ -140,31 +172,37 @@ export function ReminderCard({
       </article>
 
       <Dialog open={zoomed} onOpenChange={setZoomed}>
-        <DialogContent className="max-w-3xl">
+        <DialogContent className="surface-magnify max-h-[92dvh] w-[min(96vw,72rem)] max-w-none overflow-y-auto border-white/10 p-3 sm:p-6">
           <DialogTitle className="sr-only">{reminder.caption ?? "Reminder"}</DialogTitle>
           {reminder.is_text ? (
-            <div className="p-4">
-              <p className="whitespace-pre-wrap text-base leading-relaxed">{reminder.text}</p>
+            <div className="max-h-[80dvh] overflow-auto p-4 sm:p-8">
+              <p className="whitespace-pre-wrap text-base leading-relaxed sm:text-xl">{reminder.text}</p>
               {reminder.caption && (
                 <p className="mt-4 text-sm italic text-muted-foreground">{reminder.caption}</p>
               )}
             </div>
           ) : reminder.img_url ? (
-            <div className="relative aspect-video w-full">
-              <Image
-                src={reminder.img_url}
-                alt={reminder.caption ?? "Reminder"}
-                fill
-                className="object-contain"
-                sizes="80vw"
-              />
+            <div className="flex flex-col gap-3">
+              <div className="relative mx-auto max-h-[78dvh] w-full min-h-[50vh]">
+                <Image
+                  src={reminder.img_url}
+                  alt={reminder.caption ?? "Reminder"}
+                  fill
+                  className="object-contain"
+                  sizes="96vw"
+                />
+              </div>
               {reminder.caption && (
-                <p className="mt-4 text-sm italic text-muted-foreground">{reminder.caption}</p>
+                <p className="text-sm italic text-muted-foreground">{reminder.caption}</p>
               )}
             </div>
           ) : null}
         </DialogContent>
       </Dialog>
+
+      {isOwner && (
+        <EditReminderDialog open={editing} onOpenChange={setEditing} reminder={reminder} />
+      )}
     </>
   );
 }

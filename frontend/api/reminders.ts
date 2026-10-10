@@ -52,11 +52,35 @@ export async function createReminder(draft: ReminderDraft): Promise<ReminderFull
 
 export async function updateReminder(
   id: string,
-  patch: Partial<Pick<ReminderFull, "text" | "caption" | "public">>
+  patch: {
+    text?: string | null;
+    caption?: string | null;
+    public?: boolean;
+    is_text?: boolean;
+    image?: File | null;
+  }
 ): Promise<ReminderFull> {
+  if (patch.image) {
+    const formData = new FormData();
+    formData.append("reminder_image", patch.image);
+    formData.append("is_text", "false");
+    if (patch.caption !== undefined) formData.append("caption", patch.caption ?? "");
+    if (patch.public !== undefined) formData.append("public", String(patch.public));
+    const data = await http<unknown>(`/api/v1/reminders/${id}`, {
+      method: "PUT",
+      body: formData,
+    });
+    return reminderFullSchema.parse(data);
+  }
+
+  const body: Record<string, unknown> = {};
+  if (patch.text !== undefined) body.text = patch.text;
+  if (patch.caption !== undefined) body.caption = patch.caption;
+  if (patch.public !== undefined) body.public = patch.public;
+  if (patch.is_text !== undefined) body.is_text = patch.is_text;
   const data = await http<unknown>(`/api/v1/reminders/${id}`, {
     method: "PUT",
-    body: JSON.stringify(patch),
+    body: JSON.stringify(body),
   });
   return reminderFullSchema.parse(data);
 }

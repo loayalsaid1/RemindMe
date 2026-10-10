@@ -58,22 +58,40 @@
 }
 
 .surface-card {
-  background: linear-gradient(to bottom, var(--ink-700), var(--ink-800));
+  background: linear-gradient(to bottom, var(--ink-700-soft), var(--ink-900));
   box-shadow: var(--shadow-card);
   transition: transform var(--motion-base) ease, box-shadow var(--motion-base) ease;
 }
 
+.surface-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at top right, rgb(141 214 214 / 0.05), transparent 70%);
+  pointer-events: none;
+  z-index: 1;
+}
+
 .surface-card:hover {
-  transform: translateY(-2px);
+  transform: translateY(-8px) scale(1.02);
   box-shadow: var(--shadow-hover);
 }
 
+.surface-media {
+  background:
+    radial-gradient(circle at top right, rgb(141 214 214 / 0.08), transparent 55%),
+    linear-gradient(to bottom, var(--ink-700), var(--ink-900));
+}
+
 .surface-overlay {
-  background: linear-gradient(to bottom, rgb(44 62 80 / 0.2), rgb(0 0 0 / 0.72));
+  background: linear-gradient(to bottom, rgb(53 76 92 / 0.85), rgb(44 62 80 / 0.92));
+  backdrop-filter: blur(3px);
   transition: opacity var(--motion-fast) ease;
 }
 
 .surface-cta {
+  position: relative;
+  overflow: hidden;
   background: linear-gradient(to bottom, var(--brand), var(--brand-dark));
   color: var(--ink-900);
   box-shadow: var(--shadow-button);
@@ -89,5 +107,217 @@
 }
 
 .surface-shine {
-  background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.12), transparent);
+  position: relative;
+  overflow: hidden;
+}
+
+.surface-shine::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.22), transparent);
+  transform: translateX(-120%);
+}
+
+.surface-shine:hover::after,
+.surface-shine:focus-visible::after {
+  animation: shine-sweep 0.5s ease;
+}
+
+.surface-logo {
+  position: relative;
+  display: inline-flex;
+  filter: drop-shadow(0 2px 5px rgb(0 0 0 / 0.3));
+  transition: transform var(--motion-base) ease, filter var(--motion-base) ease;
+}
+
+.surface-logo::after {
+  content: "";
+  position: absolute;
+  bottom: -0.55rem;
+  left: 50%;
+  width: 60%;
+  height: 10px;
+  border-radius: 9999px;
+  background: radial-gradient(ellipse at center, rgb(141 214 214 / 0.28), transparent 70%);
+  transform: translateX(-50%);
+  filter: blur(3px);
+  pointer-events: none;
+}
+
+.surface-logo:hover {
+  transform: scale(1.03);
+  filter: drop-shadow(0 3px 7px rgb(0 0 0 / 0.4)) brightness(1.1);
+}
+
+.surface-logo-auth {
+  filter: drop-shadow(0 4px 6px rgb(0 0 0 / 0.3));
+}
+
+.surface-logo-auth::after {
+  width: 70%;
+  height: 15px;
+  background: radial-gradient(ellipse at center, rgb(141 214 214 / 0.35), transparent 70%);
+  filter: blur(4px);
+}
+
+.surface-logo-auth:hover {
+  transform: scale(1.05);
+  filter: drop-shadow(0 6px 10px rgb(0 0 0 / 0.35)) brightness(1.15);
+}
+
+.surface-icon {
+  color: #fff;
+  background: linear-gradient(to bottom, var(--ink-700), var(--ink-900));
+  box-shadow: 0 4px 8px rgb(0 0 0 / 0.25), inset 0 1px 0 rgb(255 255 255 / 0.12);
+}
+
+.surface-icon:hover,
+.surface-icon:focus-visible {
+  background: linear-gradient(to bottom, var(--brand), var(--brand-dark));
+  color: var(--ink-900);
+  transform: scale(1.08);
+}
+
+.surface-streak {
+  color: var(--brand);
+  text-shadow: 0 0 10px rgb(141 214 214 / 0.45), 0 2px 4px rgb(0 0 0 / 0.4);
+  transition: transform var(--motion-base) ease, text-shadow var(--motion-base) ease;
+}
+
+.surface-streak:hover {
+  transform: scale(1.1);
+  text-shadow: 0 0 15px rgb(141 214 214 / 0.65), 0 2px 5px rgb(0 0 0 / 0.5);
+}
+
+.surface-magnify {
+  background: linear-gradient(to bottom, var(--ink-800), var(--ink-900));
+}
+
+.surface-enter {
+  animation: enter-rise var(--motion-enter) ease-out backwards;
+}
+
+.surface-enter-header {
+  animation: enter-down var(--motion-enter) ease-out backwards;
+}
+
+.surface-enter-sidebar {
+  animation: enter-right var(--motion-enter) ease-out backwards;
+  animation-delay: 40ms;
+}
+
+.surface-enter-main {
+  animation: enter-fade var(--motion-enter) ease-out backwards;
+  animation-delay: 80ms;
+}
+
+.surface-enter-auth {
+  animation: enter-rise 320ms ease-out backwards;
+}
+
+.surface-enter-panel {
+  animation: enter-left var(--motion-enter) ease-out backwards;
+}
+
+.surface-enter-stagger {
+  animation: enter-rise var(--motion-enter) ease-out backwards;
+}
+
+.surface-enter-stagger:nth-child(1) { animation-delay: 90ms; }
+.surface-enter-stagger:nth-child(2) { animation-delay: 130ms; }
+.surface-enter-stagger:nth-child(3) { animation-delay: 170ms; }
+.surface-enter-stagger:nth-child(4) { animation-delay: 210ms; }
+.surface-enter-stagger:nth-child(5) { animation-delay: 250ms; }
+.surface-enter-stagger:nth-child(6) { animation-delay: 290ms; }
+.surface-enter-stagger:nth-child(7) { animation-delay: 330ms; }
+.surface-enter-stagger:nth-child(8) { animation-delay: 370ms; }
+.surface-enter-stagger:nth-child(n + 9) { animation-delay: 400ms; }
+
+@keyframes shine-sweep {
+  from {
+    transform: translateX(-120%);
+  }
+  to {
+    transform: translateX(120%);
+  }
+}
+
+@keyframes enter-rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes enter-down {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes enter-right {
+  from {
+    opacity: 0;
+    transform: translateX(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes enter-left {
+  from {
+    opacity: 0;
+    transform: translateX(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes enter-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .surface-card:hover,
+  .surface-logo:hover,
+  .surface-logo-auth:hover,
+  .surface-icon:hover,
+  .surface-streak:hover {
+    transform: none;
+  }
+
+  .surface-shine:hover::after,
+  .surface-shine:focus-visible::after {
+    animation: none;
+  }
+
+  .surface-enter,
+  .surface-enter-header,
+  .surface-enter-sidebar,
+  .surface-enter-main,
+  .surface-enter-auth,
+  .surface-enter-panel,
+  .surface-enter-stagger {
+    animation: none;
+  }
 }

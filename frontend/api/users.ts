@@ -1,4 +1,5 @@
 import { http } from "@/lib/http";
+import { ApiError } from "@/lib/api-error";
 import {
   profileDraftSchema,
   userFullSchema,
@@ -30,7 +31,10 @@ export async function checkUsername(username: string): Promise<{ exists: boolean
   try {
     const data = await http<unknown>(`/api/v1/check_user/${encodeURIComponent(username)}`);
     return usernameExistsSchema.parse(data);
-  } catch {
-    return { exists: false };
+  } catch (error) {
+    if (error instanceof ApiError && error.status === 404) {
+      return { exists: false };
+    }
+    throw error;
   }
 }

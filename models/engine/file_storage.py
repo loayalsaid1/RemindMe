@@ -78,3 +78,14 @@ class FileStorage:
             return objects
         else:
             return None
+
+    def close(self):
+        """No-op so Flask teardown can share FileStorage and DBStorage."""
+        return None
+
+    def get_user_by_email(self, email):
+        """Get a user by email from file storage."""
+        found = self.filter_objects(User, "email", email)
+        if found:
+            return found[0]
+        return None
