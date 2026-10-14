@@ -31,20 +31,25 @@ export function AppShell({
 }: AppShellProps) {
   return (
     <div className="relative z-10 flex h-dvh flex-col">
-      <Header onSearch={onSearch} searchPlaceholder={searchPlaceholder} />
+      <Header
+        onSearch={onSearch}
+        searchPlaceholder={searchPlaceholder}
+        isOwnProfile={isOwnProfile}
+        onAddReminder={onAddReminder}
+      />
       <div className="flex min-h-0 flex-1 overflow-hidden">
         <Sidebar
           profileUser={profileUser}
           isOwnProfile={isOwnProfile}
           onAddReminder={onAddReminder}
         />
-        {/* pb-16 on mobile so content clears the fixed bottom nav */}
-        <main className="min-w-0 flex-1 overflow-y-auto pb-16 md:pb-0">{children}</main>
+        {/* pb-20 on mobile to comfortably clear the fixed 3-tab bottom nav */}
+        <main className="min-w-0 flex-1 overflow-y-auto pb-20 md:pb-0">{children}</main>
         {selectedReminder && onCloseReflections && (
           <ReflectionsPanel reminder={selectedReminder} onClose={onCloseReflections} />
         )}
       </div>
-      <MobileNav isOwnProfile={isOwnProfile} onAddReminder={onAddReminder} />
+      <MobileNav />
     </div>
   );
 }

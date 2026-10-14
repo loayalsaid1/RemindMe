@@ -11,12 +11,9 @@ interface ReminderGridProps {
   emptyMessage?: string;
 }
 
-// Minimum card width — cards auto-fill the available space.
-// When the reflections panel is open the main column shrinks but cards
-// won't go below this minimum, so they just stack fewer per row instead
-// of being crushed into unusably thin columns.
+// Responsive card grid: 2 columns on mobile, auto-fill on tablet and desktop.
 const GRID_CLASS =
-  "grid gap-3 p-4 [grid-template-columns:repeat(auto-fill,minmax(250px,1fr))]";
+  "grid grid-cols-2 gap-2.5 p-3 sm:gap-3 sm:p-4 sm:[grid-template-columns:repeat(auto-fill,minmax(250px,1fr))]";
 
 export function ReminderGrid({
   reminders,
