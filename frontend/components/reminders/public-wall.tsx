@@ -15,13 +15,19 @@ export function PublicWall() {
     if (!search.trim()) return reminders;
     const query = search.toLowerCase();
     return reminders.filter(
-      (item) => item.text?.toLowerCase().includes(query) || item.caption?.toLowerCase().includes(query)
+      (item) =>
+        item.text?.toLowerCase().includes(query) ||
+        item.caption?.toLowerCase().includes(query) ||
+        // username search — the field comes from the serializer as passthrough
+        (item as Record<string, unknown>)["username"]?.toString().toLowerCase().includes(query) ||
+        (item as Record<string, unknown>)["user_name"]?.toString().toLowerCase().includes(query)
     );
   }, [reminders, search]);
 
   return (
     <AppShell
       onSearch={setSearch}
+      searchPlaceholder="Search by username or text…"
       selectedReminder={selectedReminder}
       onCloseReflections={() => setSelectedReminder(null)}
     >
@@ -34,6 +40,7 @@ export function PublicWall() {
         isOwner={false}
         isLoading={isLoading}
         onShowReflections={setSelectedReminder}
+        emptyMessage="No public reminders found"
       />
     </AppShell>
   );

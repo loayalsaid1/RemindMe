@@ -32,6 +32,15 @@ def user_public_dict(user):
     return data
 
 
+def reminder_public_dict(reminder):
+    """Reminder JSON with denormalized author username for frontend search."""
+    data = reminder.to_dict()
+    if hasattr(reminder, "user") and reminder.user:
+        data["username"] = reminder.user.user_name
+        data["user_full_name"] = f"{reminder.user.first_name} {reminder.user.last_name}"
+    return data
+
+
 def reflection_public_dict(reflection):
     """Reflection JSON with denormalized author fields the UI already expects."""
     data = reflection.to_dict()

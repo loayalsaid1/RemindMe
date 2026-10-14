@@ -2,6 +2,7 @@
 
 import { Header } from "@/components/layout/header";
 import { Sidebar } from "@/components/layout/sidebar";
+import { MobileNav } from "@/components/layout/mobile-nav";
 import { cn } from "@/lib/utils";
 import type { UserFull } from "@/schemas/user";
 import type { ReminderFull } from "@/schemas/reminder";
@@ -10,6 +11,7 @@ import { ReflectionsPanel } from "@/components/reminders/reflections-panel";
 interface AppShellProps {
   children: React.ReactNode;
   onSearch?: (query: string) => void;
+  searchPlaceholder?: string;
   profileUser?: UserFull | null;
   isOwnProfile?: boolean;
   onAddReminder?: () => void;
@@ -20,6 +22,7 @@ interface AppShellProps {
 export function AppShell({
   children,
   onSearch,
+  searchPlaceholder,
   profileUser,
   isOwnProfile,
   onAddReminder,
@@ -28,18 +31,20 @@ export function AppShell({
 }: AppShellProps) {
   return (
     <div className="relative z-10 flex h-dvh flex-col">
-      <Header onSearch={onSearch} />
+      <Header onSearch={onSearch} searchPlaceholder={searchPlaceholder} />
       <div className="flex min-h-0 flex-1 overflow-hidden">
         <Sidebar
           profileUser={profileUser}
           isOwnProfile={isOwnProfile}
           onAddReminder={onAddReminder}
         />
-        <main className="min-w-0 flex-1 overflow-y-auto">{children}</main>
+        {/* pb-16 on mobile so content clears the fixed bottom nav */}
+        <main className="min-w-0 flex-1 overflow-y-auto pb-16 md:pb-0">{children}</main>
         {selectedReminder && onCloseReflections && (
           <ReflectionsPanel reminder={selectedReminder} onClose={onCloseReflections} />
         )}
       </div>
+      <MobileNav isOwnProfile={isOwnProfile} onAddReminder={onAddReminder} />
     </div>
   );
 }

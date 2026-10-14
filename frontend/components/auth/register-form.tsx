@@ -1,9 +1,9 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Bell } from "lucide-react";
 import { registerDraftSchema, type RegisterDraft } from "@/schemas/user";
 import { useRegister } from "@/hooks/use-auth";
 import { useToast } from "@/hooks/use-toast";
@@ -49,9 +49,8 @@ export function RegisterForm() {
   return (
     <Card className="surface-auth w-full max-w-sm border-white/10">
       <CardHeader className="relative z-10 flex flex-col items-center gap-2">
-        <div className="flex items-center gap-2 text-primary">
-          <Bell className="h-8 w-8" aria-hidden="true" />
-          <span className="text-2xl font-bold">RemindMe</span>
+        <div className="logo-glow relative mx-auto h-14 w-48">
+          <Image src="/logo.png" alt="RemindMe" fill className="object-contain drop-shadow-lg" />
         </div>
         <CardTitle className="text-xl">Create an account</CardTitle>
         <CardDescription className="text-center text-xs">

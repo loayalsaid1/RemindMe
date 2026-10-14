@@ -42,9 +42,11 @@ def get_reflections_by_user(user_id):
         abort(404, description="User not found")
 
     reflections = storage.all(Reflection).values()
-    for reflection in reflections:
-        if reflection.user_id == user_id:
-            user_reflections = reflection.to_dict()
+    user_reflections = [
+        reflection.to_dict()
+        for reflection in reflections
+        if reflection.user_id == user_id
+    ]
     return jsonify(user_reflections)
 
 

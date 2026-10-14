@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useCurrentUser } from "@/hooks/use-auth";
 import { useUserByUsername } from "@/hooks/use-user-profile";
 import { useUserReminders } from "@/hooks/use-reminders";
@@ -19,6 +19,17 @@ export function UserWall({ username }: { username: string }) {
   const { data: reminders = [], isLoading } = useUserReminders(profileUser?.id, isOwn);
   const [selectedReminder, setSelectedReminder] = useState<ReminderFull | null>(null);
   const [addOpen, setAddOpen] = useState(false);
+  const [search, setSearch] = useState("");
+
+  const filtered = useMemo(() => {
+    if (!search.trim()) return reminders;
+    const query = search.toLowerCase();
+    return reminders.filter(
+      (item) =>
+        item.text?.toLowerCase().includes(query) ||
+        item.caption?.toLowerCase().includes(query)
+    );
+  }, [reminders, search]);
 
   const notFound = !isOwn && profileQuery.isError && profileQuery.error instanceof ApiError
     ? profileQuery.error.status === 404
@@ -40,6 +51,7 @@ export function UserWall({ username }: { username: string }) {
       <AppShell
         profileUser={profileUser}
         isOwnProfile={isOwn}
+        onSearch={setSearch}
         onAddReminder={() => setAddOpen(true)}
         selectedReminder={selectedReminder}
         onCloseReflections={() => setSelectedReminder(null)}
@@ -48,10 +60,15 @@ export function UserWall({ username }: { username: string }) {
           <PageHeading title={`${profileUser.first_name}'s Reminders`} />
         )}
         <ReminderGrid
-          reminders={reminders}
+          reminders={filtered}
           isOwner={isOwn}
           isLoading={isLoading || profileQuery.isLoading}
           onShowReflections={setSelectedReminder}
+          emptyMessage={
+            isOwn
+              ? "Add your first reminder to get started"
+              : `${profileUser?.first_name ?? username} hasn't shared any reminders yet`
+          }
         />
       </AppShell>
       {isOwn && <AddReminderDialog open={addOpen} onOpenChange={setAddOpen} />}
