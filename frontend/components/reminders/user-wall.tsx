@@ -8,6 +8,7 @@ import { AppShell, PageHeading } from "@/components/layout/app-shell";
 import { Header } from "@/components/layout/header";
 import { ReminderGrid } from "@/components/reminders/reminder-grid";
 import { AddReminderDialog } from "@/components/reminders/add-reminder-dialog";
+import { ProfileHeader } from "@/components/profile/profile-header";
 import { ApiError } from "@/lib/api-error";
 import type { ReminderFull } from "@/schemas/reminder";
 
@@ -56,8 +57,14 @@ export function UserWall({ username }: { username: string }) {
         selectedReminder={selectedReminder}
         onCloseReflections={() => setSelectedReminder(null)}
       >
+        {/* Mobile stacked profile header */}
+        <ProfileHeader profileUser={profileUser} isOwnProfile={isOwn} />
+
         {!isOwn && profileUser && (
-          <PageHeading title={`${profileUser.first_name}'s Reminders`} />
+          <PageHeading
+            title={`${profileUser.first_name}'s Reminders`}
+            className="hidden md:block"
+          />
         )}
         <ReminderGrid
           reminders={filtered}
