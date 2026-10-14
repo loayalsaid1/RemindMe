@@ -13,6 +13,7 @@ from models.reminder import Reminder
 from flask import jsonify, abort, request
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from models.user import User
+from api.v1.serializers import reminder_public_dict
 import os
 
 # ImageKit Credentials
@@ -42,8 +43,7 @@ def validate_booleans(dictionary):
 def get_reminders():
     """Retrieves the list of all public reminders in the RemindMe app"""
     reminders = storage.all(Reminder).values()
-    public_reminders = [reminder.to_dict()
-                        for reminder in reminders if reminder.public]
+    public_reminders = [reminder_public_dict(r) for r in reminders if r.public]
     return jsonify(public_reminders)
 
 
@@ -56,7 +56,7 @@ def get_reminder(reminder_id):
         abort(404)
     if not reminder.public:
         abort(403, description="Access forbidden")
-    return jsonify(reminder.to_dict())
+    return jsonify(reminder_public_dict(reminder))
 
 
 @app_views.route("/users/<user_id>/reminders", strict_slashes=False,

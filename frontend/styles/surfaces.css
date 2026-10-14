@@ -69,14 +69,38 @@
 }
 
 .surface-overlay {
-  background: linear-gradient(to bottom, rgb(44 62 80 / 0.2), rgb(0 0 0 / 0.72));
+  background: linear-gradient(to bottom, rgb(0 0 0 / 0.55), rgb(0 0 0 / 0.82));
   transition: opacity var(--motion-fast) ease;
 }
 
+/* CTA button with shine sweep on hover */
 .surface-cta {
+  position: relative;
+  overflow: hidden;
   background: linear-gradient(to bottom, var(--brand), var(--brand-dark));
   color: var(--ink-900);
   box-shadow: var(--shadow-button);
+}
+
+.surface-cta::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgb(255 255 255 / 0.35),
+    transparent
+  );
+  transition: left 0ms;
+}
+
+.surface-cta:hover::after {
+  left: 150%;
+  transition: left 450ms ease;
 }
 
 .surface-cta:hover {
@@ -91,3 +115,34 @@
 .surface-shine {
   background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.12), transparent);
 }
+
+/* Logo glow — soft ambient halo beneath the logo */
+.logo-glow::after {
+  content: "";
+  position: absolute;
+  bottom: -0.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 110%;
+  height: 1.25rem;
+  border-radius: 9999px;
+  background: radial-gradient(ellipse, rgb(141 214 214 / 0.45) 0%, transparent 70%);
+  filter: blur(6px);
+  pointer-events: none;
+}
+
+/* Logo link hover glow */
+.logo-link:hover .logo-glow::after,
+.logo-link:focus .logo-glow::after {
+  background: radial-gradient(ellipse, rgb(141 214 214 / 0.65) 0%, transparent 70%);
+}
+
+/* Streak fire glow */
+.streak-glow {
+  filter: drop-shadow(0 0 6px rgb(141 214 214 / 0.7));
+}
+
+.streak-glow-orange {
+  filter: drop-shadow(0 0 6px rgb(251 146 60 / 0.7));
+}
+

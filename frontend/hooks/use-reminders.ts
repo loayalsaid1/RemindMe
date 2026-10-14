@@ -5,6 +5,8 @@ import { createReminder, deleteReminder, getPublicReminders, getUserReminders, u
 import { queryKeys } from "@/lib/query-keys";
 import { useToast } from "@/hooks/use-toast";
 import type { ReminderDraft, ReminderFull } from "@/schemas/reminder";
+import { reminderListSchema } from "@/schemas/reminder";
+import { http } from "@/lib/http";
 
 export function useMyReminders(userId: string | undefined) {
   return useQuery({
@@ -21,14 +23,25 @@ export function usePublicReminders() {
   });
 }
 
+async function getPublicUserReminders(userId: string): Promise<ReminderFull[]> {
+  // Uses the same authenticated endpoint — for non-owners this only returns public reminders
+  // because the backend filters by public=True for other users.
+  // Fall back to filtering the public wall if the route 403s.
+  try {
+    const data = await http<unknown>(`/api/v1/users/${userId}/reminders`);
+    return reminderListSchema.parse(data);
+  } catch {
+    const all = await getPublicReminders();
+    return all.filter((item) => item.user_id === userId);
+  }
+}
+
 export function useUserReminders(userId: string | undefined, isOwn: boolean) {
   return useQuery({
     queryKey: userId ? queryKeys.reminders.user(userId) : queryKeys.reminders.all,
     queryFn: async () => {
       if (!userId) return [];
-      if (isOwn) return getUserReminders(userId);
-      const all = await getPublicReminders();
-      return all.filter((item) => item.user_id === userId);
+      return isOwn ? getUserReminders(userId) : getPublicUserReminders(userId);
     },
     enabled: Boolean(userId),
   });
@@ -63,10 +76,14 @@ export function useUpdateReminder() {
     }: {
       id: string;
       patch: Partial<Pick<ReminderFull, "text" | "caption" | "public">>;
+      toastMessage?: string;
     }) => updateReminder(id, patch),
-    onSuccess: (updated) => {
+    onSuccess: (updated, variables) => {
       queryClient.invalidateQueries({ queryKey: queryKeys.reminders.all });
-      toast({ title: updated.public ? "Set to public" : "Set to private" });
+      const msg =
+        variables.toastMessage ??
+        (updated.public ? "Set to public" : "Set to private");
+      toast({ title: msg });
     },
     onError: () => {
       toast({ title: "Failed to update", variant: "destructive" });
