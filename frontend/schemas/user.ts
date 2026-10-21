@@ -42,10 +42,11 @@ export const registerDraftSchema = z.object({
 });
 
 export const profileDraftSchema = z.object({
-  first_name: z.string().min(1),
-  last_name: z.string().min(1),
+  first_name: z.string().min(1, "First name is required"),
+  last_name: z.string().min(1, "Last name is required"),
   description: z.string().optional(),
-  img_url: z.string().nullable().optional(),
+  remove_image: z.boolean().optional(),
+  image: z.instanceof(File).nullable().optional(),
 });
 
 export const usernameExistsSchema = z.object({

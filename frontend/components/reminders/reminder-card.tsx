@@ -101,16 +101,17 @@ export function ReminderCard({
         <div className="absolute right-2.5 top-2.5 z-10 flex items-center gap-1.5">
           {/* Zoom button — subtle helper on desktop */}
           <Button
+            type="button"
             variant="ghost"
             size="icon"
-            className="hidden h-8 w-8 rounded-full bg-black/60 text-white shadow-md backdrop-blur-sm transition-opacity hover:bg-black/80 md:flex md:opacity-0 md:group-hover:opacity-100"
+            className="hidden h-8 w-8 rounded-full border border-white/10 bg-black/70 text-white shadow-md backdrop-blur-sm transition-all hover:border-white/30 hover:bg-black/90 hover:text-white focus-visible:text-white md:flex md:opacity-0 md:group-hover:opacity-100"
             aria-label="Zoom reminder"
             onClick={(event) => {
               event.stopPropagation();
               setZoomed(true);
             }}
           >
-            <ZoomIn className="h-4 w-4" />
+            <ZoomIn className="h-4 w-4 text-white" />
           </Button>
 
           {/* Owner 3-dot menu — always visible on mobile, hover on desktop */}
@@ -118,16 +119,17 @@ export function ReminderCard({
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button
+                  type="button"
                   variant="ghost"
                   size="icon"
                   className={cn(
-                    "h-8 w-8 rounded-full bg-black/60 text-white shadow-md backdrop-blur-sm transition-opacity hover:bg-black/80",
+                    "h-8 w-8 rounded-full border border-white/10 bg-black/70 text-white shadow-md backdrop-blur-sm transition-all hover:border-white/30 hover:bg-black/90 hover:text-white focus-visible:text-white",
                     "opacity-90 md:opacity-0 md:group-hover:opacity-100"
                   )}
                   aria-label="Reminder options"
                   onClick={(event) => event.stopPropagation()}
                 >
-                  <MoreVertical className="h-4 w-4" />
+                  <MoreVertical className="h-4 w-4 text-white" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-44">
@@ -188,10 +190,11 @@ export function ReminderCard({
 
             {/* Reflections button — always accessible on mobile, enhanced hover on desktop */}
             <Button
+              type="button"
               variant="ghost"
               size="sm"
               className={cn(
-                "h-7 shrink-0 rounded-full bg-black/60 px-2 text-[11px] font-medium text-white backdrop-blur-sm shadow-sm hover:bg-black/80 active:scale-95 transition-opacity flex items-center justify-center",
+                "flex h-7 shrink-0 items-center justify-center rounded-full border border-white/10 bg-black/70 px-2.5 text-[11px] font-medium text-white shadow-sm backdrop-blur-sm transition-all hover:border-white/30 hover:bg-black/90 hover:text-white active:scale-95",
                 "opacity-90 md:opacity-0 md:group-hover:opacity-100"
               )}
               onClick={(event) => {
@@ -200,8 +203,8 @@ export function ReminderCard({
               }}
               aria-label="Show reflections"
             >
-              <MessageSquare className="h-3.5 w-3.5 sm:mr-1" />
-              <span className="hidden sm:inline">Reflections</span>
+              <MessageSquare className="h-3.5 w-3.5 text-white sm:mr-1" />
+              <span className="hidden text-white sm:inline">Reflections</span>
             </Button>
           </div>
         </div>

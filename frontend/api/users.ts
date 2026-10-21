@@ -19,7 +19,34 @@ export async function getUserByUsername(username: string): Promise<UserFull> {
 }
 
 export async function updateUser(userId: string, draft: ProfileDraft): Promise<UserFull> {
-  const payload = profileDraftSchema.parse(draft);
+  const validated = profileDraftSchema.parse(draft);
+
+  if (validated.image || validated.remove_image) {
+    const formData = new FormData();
+    formData.append("first_name", validated.first_name);
+    formData.append("last_name", validated.last_name);
+    if (validated.description !== undefined) {
+      formData.append("description", validated.description);
+    }
+    if (validated.image) {
+      formData.append("profile_image", validated.image);
+    }
+    if (validated.remove_image) {
+      formData.append("remove_image", "true");
+    }
+    const data = await http<unknown>(`/api/v1/users/${userId}`, {
+      method: "PUT",
+      body: formData,
+    });
+    return userFullSchema.parse(data);
+  }
+
+  const payload: Record<string, unknown> = {
+    first_name: validated.first_name,
+    last_name: validated.last_name,
+    description: validated.description ?? undefined,
+  };
+
   const data = await http<unknown>(`/api/v1/users/${userId}`, {
     method: "PUT",
     body: JSON.stringify(payload),
