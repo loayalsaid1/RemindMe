@@ -41,7 +41,9 @@ export function MobileNav() {
         )}
       >
         <Home className={cn("h-5 w-5", isHome && "stroke-[2.5px]")} />
-        <span>Home</span>
+        {/* <span>Home</span> */}
+        <span>My Reminders</span>
+
       </Link>
 
       {/* Discover tab */}
@@ -56,7 +58,8 @@ export function MobileNav() {
         )}
       >
         <Compass className={cn("h-5 w-5", isDiscover && "stroke-[2.5px]")} />
-        <span>Discover</span>
+        {/* <span>Discover</span> */}
+        <span>Public Reminders</span>
       </Link>
 
       {/* Profile tab */}

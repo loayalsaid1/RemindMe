@@ -1,12 +1,23 @@
 #!/usr/bin/python3
-"""This module defines the user API views"""
-
+import os
+import tempfile
+from imagekitio import ImageKit
 from flask import jsonify, request, abort
 from models import storage
 from models.user import User
 from api.v1.views import app_views
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from api.v1.serializers import user_public_dict, make_initial_username
+
+IMAGEKIT_PRIVATE_KEY = os.getenv('IMAGEKIT_PRIVATE_KEY')
+IMAGEKIT_PUBLIC_KEY = os.getenv('IMAGEKIT_PUBLIC_KEY')
+IMAGEKIT_URL_ENDPOINT = os.getenv('IMAGEKIT_URL_ENDPOINT')
+
+ik = ImageKit(
+    private_key=IMAGEKIT_PRIVATE_KEY,
+    public_key=IMAGEKIT_PUBLIC_KEY,
+    url_endpoint=IMAGEKIT_URL_ENDPOINT
+)
 
 
 @app_views.route("/users", methods=["GET"], strict_slashes=False)
@@ -73,16 +84,48 @@ def update_user(user_id):
     user = storage.get(User, user_id)
     if not user:
         abort(404)
-    if not request.get_json():
-        abort(400, description="Not a JSON")
 
-    data = request.get_json()
-    ignore_keys = ["id", "created_at", "updated_at", "email"]
+    if request.is_json:
+        data = request.get_json() or {}
+    else:
+        data = request.form.to_dict()
+
+    if not data and not request.files:
+        abort(400, description="No data provided")
+
+    # Handle image file upload if provided
+    image_file = request.files.get('profile_image') or request.files.get('image')
+    if image_file and image_file.filename:
+        extension = image_file.filename.split('.')[-1]
+        with tempfile.NamedTemporaryFile(suffix=f'.{extension}', delete=False) as temp_file:
+            temp_file_path = temp_file.name
+            image_file.save(temp_file_path)
+
+        try:
+            with open(temp_file_path, 'rb') as f:
+                result = ik.upload_file(
+                    file=f,
+                    file_name=f'profile_{user.id}.{extension}'
+                )
+            if result.response_metadata.http_status_code == 200:
+                data['img_url'] = result.url
+            else:
+                abort(500, description="Failed to upload image")
+        finally:
+            if os.path.exists(temp_file_path):
+                os.remove(temp_file_path)
+
+    elif str(data.get('remove_image', '')).lower() in ['true', '1']:
+        data['img_url'] = None
+
+    ignore_keys = ["id", "created_at", "updated_at", "email", "profile_image", "image", "remove_image"]
 
     for key, value in data.items():
         if key not in ignore_keys:
             if key == "password":
                 user.set_password(value)
+            elif key == "img_url" and (value == "" or value == "null" or value is None):
+                setattr(user, key, None)
             else:
                 setattr(user, key, value)
 

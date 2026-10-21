@@ -13,7 +13,7 @@ interface ReminderGridProps {
 
 // Responsive card grid: 2 columns on mobile, auto-fill on tablet and desktop.
 const GRID_CLASS =
-  "grid grid-cols-2 gap-2.5 p-3 sm:gap-3 sm:p-4 sm:[grid-template-columns:repeat(auto-fill,minmax(250px,1fr))]";
+  "grid grid-cols-1 gap-2.5 p-3 sm:gap-3 sm:p-4 sm:[grid-template-columns:repeat(auto-fill,minmax(250px,1fr))]";
 
 export function ReminderGrid({
   reminders,

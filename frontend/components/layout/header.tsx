@@ -3,7 +3,6 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { Globe, Home, LogOut, Plus, Search, User, X } from "lucide-react";
 import { useCurrentUser, useLogout } from "@/hooks/use-auth";
 import { Button } from "@/components/ui/button";
@@ -17,6 +16,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { HeaderStreak } from "@/components/layout/header-streak";
+import { ProfileModal } from "@/components/profile/profile-modal";
 
 interface HeaderProps {
   onSearch?: (query: string) => void;
@@ -33,9 +33,9 @@ export function Header({
 }: HeaderProps) {
   const { data: user } = useCurrentUser();
   const logout = useLogout();
-  const router = useRouter();
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
   const [mobileQuery, setMobileQuery] = useState("");
+  const [profileModalOpen, setProfileModalOpen] = useState(false);
 
   const initials = user
     ? `${user.first_name[0] ?? ""}${user.last_name[0] ?? ""}`.toUpperCase()
@@ -91,8 +91,8 @@ export function Header({
             />
           </div>
 
-          {/* Streak indicator — visible on both mobile and desktop */}
-          <HeaderStreak user={user} />
+          {/* Streak indicator — visible on mobile only (desktop has it in sidebar) */}
+          <HeaderStreak user={user} className="md:hidden" />
 
           {/* Mobile search toggle button */}
           {onSearch && (
@@ -141,7 +141,7 @@ export function Header({
                       <p className="text-xs text-muted-foreground">@{user.user_name}</p>
                     </div>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem onClick={() => router.push(`/user/${user.user_name}`)}>
+                    <DropdownMenuItem onClick={() => setProfileModalOpen(true)}>
                       <User className="mr-2 h-4 w-4" />
                       My Profile
                     </DropdownMenuItem>
@@ -175,6 +175,13 @@ export function Header({
           </Button>
         </div>
       )}
+
+      {/* Profile Modal on Desktop */}
+      <ProfileModal
+        user={user}
+        open={profileModalOpen}
+        onOpenChange={setProfileModalOpen}
+      />
     </div>
   );
 }

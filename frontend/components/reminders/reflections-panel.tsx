@@ -68,14 +68,14 @@ export function ReflectionsPanel({ reminder, onClose }: ReflectionsPanelProps) {
         />
       </aside>
 
-      {/* Mobile view: slide-up bottom sheet modal */}
+      {/* Mobile view: slide-up bottom sheet modal (z-[70] to sit strictly above z-50 mobile navbar) */}
       <div
-        className="fixed inset-0 z-50 flex flex-col justify-end bg-black/60 backdrop-blur-sm md:hidden"
+        className="fixed inset-0 z-[70] flex flex-col justify-end bg-black/75 backdrop-blur-sm md:hidden"
         onClick={onClose}
         aria-label="Reflections Bottom Sheet Modal"
       >
         <div
-          className="surface-panel animate-slide-up flex max-h-[88dvh] w-full flex-col rounded-t-2xl border-t border-white/10 shadow-2xl"
+          className="surface-panel animate-slide-up relative z-[75] flex max-h-[88dvh] w-full flex-col rounded-t-2xl border-t border-white/10 shadow-2xl"
           onClick={(e) => e.stopPropagation()}
         >
           {/* Mobile pull indicator */}
@@ -88,11 +88,12 @@ export function ReflectionsPanel({ reminder, onClose }: ReflectionsPanelProps) {
             currentUserId={user?.id}
             onDelete={handleDelete}
           />
-          <div className="pb-safe">
+          <div className="border-t border-white/10 bg-[var(--ink-900)] pb-[calc(0.75rem+env(safe-area-inset-bottom,0px))]">
             <ReflectionInput
               form={form}
               onSubmit={onSubmit}
               isPending={createReflection.isPending}
+              noBorder
             />
           </div>
         </div>
@@ -264,12 +265,19 @@ interface ReflectionInputProps {
   form: UseFormReturn<ReflectionDraft>;
   onSubmit: (e?: React.BaseSyntheticEvent) => Promise<void>;
   isPending: boolean;
+  noBorder?: boolean;
 }
 
-function ReflectionInput({ form, onSubmit, isPending }: ReflectionInputProps) {
+function ReflectionInput({ form, onSubmit, isPending, noBorder = false }: ReflectionInputProps) {
   return (
     <Form {...form}>
-      <form onSubmit={onSubmit} className="flex gap-2 border-t border-white/10 p-3 sm:p-4">
+      <form
+        onSubmit={onSubmit}
+        className={cn(
+          "flex gap-2 p-3 sm:p-4",
+          !noBorder && "border-t border-white/10"
+        )}
+      >
         <FormField
           control={form.control}
           name="content"
