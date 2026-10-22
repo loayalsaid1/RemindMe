@@ -9,7 +9,8 @@ const withPWA = require("next-pwa")({
   skipWaiting: true,
 });
 
-const backend = process.env.API_PROXY_TARGET ?? "http://localhost:5001";
+const rawBackend = process.env.API_PROXY_TARGET ?? "http://localhost:5001";
+const backend = rawBackend.trim().replace(/\/+$/, "");
 
 const nextConfig: NextConfig = {
   turbopack: {},

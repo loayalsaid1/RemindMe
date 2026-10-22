@@ -31,7 +31,7 @@ app.register_blueprint(app_views)
 
 CORS(
     app,
-    resources={r"/api/v1/*": {"origins": getenv("CORS_ORIGINS", "http://localhost:3000")}},
+    resources={r"/api/v1/*": {"origins": [o.strip().rstrip("/") for o in getenv("CORS_ORIGINS", "http://localhost:3000").split(",") if o.strip()]}},
     supports_credentials=True,
 )
 
