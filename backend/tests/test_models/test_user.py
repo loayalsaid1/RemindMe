@@ -6,7 +6,7 @@ from datetime import datetime
 from models import storage_t
 from models.user import User
 from models.base_model import BaseModel
-from models .reminder import Reminder
+from models.reminder import Reminder
 from models.streak import Streak
 from models.reflection import Reflection
 

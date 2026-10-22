@@ -2,7 +2,7 @@
 """Make the basemodel for the other models"""
 from datetime import datetime
 from uuid import uuid4
-import models
+import models as models
 from sqlalchemy import Column, DateTime, String
 from sqlalchemy.ext.declarative import declarative_base
 from os import getenv

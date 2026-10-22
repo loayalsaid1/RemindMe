@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """User model for RemindMe web application"""
-import models
+import models as models
 from models.base_model import BaseModel, Base
 from models.reminder import Reminder
 from models.reflection import Reflection

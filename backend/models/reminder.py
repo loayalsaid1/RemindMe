@@ -4,7 +4,7 @@ from models.base_model import BaseModel, Base
 from sqlalchemy.orm import relationship
 from sqlalchemy import Column, Integer, String, ForeignKey, Boolean
 from os import getenv
-import models
+import models as models
 from models.reflection import Reflection
 
 
